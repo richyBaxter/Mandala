@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Bitcoin Spiral — Power Law on a 4-year cycle map · houtini</title>
+<meta name="description" content="Bitcoin price and the Power Law plotted on a 4-year-cycle polar map. Open source, by houtini.">
+<meta property="og:title" content="The Bitcoin Spiral">
+<meta property="og:description" content="Bitcoin price and the Power Law on a 4-year-cycle polar map. By houtini.">
+<meta property="og:image" content="btc-mandala.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0b0e14; --panel: #0f141d; --border: #1e2733;
+    --ink: #e8ecf3; --muted: #8a93a3; --faint: #525b6b; --btc: #f7931a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Inter, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.6;
+    background-image: radial-gradient(60% 50% at 50% 0%, #10202e 0%, var(--bg) 70%);
+  }
+  header, main, footer { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+  header { padding-top: 56px; }
+  .kicker { color: var(--btc); font-size: .72rem; font-weight: 700; letter-spacing: 3px; margin: 0 0 8px; }
+  h1 { font-size: 2.4rem; font-weight: 800; margin: 0 0 6px; letter-spacing: -.5px; }
+  .sub { color: var(--muted); margin: 0 0 28px; max-width: 60ch; }
+  .chart {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 16px;
+    padding: 10px; box-shadow: 0 20px 60px rgba(0,0,0,.45);
+  }
+  .chart img { width: 100%; height: auto; display: block; border-radius: 10px; }
+  h2 { font-size: 1.25rem; font-weight: 700; margin-top: 44px; }
+  ul { padding-left: 18px; } li { margin: 6px 0; color: var(--muted); }
+  li strong { color: var(--ink); font-weight: 600; }
+  pre {
+    background: #070a0f; color: #cfe3d6; padding: 16px 18px; border-radius: 12px;
+    border: 1px solid var(--border); overflow-x: auto; font-size: .85rem;
+  }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .note {
+    background: rgba(247,147,26,.07); border: 1px solid rgba(247,147,26,.3);
+    padding: 14px 18px; border-radius: 12px; font-size: .9rem; color: var(--muted);
+  }
+  footer { color: var(--faint); font-size: .85rem; padding: 44px 24px 72px; border-top: 1px solid var(--border); margin-top: 48px; }
+  footer strong { color: var(--btc); }
+  a { color: var(--btc); }
+</style>
+</head>
+<body>
+<header>
+  <p class="kicker">HOUTINI</p>
+  <h1>The Bitcoin Spiral</h1>
+  <p class="sub">Bitcoin price and the Power Law on a 4-year-cycle polar map — with buy/sell zones, an events diary and institutional ETF flows. Open source, with current data.</p>
+</header>
+
+<main>
+  <div class="chart">
+    <img src="btc-mandala.svg" alt="The Bitcoin Spiral: Bitcoin price spiralling outward on a 4-year-cycle map, riding the Power Law support/resistance channel.">
+  </div>
+
+  <h2>How to read it</h2>
+  <ul>
+    <li><strong>Angle</strong> = position within the 4-year cycle (one full turn = 4 years).</li>
+    <li><strong>Radius</strong> = price on a log scale ($1 at the centre); each dashed ring is a 10&times; level.</li>
+    <li><strong>BTC line colour</strong> = buy/sell zone: green where price is cheap vs the Power Law, red where it's expensive. <strong>Orange</strong> = support, <strong>red spiral</strong> = resistance.</li>
+    <li><strong>Markers</strong> = events diary (halvings, ETF launches, macro). <strong>Radial ticks</strong> = spot-ETF net flow (green out = institutions buying, red in = selling).</li>
+  </ul>
+
+  <h2>Embed it</h2>
+  <p>The chart is a single self-contained SVG. Drop it in with an <code>&lt;img&gt;</code> or <code>&lt;object&gt;</code>:</p>
+  <pre><code>&lt;img src="https://richybaxter.github.io/btc-mandala/btc-mandala.svg"
+     alt="The Bitcoin Spiral" style="max-width:100%;height:auto"&gt;</code></pre>
+  <p>Or inline the SVG markup directly from <code>btc-mandala.svg</code> for crisp scaling and themable styling.</p>
+
+  <h2>Update the data</h2>
+  <p>Edit <code>data/btc-monthly.json</code> (price), <code>data/events.csv</code> (diary)
+     or <code>data/flows.csv</code> (ETF flows), then re-render:</p>
+  <pre><code>python3 generate.py
+# refresh ETF flows from a free source first:
+FLOWS_URL="https://your-source/btc-etf-daily.csv" python3 fetch_flows.py</code></pre>
+
+  <p class="note">An open-source chart by houtini. The underlying Power-Law model is
+  the work of G. Santostasi. Prices are approximate monthly closes; the latest cycle is
+  anchored to verified data (ATH $126,198 on 6 Oct 2025; ~$77k in May 2026).
+  Not financial advice.</p>
+</main>
+
+<footer>
+  By <strong>houtini</strong> &middot; open source, MIT licensed &middot; Power-Law model after G. Santostasi.
+</footer>
+</body>
+</html>

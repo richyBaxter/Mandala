@@ -25,12 +25,14 @@ genesis block (2009-01-03), with `a = -17.2` (support) and `a = -16.5` (resistan
 browser (no server, no build step) — perfect for GitHub Pages. It fetches free public data
 client-side and renders:
 
-- **Stat tiles** — price + 24h, Power-Law fair value, price vs fair, PL oscillator (buy/sell), Mayer Multiple, Fear & Greed.
-- **Price vs Power-Law channel** (log) — price, dashed fair value, floor and cycle-top bands.
-- **Mayer Multiple**, **Fear & Greed (60d)**, and **network hashrate (1y)**.
+- **Stat tiles** — price + 24h, BTC/Gold ratio, Power-Law fair value, price vs fair, PL oscillator, Mayer Multiple, MVRV, Fear & Greed, next difficulty, Lightning capacity, on-chain fees.
+- **Charts** — price vs Power-Law channel (log), Pi Cycle Top, Mayer Multiple, Fear & Greed (60d), buy/sell taker-volume pressure, network hashrate (1y).
+- **Flows & institutional news** (CoinDesk / Cointelegraph / Bitcoin Magazine, filtered) and a **key-dates diary** (FOMC, CME/Deribit expiries, halving) with countdowns.
 
-Data sources (all free, all CORS-friendly): **CoinGecko** (price), **alternative.me** (Fear & Greed),
-**mempool.space** (hashrate). Each panel fails gracefully to "n/a" if a feed is rate-limited.
+Data sources (all free): **CoinGecko** (price/history), **Binance public** (taker volume, PAXG, Pi Cycle),
+**alternative.me** (Fear & Greed), **mempool.space** (hashrate, difficulty, Lightning, fees),
+**CoinMetrics community** (MVRV, best-effort), **rss2json** (news bridge). Every panel degrades to
+"n/a" if a feed is rate-limited or CORS-blocked.
 
 ## Indicators & overlays
 

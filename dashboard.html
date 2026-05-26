@@ -30,9 +30,7 @@
   .updated { color:var(--faint); font-size:.8rem; margin-top:10px; }
   .updated .dot { color:var(--buy); }
 
-  .tiles { display:grid; grid-template-columns:repeat(6,1fr); gap:14px; margin:28px 0; }
-  @media (max-width:1080px){ .tiles{ grid-template-columns:repeat(3,1fr);} }
-  @media (max-width:620px){ .tiles{ grid-template-columns:repeat(2,1fr);} }
+  .tiles { display:grid; grid-template-columns:repeat(auto-fit, minmax(158px,1fr)); gap:14px; margin:28px 0; }
   .tile {
     background:var(--panel); border:1px solid var(--border); border-radius:14px;
     padding:16px 16px 14px; min-height:96px;
@@ -86,11 +84,16 @@
 
   <section class="tiles">
     <div class="tile"><div class="label">BTC Price</div><div class="val" id="t-price">&mdash;</div><div class="meta" id="t-price-chg">24h</div></div>
+    <div class="tile"><div class="label">BTC / Gold</div><div class="val" id="t-gold">&mdash;</div><div class="meta" id="t-gold-meta">oz of gold / BTC</div></div>
     <div class="tile"><div class="label">Power-Law Fair</div><div class="val accent" id="t-fair">&mdash;</div><div class="meta" id="t-fair-meta">model value today</div></div>
     <div class="tile"><div class="label">vs Fair Value</div><div class="val" id="t-vsfair">&mdash;</div><div class="meta">price &divide; fair</div></div>
     <div class="tile"><div class="label">PL Oscillator</div><div class="val" id="t-osc">&mdash;</div><div class="meta" id="t-osc-meta">floor &rarr; top</div></div>
     <div class="tile"><div class="label">Mayer Multiple</div><div class="val" id="t-mayer">&mdash;</div><div class="meta" id="t-mayer-meta">price &divide; 200DMA</div></div>
+    <div class="tile"><div class="label">MVRV</div><div class="val" id="t-mvrv">&mdash;</div><div class="meta" id="t-mvrv-meta">on-chain valuation</div></div>
     <div class="tile"><div class="label">Fear &amp; Greed</div><div class="val" id="t-fng">&mdash;</div><div class="meta" id="t-fng-meta">sentiment</div></div>
+    <div class="tile"><div class="label">Next Difficulty</div><div class="val" id="t-diff">&mdash;</div><div class="meta" id="t-diff-meta">retarget estimate</div></div>
+    <div class="tile"><div class="label">Lightning</div><div class="val" id="t-ln">&mdash;</div><div class="meta" id="t-ln-meta">network capacity</div></div>
+    <div class="tile"><div class="label">Fees</div><div class="val" id="t-fees">&mdash;</div><div class="meta" id="t-fees-meta">on-chain congestion</div></div>
   </section>
 
   <div class="grid">
@@ -129,6 +132,14 @@
       <h2>Mayer Multiple</h2>
       <p class="hint">Price &divide; 200-day MA. &lt;1 = historically cheap, &gt;2.4 = overheated.</p>
       <div class="chart-box"><canvas id="c-mayer"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card full">
+      <h2>Pi Cycle Top</h2>
+      <p class="hint" id="pi-hint">111-day MA vs 2&times; the 350-day MA &mdash; a crossover has marked cycle tops within days.</p>
+      <div class="chart-box"><canvas id="c-pi"></canvas></div>
     </div>
   </div>
 
@@ -266,6 +277,82 @@ async function loadFng(){
   });
 }
 
+// ---------- BTC / Gold (PAXG) ----------
+async function loadGold(){
+  const get = s => fetch("https://data-api.binance.vision/api/v3/ticker/24hr?symbol="+s)
+                      .then(r=>{ if(!r.ok) throw new Error(s); return r.json(); });
+  const [b,p] = await Promise.all([get("BTCUSDT"), get("PAXGUSDT")]);
+  const now = +b.lastPrice / +p.lastPrice;
+  const open = +b.openPrice / +p.openPrice;
+  const chg = (now/open - 1) * 100;
+  setText("t-gold", now.toFixed(1)+" oz", chg>=0?"up":"down");
+  document.getElementById("t-gold-meta").innerHTML =
+    `<span class="${chg>=0?'up':'down'}">${chg>=0?'▲':'▼'} ${Math.abs(chg).toFixed(2)}% 24h</span>`;
+}
+
+// ---------- MVRV (CoinMetrics community; may be CORS-blocked) ----------
+async function loadMVRV(){
+  const start = new Date(Date.now() - 14*86400000).toISOString().slice(0,10);
+  const r = await fetch("https://community-api.coinmetrics.io/v4/timeseries/asset-metrics?assets=btc&metrics=CapMVRVCur&frequency=1d&start_time="+start);
+  if(!r.ok) throw new Error("coinmetrics "+r.status);
+  const j = await r.json(); const rows = j.data || [];
+  if(!rows.length) throw new Error("no mvrv");
+  const v = parseFloat(rows[rows.length-1].CapMVRVCur);
+  setText("t-mvrv", v.toFixed(2), v<1 ? "up" : v>3.5 ? "down" : "");
+  document.getElementById("t-mvrv-meta").textContent = v<1 ? "undervalued" : v>3.5 ? "euphoria" : "neutral";
+}
+
+// ---------- Pi Cycle Top (Binance daily, 1000 candles) ----------
+async function loadPiCycle(){
+  const r = await fetch("https://data-api.binance.vision/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=1000");
+  if(!r.ok) throw new Error("binance "+r.status);
+  const k = await r.json();
+  const closes = k.map(c=>+c[4]), times = k.map(c=>c[0]);
+  const sma = (a,n) => a.map((_,i)=> i<n-1 ? null : a.slice(i-n+1,i+1).reduce((x,y)=>x+y,0)/n);
+  const s111 = sma(closes,111);
+  const s350x2 = sma(closes,350).map(v=> v==null ? null : v*2);
+  const N = Math.min(540, closes.length), sl = a => a.slice(-N);
+  const labels = sl(times).map(t=> new Date(t).toLocaleDateString(undefined,{month:"short",year:"2-digit"}));
+  new Chart(document.getElementById("c-pi"), {
+    type:"line",
+    data:{ labels, datasets:[
+      { label:"Price", data:sl(closes), borderColor:C.btc, ...noPoints, borderWidth:1.6 },
+      { label:"111 DMA", data:sl(s111), borderColor:C.sky, ...noPoints, borderWidth:2 },
+      { label:"2× 350 DMA (trigger)", data:sl(s350x2), borderColor:C.sell, ...noPoints, borderWidth:2 },
+    ]},
+    options: baseOpts(true)
+  });
+  const a = s111[s111.length-1], b = s350x2[s350x2.length-1];
+  if(a && b){
+    const gap = (b-a)/b*100;
+    document.getElementById("pi-hint").innerHTML =
+      `111-day MA vs 2× the 350-day MA &mdash; a crossover has marked cycle tops within days. Now: 111DMA is ` +
+      `<strong style="color:${gap>=0?C.buy:C.sell}">${gap>=0 ? gap.toFixed(0)+"% below" : Math.abs(gap).toFixed(0)+"% ABOVE"}</strong> the trigger.`;
+  }
+}
+
+// ---------- Network fundamentals (mempool.space) ----------
+async function loadNetwork(){
+  try {
+    const d = await (await fetch("https://mempool.space/api/v1/difficulty-adjustment")).json();
+    setText("t-diff", (d.difficultyChange>=0?"+":"") + d.difficultyChange.toFixed(1) + "%");
+    document.getElementById("t-diff").style.color = d.difficultyChange>=0 ? C.buy : C.sell;
+    document.getElementById("t-diff-meta").textContent = "retarget in " + ((d.remainingTime||0)/86400000).toFixed(0) + "d";
+  } catch(e){ tileErr("t-diff"); }
+  try {
+    const l = await (await fetch("https://mempool.space/api/v1/lightning/statistics/latest")).json();
+    const cap = l.latest.total_capacity / 1e8;
+    setText("t-ln", Math.round(cap).toLocaleString() + " BTC");
+    document.getElementById("t-ln-meta").textContent = (l.latest.channel_count).toLocaleString() + " channels";
+  } catch(e){ tileErr("t-ln"); }
+  try {
+    const f = await (await fetch("https://mempool.space/api/v1/fees/recommended")).json();
+    setText("t-fees", f.hourFee + " sat/vB");
+    document.getElementById("t-fees").style.color = f.hourFee<10 ? C.buy : f.hourFee<30 ? C.fair : C.sell;
+    document.getElementById("t-fees-meta").textContent = "fast " + f.fastestFee + " · min " + f.minimumFee;
+  } catch(e){ tileErr("t-fees"); }
+}
+
 // ---------- Buy vs Sell pressure (taker volume, Binance public) ----------
 async function loadPressure(){
   const r = await fetch("https://data-api.binance.vision/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=180");
@@ -397,6 +484,11 @@ async function loadDiary(){
 (async()=>{ try{ await loadPressure(); }catch(e){ console.error(e);
   document.getElementById("pressure-hint").innerHTML="<span class='err'>buy/sell feed unavailable (Binance)</span>"; } })();
 (async()=>{ try{ await loadHash(); }catch(e){ console.error(e); } })();
+(async()=>{ try{ await loadGold(); }catch(e){ console.error(e); tileErr("t-gold"); } })();
+(async()=>{ try{ await loadPiCycle(); }catch(e){ console.error(e);
+  document.getElementById("pi-hint").innerHTML="<span class='err'>Pi Cycle feed unavailable (Binance)</span>"; } })();
+(async()=>{ try{ await loadNetwork(); }catch(e){ console.error(e); ["t-diff","t-ln","t-fees"].forEach(tileErr); } })();
+(async()=>{ try{ await loadMVRV(); }catch(e){ console.error(e); tileErr("t-mvrv"); } })();
 (async()=>{ try{ await loadNews(); }catch(e){ console.error(e);
   document.getElementById("news").innerHTML="<li class='err'>news feed unavailable (rss2json bridge)</li>"; } })();
 (async()=>{ try{ await loadDiary(); }catch(e){ console.error(e);

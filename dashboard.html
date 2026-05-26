@@ -81,7 +81,7 @@
   <div class="grid">
     <div class="card spiral">
       <h2>The Bitcoin Spiral</h2>
-      <p class="hint">Price &amp; the Power Law on a 4-year cycle map. <a href="index.html">About &amp; embed &rarr;</a></p>
+      <p class="hint">Colour = <em>valuation</em> (cheap&rarr;expensive vs Power Law), not order flow. For actual buy/sell pressure see the chart below. <a href="index.html">About &amp; embed &rarr;</a></p>
       <img src="btc-mandala.svg" alt="The Bitcoin Spiral — price spiralling outward on a 4-year-cycle Power-Law map.">
     </div>
     <div class="card">
@@ -101,6 +101,14 @@
       <h2>Mayer Multiple</h2>
       <p class="hint">Price &divide; 200-day MA. &lt;1 = historically cheap, &gt;2.4 = overheated.</p>
       <div class="chart-box"><canvas id="c-mayer"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card full">
+      <h2>Buy vs Sell Pressure</h2>
+      <p class="hint" id="pressure-hint">Net taker volume per day (buy &minus; sell, BTC). Green = net buying, red = net selling.</p>
+      <div class="chart-box"><canvas id="c-pressure"></canvas></div>
     </div>
   </div>
 
@@ -230,6 +238,31 @@ async function loadFng(){
   });
 }
 
+// ---------- Buy vs Sell pressure (taker volume, Binance public) ----------
+async function loadPressure(){
+  const r = await fetch("https://data-api.binance.vision/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=180");
+  if(!r.ok) throw new Error("binance "+r.status);
+  const k = await r.json();
+  // kline: [openTime,o,h,l,c,volume,closeTime,quoteVol,trades,takerBuyBaseVol,...]
+  const labels = k.map(c=> new Date(c[0]).toLocaleDateString(undefined,{month:"short",day:"numeric"}));
+  const net = k.map(c=>{ const vol=+c[5], buy=+c[9]; return buy-(vol-buy); }); // net taker BTC
+  const colors = net.map(v=> v>=0 ? C.buy : C.sell);
+  const last7 = k.slice(-7);
+  const tb = last7.reduce((a,c)=>a+ +c[9], 0), tv = last7.reduce((a,c)=>a+ +c[5], 0);
+  const buyPct = tv ? tb/tv*100 : 0;
+  document.getElementById("pressure-hint").innerHTML =
+    `Net taker volume per day (buy &minus; sell, BTC). 7-day buy share: ` +
+    `<strong style="color:${buyPct>=50?C.buy:C.sell}">${buyPct.toFixed(1)}%</strong> ` +
+    `&middot; green = net buying, red = net selling.`;
+  new Chart(document.getElementById("c-pressure"), {
+    type:"bar",
+    data:{ labels, datasets:[
+      { label:"Net taker volume (BTC)", data:net, backgroundColor:colors, borderWidth:0, barPercentage:1, categoryPercentage:.96 },
+    ]},
+    options:{ ...baseOpts(false), plugins:{ ...baseOpts(false).plugins, legend:{display:false} } }
+  });
+}
+
 // ---------- Hashrate ----------
 async function loadHash(){
   const r = await fetch("https://mempool.space/api/v1/mining/hashrate/1y");
@@ -251,6 +284,8 @@ async function loadHash(){
 (async()=>{ try{ await loadPrice(); }catch(e){ console.error(e); ["t-price","t-fair","t-vsfair","t-osc","t-mayer"].forEach(tileErr);
   document.getElementById("updated").innerHTML="<span class='err'>price feed unavailable (CoinGecko)</span>"; } })();
 (async()=>{ try{ await loadFng();  }catch(e){ console.error(e); tileErr("t-fng"); } })();
+(async()=>{ try{ await loadPressure(); }catch(e){ console.error(e);
+  document.getElementById("pressure-hint").innerHTML="<span class='err'>buy/sell feed unavailable (Binance)</span>"; } })();
 (async()=>{ try{ await loadHash(); }catch(e){ console.error(e); } })();
 </script>
 </body>

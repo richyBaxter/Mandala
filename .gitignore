@@ -1,0 +1,16 @@
+# secrets / credentials — never commit these
+.env
+.env.*
+*.pem
+*.key
+*.p12
+secrets.*
+*.secret
+credentials*.json
+.netrc
+
+# python / os cruft
+__pycache__/
+*.pyc
+.DS_Store
+.venv/

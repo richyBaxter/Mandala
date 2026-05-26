@@ -52,7 +52,8 @@ K = 80.0                 # px per decade of price
 P0 = 1.0                 # price at radius 0 (centre)
 CX, CY = 620.0, 630.0
 N = 5.8                  # power-law exponent
-A_SUP, A_RES = -17.2, -16.5
+A_SUP, A_RES = -17.32, -16.5   # support/floor and resistance/cycle-top intercepts
+A_FAIR = -17.01                # central fair-value line (canonical Santostasi)
 W = H = 1240
 
 # ---------- analytics theme (dark crypto-dashboard) ----------
@@ -168,7 +169,8 @@ def spiral(a_coef):
 btc_pts = []
 for year in sorted(MONTHLY):
     for i, price in enumerate(MONTHLY[year]):
-        btc_pts.append((ymid(year, i + 1), price))
+        if price >= 1:               # sub-$1 months collapse to centre; skip the noise
+            btc_pts.append((ymid(year, i + 1), price))
 cur_d, cur_p = btc_pts[-1]
 cur_x, cur_y = xy(cur_p, cur_d)
 cur_t = oscillator(cur_d, cur_p)
@@ -216,11 +218,16 @@ for price in (10, 100, 1000, 10000, 100000):
 # channel bands
 s.append(f'<path d="{ribbon(A_SUP,0.14)}" fill="{T["buy"]}" opacity="0.10" stroke="none"/>')
 s.append(f'<path d="{ribbon(A_RES,0.14)}" fill="{T["sell"]}" opacity="0.10" stroke="none"/>')
-# channel spirals (with glow)
+# channel spirals (with glow) + dashed fair-value line
 s.append('<g filter="url(#glow)">')
 s.append(f'<path d="{spiral(A_SUP)}" fill="none" stroke="{T["support"]}" stroke-width="2" opacity="0.85"/>')
 s.append(f'<path d="{spiral(A_RES)}" fill="none" stroke="{T["resist"]}" stroke-width="2" opacity="0.85"/>')
 s.append('</g>')
+s.append(f'<path d="{spiral(A_FAIR)}" fill="none" stroke="{T["ink"]}" stroke-width="1.3" '
+         f'stroke-dasharray="6,5" opacity="0.45"/>')
+_fvx, _fvy = pl_xy(ymid(LAST_YEAR, 7), A_FAIR)
+s.append(f'<text x="{_fvx:.1f}" y="{_fvy:.1f}" font-size="10.5" fill="{T["muted"]}" '
+         f'text-anchor="middle" opacity="0.8">fair value</text>')
 
 # BTC price line, coloured by buy/sell zone (with glow)
 s.append('<g filter="url(#glow)">')
@@ -322,8 +329,8 @@ s.append(f'<text x="{hx+27:.1f}" y="{hy+2:.1f}" font-size="12.5" font-weight="70
          f'fill="{T["ink"]}">{badge}</text>')
 
 # ---------- legend + buy/sell gauge (bottom-right) ----------
-lx, ly = 858, H - 256
-s.append(f'<rect x="{lx-18}" y="{ly-30}" width="324" height="224" rx="12" '
+lx, ly = 858, H - 280
+s.append(f'<rect x="{lx-18}" y="{ly-30}" width="324" height="250" rx="12" '
          f'fill="{T["panel"]}" stroke="{T["border"]}"/>')
 s.append(f'<text x="{lx}" y="{ly-8}" font-size="12.5" font-weight="700" '
          f'fill="{T["ink"]}">BUY / SELL ZONE</text>')
@@ -354,6 +361,10 @@ s.append(f'<circle cx="{lx+6}" cy="{ky}" r="3.2" fill="{T["halving"]}"/>')
 s.append(f'<circle cx="{lx+20}" cy="{ky}" r="3.2" fill="{T["etf"]}"/>')
 s.append(f'<circle cx="{lx+34}" cy="{ky}" r="3.2" fill="{T["macro"]}"/>')
 s.append(f'<text x="{lx+54}" y="{ky+4}" font-size="10.5" fill="{T["muted"]}">Events: halving / ETF / macro</text>')
+ky += 22
+s.append(f'<line x1="{lx}" y1="{ky}" x2="{lx+44}" y2="{ky}" stroke="{T["ink"]}" '
+         f'stroke-width="1.3" stroke-dasharray="5,4" opacity="0.6"/>')
+s.append(f'<text x="{lx+54}" y="{ky+4}" font-size="10.5" fill="{T["muted"]}">Power-Law fair value</text>')
 s.append(f'<text x="{lx}" y="{ky+24}" font-size="9" fill="{T["faint"]}">Educational, not financial advice.</text>')
 
 # footer
@@ -361,7 +372,7 @@ s.append(f'<text x="64" y="{H-52}" font-size="14" font-weight="800" fill="{T["bt
 s.append(f'<text x="124" y="{H-52}" font-size="11" fill="{T["muted"]}">'
          f'&#183; data through {LAST_UPDATED} &#183; ATH $126,198 (6 Oct 2025)</text>')
 s.append(f'<text x="64" y="{H-34}" font-size="10" fill="{T["faint"]}">'
-         f'Power Law model after G. Santostasi</text>')
+         f'Power Law model after G. Santostasi &#183; angle = position in the 4-year calendar cycle (not time-since-halving)</text>')
 s.append('</svg>')
 
 out = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "btc-mandala.svg")

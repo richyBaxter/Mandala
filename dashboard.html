@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bitcoin Monitor — live Power-Law dashboard · houtini</title>
+<meta name="description" content="A live Bitcoin monitoring dashboard: Power-Law spiral, fair value, Mayer Multiple, Fear & Greed and network hashrate. Free data, by houtini.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg:#0b0e14; --panel:#0f141d; --panel2:#0c111a; --border:#1e2733;
+    --ink:#e8ecf3; --muted:#8a93a3; --faint:#525b6b;
+    --btc:#f7931a; --buy:#16c784; --fair:#f0a92b; --sell:#ea3943; --sky:#38bdf8;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; font-family:Inter,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.5;
+    background-image:radial-gradient(70% 50% at 50% -5%, #10202e 0%, var(--bg) 60%);
+  }
+  .wrap { max-width:1240px; margin:0 auto; padding:0 22px; }
+  header { padding:48px 0 8px; }
+  .kicker { color:var(--btc); font-size:.72rem; font-weight:700; letter-spacing:3px; margin:0 0 8px; }
+  h1 { font-size:2.3rem; font-weight:800; margin:0 0 6px; letter-spacing:-.5px; }
+  .sub { color:var(--muted); margin:0; max-width:64ch; }
+  .updated { color:var(--faint); font-size:.8rem; margin-top:10px; }
+  .updated .dot { color:var(--buy); }
+
+  .tiles { display:grid; grid-template-columns:repeat(6,1fr); gap:14px; margin:28px 0; }
+  @media (max-width:1080px){ .tiles{ grid-template-columns:repeat(3,1fr);} }
+  @media (max-width:620px){ .tiles{ grid-template-columns:repeat(2,1fr);} }
+  .tile {
+    background:var(--panel); border:1px solid var(--border); border-radius:14px;
+    padding:16px 16px 14px; min-height:96px;
+  }
+  .tile .label { color:var(--muted); font-size:.72rem; font-weight:600; letter-spacing:.5px; text-transform:uppercase; }
+  .tile .val { font-size:1.5rem; font-weight:800; margin-top:6px; letter-spacing:-.5px; }
+  .tile .meta { font-size:.78rem; color:var(--faint); margin-top:3px; }
+  .up { color:var(--buy);} .down{ color:var(--sell);} .accent{ color:var(--btc);}
+
+  .grid { display:grid; grid-template-columns:1.15fr .85fr; gap:18px; margin-bottom:18px; }
+  @media (max-width:980px){ .grid{ grid-template-columns:1fr;} }
+  .card {
+    background:var(--panel); border:1px solid var(--border); border-radius:16px;
+    padding:16px 18px; box-shadow:0 18px 50px rgba(0,0,0,.35);
+  }
+  .card h2 { font-size:1rem; font-weight:700; margin:0 0 2px; }
+  .card .hint { color:var(--muted); font-size:.8rem; margin:0 0 12px; }
+  .card.full { grid-column:1 / -1; }
+  .spiral img { width:100%; height:auto; display:block; border-radius:10px; }
+  canvas { width:100% !important; }
+  .chart-box { position:relative; height:300px; }
+
+  footer { color:var(--faint); font-size:.82rem; padding:30px 0 70px; border-top:1px solid var(--border); margin-top:26px; }
+  footer strong { color:var(--btc); } a { color:var(--btc); }
+  .err { color:var(--sell); font-size:.78rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="kicker">HOUTINI</p>
+    <h1>Bitcoin Monitor</h1>
+    <p class="sub">A live Power-Law dashboard — price vs fair value, the Mayer Multiple, market sentiment and network health. Built on free public data; everything below loads live in your browser.</p>
+    <p class="updated"><span class="dot">&#9679;</span> <span id="updated">loading live data&hellip;</span></p>
+  </header>
+
+  <section class="tiles">
+    <div class="tile"><div class="label">BTC Price</div><div class="val" id="t-price">&mdash;</div><div class="meta" id="t-price-chg">24h</div></div>
+    <div class="tile"><div class="label">Power-Law Fair</div><div class="val accent" id="t-fair">&mdash;</div><div class="meta" id="t-fair-meta">model value today</div></div>
+    <div class="tile"><div class="label">vs Fair Value</div><div class="val" id="t-vsfair">&mdash;</div><div class="meta">price &divide; fair</div></div>
+    <div class="tile"><div class="label">PL Oscillator</div><div class="val" id="t-osc">&mdash;</div><div class="meta" id="t-osc-meta">floor &rarr; top</div></div>
+    <div class="tile"><div class="label">Mayer Multiple</div><div class="val" id="t-mayer">&mdash;</div><div class="meta" id="t-mayer-meta">price &divide; 200DMA</div></div>
+    <div class="tile"><div class="label">Fear &amp; Greed</div><div class="val" id="t-fng">&mdash;</div><div class="meta" id="t-fng-meta">sentiment</div></div>
+  </section>
+
+  <div class="grid">
+    <div class="card spiral">
+      <h2>The Bitcoin Spiral</h2>
+      <p class="hint">Price &amp; the Power Law on a 4-year cycle map. <a href="index.html">About &amp; embed &rarr;</a></p>
+      <img src="btc-mandala.svg" alt="The Bitcoin Spiral — price spiralling outward on a 4-year-cycle Power-Law map.">
+    </div>
+    <div class="card">
+      <h2>Fear &amp; Greed (60 days)</h2>
+      <p class="hint">Market sentiment, 0 (extreme fear) &rarr; 100 (extreme greed).</p>
+      <div class="chart-box"><canvas id="c-fng"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Price vs Power-Law channel</h2>
+      <p class="hint">365 days, log scale. Dashed = fair value; band = floor&rarr;cycle-top.</p>
+      <div class="chart-box"><canvas id="c-price"></canvas></div>
+    </div>
+    <div class="card">
+      <h2>Mayer Multiple</h2>
+      <p class="hint">Price &divide; 200-day MA. &lt;1 = historically cheap, &gt;2.4 = overheated.</p>
+      <div class="chart-box"><canvas id="c-mayer"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card full">
+      <h2>Network hashrate (1 year)</h2>
+      <p class="hint">Total mining power securing the network (EH/s). Source: mempool.space.</p>
+      <div class="chart-box"><canvas id="c-hash"></canvas></div>
+    </div>
+  </div>
+
+  <footer>
+    By <strong>houtini</strong> &middot; data: CoinGecko, alternative.me, mempool.space &middot;
+    Power-Law model after G. Santostasi &middot; educational, not financial advice.
+  </footer>
+</div>
+
+<script>
+const C = { bg:"#0b0e14", ink:"#e8ecf3", muted:"#8a93a3", faint:"#525b6b", grid:"#1c2330",
+            btc:"#f7931a", buy:"#16c784", fair:"#f0a92b", sell:"#ea3943", sky:"#38bdf8" };
+// ---- Power Law (Santostasi) ----
+const GENESIS = Date.UTC(2009,0,3);
+const N = 5.8, A_SUP = -17.32, A_FAIR = -17.01, A_RES = -16.5;
+const daysSince = ms => (ms - GENESIS) / 86400000;
+const pl = (ms, a) => { const d = daysSince(ms); return d <= 0 ? 0 : Math.pow(10, a + N * Math.log10(d)); };
+const fmtUSD = v => v >= 1000 ? "$" + Math.round(v).toLocaleString() : "$" + v.toFixed(2);
+
+Chart.defaults.color = C.muted;
+Chart.defaults.borderColor = C.grid;
+Chart.defaults.font.family = "Inter, sans-serif";
+Chart.defaults.font.size = 11;
+const noPoints = { pointRadius:0, pointHoverRadius:4, borderWidth:2, tension:.15 };
+const baseOpts = (logY=false) => ({
+  responsive:true, maintainAspectRatio:false,
+  plugins:{ legend:{ display:true, labels:{ boxWidth:10, boxHeight:10, usePointStyle:true } },
+            tooltip:{ mode:"index", intersect:false } },
+  scales:{ x:{ ticks:{ maxTicksLimit:7, autoSkip:true }, grid:{ display:false } },
+           y:{ type: logY ? "logarithmic" : "linear", grid:{ color:C.grid } } },
+  interaction:{ mode:"index", intersect:false }
+});
+const thin = (arr, keepEvery) => arr.map((v,i)=> i % keepEvery === 0 ? v : null);
+
+function setText(id, txt, cls){ const el=document.getElementById(id); el.innerHTML=txt; if(cls) el.className="val "+cls; }
+function tileErr(id){ const el=document.getElementById(id); if(el && el.innerHTML==="—") el.innerHTML="<span class='err'>n/a</span>"; }
+
+// ---------- live price + power-law + Mayer ----------
+async function loadPrice(){
+  const r = await fetch("https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=365");
+  if(!r.ok) throw new Error("coingecko "+r.status);
+  const j = await r.json();
+  const prices = j.prices;                       // [[ms, price], ...] daily
+  const last = prices[prices.length-1];
+  const price = last[1], nowMs = last[0];
+  // 24h change
+  const prev = prices[prices.length-2] ? prices[prices.length-2][1] : price;
+  const chg = (price/prev - 1) * 100;
+  // power law today
+  const fair = pl(nowMs, A_FAIR), sup = pl(nowMs, A_SUP), res = pl(nowMs, A_RES);
+  const osc = Math.max(0, Math.min(1, (Math.log10(price)-Math.log10(sup))/(Math.log10(res)-Math.log10(sup))));
+  const zone = osc < 0.34 ? ["BUY", C.buy] : osc > 0.66 ? ["SELL", C.sell] : ["FAIR", C.fair];
+  // Mayer
+  const closes = prices.map(p=>p[1]);
+  const sma200 = closes.slice(-200).reduce((a,b)=>a+b,0) / Math.min(200, closes.length);
+  const mayer = price / sma200;
+
+  setText("t-price", fmtUSD(price));
+  document.getElementById("t-price-chg").innerHTML =
+    `<span class="${chg>=0?'up':'down'}">${chg>=0?'▲':'▼'} ${Math.abs(chg).toFixed(2)}% 24h</span>`;
+  setText("t-fair", fmtUSD(fair));
+  const vf = price/fair;
+  setText("t-vsfair", (vf*100).toFixed(0)+"%", vf<1?"up":"down");
+  setText("t-osc", zone[0]+" · "+(osc*100).toFixed(0)+"%"); document.getElementById("t-osc").style.color=zone[1];
+  setText("t-mayer", mayer.toFixed(2), mayer<1?"up":mayer>2.4?"down":"");
+  document.getElementById("updated").innerHTML =
+    "live · " + new Date(nowMs).toUTCString().replace("GMT","UTC");
+
+  // ----- price vs channel chart -----
+  const labels = prices.map(p=> new Date(p[0]).toLocaleDateString(undefined,{month:"short",day:"numeric"}));
+  const fairArr = prices.map(p=> pl(p[0], A_FAIR));
+  const supArr  = prices.map(p=> pl(p[0], A_SUP));
+  const resArr  = prices.map(p=> pl(p[0], A_RES));
+  new Chart(document.getElementById("c-price"), {
+    type:"line",
+    data:{ labels, datasets:[
+      { label:"Price", data:closes, borderColor:C.btc, backgroundColor:"transparent", ...noPoints, borderWidth:2.4 },
+      { label:"Fair value", data:fairArr, borderColor:C.ink, borderDash:[6,5], ...noPoints, borderWidth:1.4 },
+      { label:"Floor", data:supArr, borderColor:C.buy, ...noPoints, borderWidth:1.2 },
+      { label:"Cycle top", data:resArr, borderColor:C.sell, ...noPoints, borderWidth:1.2 },
+    ]},
+    options: baseOpts(true)
+  });
+
+  // ----- Mayer chart -----
+  const mayerSeries = closes.map((c,i)=>{
+    const from = Math.max(0, i-199); const win = closes.slice(from, i+1);
+    return c / (win.reduce((a,b)=>a+b,0)/win.length);
+  });
+  new Chart(document.getElementById("c-mayer"), {
+    type:"line",
+    data:{ labels, datasets:[
+      { label:"Mayer Multiple", data:mayerSeries, borderColor:C.sky, ...noPoints, borderWidth:2 },
+    ]},
+    options:{ ...baseOpts(false), plugins:{ ...baseOpts(false).plugins, legend:{display:false} } }
+  });
+}
+
+// ---------- Fear & Greed ----------
+async function loadFng(){
+  const r = await fetch("https://api.alternative.me/fng/?limit=60&format=json");
+  if(!r.ok) throw new Error("fng "+r.status);
+  const j = await r.json();
+  const arr = j.data.slice().reverse();          // oldest -> newest
+  const latest = arr[arr.length-1];
+  const v = +latest.value;
+  const col = v<25?C.sell : v<45?C.fair : v<55?C.muted : v<75?C.buy : C.buy;
+  setText("t-fng", v); document.getElementById("t-fng").style.color = col;
+  document.getElementById("t-fng-meta").textContent = latest.value_classification;
+  const labels = arr.map(d=> new Date(d.timestamp*1000).toLocaleDateString(undefined,{month:"short",day:"numeric"}));
+  new Chart(document.getElementById("c-fng"), {
+    type:"line",
+    data:{ labels, datasets:[
+      { label:"Fear & Greed", data:arr.map(d=>+d.value), borderColor:C.fair,
+        backgroundColor:"rgba(240,169,43,.12)", fill:true, ...noPoints, borderWidth:2 },
+    ]},
+    options:{ ...baseOpts(false), plugins:{ ...baseOpts(false).plugins, legend:{display:false} },
+              scales:{ ...baseOpts(false).scales, y:{ min:0, max:100, grid:{color:C.grid} } } }
+  });
+}
+
+// ---------- Hashrate ----------
+async function loadHash(){
+  const r = await fetch("https://mempool.space/api/v1/mining/hashrate/1y");
+  if(!r.ok) throw new Error("hashrate "+r.status);
+  const j = await r.json();
+  const hs = j.hashrates || [];
+  const labels = hs.map(h=> new Date(h.timestamp*1000).toLocaleDateString(undefined,{month:"short",day:"numeric"}));
+  const data = hs.map(h=> h.avgHashrate/1e18);   // EH/s
+  new Chart(document.getElementById("c-hash"), {
+    type:"line",
+    data:{ labels, datasets:[
+      { label:"Hashrate (EH/s)", data, borderColor:C.btc,
+        backgroundColor:"rgba(247,147,26,.10)", fill:true, ...noPoints, borderWidth:2 },
+    ]},
+    options:{ ...baseOpts(false), plugins:{ ...baseOpts(false).plugins, legend:{display:false} } }
+  });
+}
+
+(async()=>{ try{ await loadPrice(); }catch(e){ console.error(e); ["t-price","t-fair","t-vsfair","t-osc","t-mayer"].forEach(tileErr);
+  document.getElementById("updated").innerHTML="<span class='err'>price feed unavailable (CoinGecko)</span>"; } })();
+(async()=>{ try{ await loadFng();  }catch(e){ console.error(e); tileErr("t-fng"); } })();
+(async()=>{ try{ await loadHash(); }catch(e){ console.error(e); } })();
+</script>
+</body>
+</html>

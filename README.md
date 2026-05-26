@@ -19,6 +19,19 @@ An open-source chart by **houtini** — Bitcoin price and the **Power Law** plot
 The Power Law follows `log10(P) = a + 5.8·log10(d)`, where `d` is days since the
 genesis block (2009-01-03), with `a = -17.2` (support) and `a = -16.5` (resistance).
 
+## Live dashboard
+
+[`dashboard.html`](dashboard.html) is a **live Bitcoin monitor** that runs entirely in the
+browser (no server, no build step) — perfect for GitHub Pages. It fetches free public data
+client-side and renders:
+
+- **Stat tiles** — price + 24h, Power-Law fair value, price vs fair, PL oscillator (buy/sell), Mayer Multiple, Fear & Greed.
+- **Price vs Power-Law channel** (log) — price, dashed fair value, floor and cycle-top bands.
+- **Mayer Multiple**, **Fear & Greed (60d)**, and **network hashrate (1y)**.
+
+Data sources (all free, all CORS-friendly): **CoinGecko** (price), **alternative.me** (Fear & Greed),
+**mempool.space** (hashrate). Each panel fails gracefully to "n/a" if a feed is rate-limited.
+
 ## Indicators & overlays
 
 | Overlay | What it shows | Source |

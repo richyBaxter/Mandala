@@ -8,9 +8,20 @@ secrets.*
 *.secret
 credentials*.json
 .netrc
+*token*.txt
+
+# AI prompt / instruction files — keep private
+prompts/
+*.prompt
+*.prompt.md
+*.prompt.txt
+.claude/
+CLAUDE.md
+AGENTS.md
 
 # python / os cruft
 __pycache__/
 *.pyc
 .DS_Store
 .venv/
+node_modules/

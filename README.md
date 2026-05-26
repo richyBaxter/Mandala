@@ -1,92 +1,106 @@
 # The Bitcoin Spiral
 
-An open-source chart by **houtini** — Bitcoin price and the **Power Law** plotted on a
-**4-year-cycle polar map**, rendered as a clean, embeddable SVG.
+A clean, open-source **Bitcoin monitoring dashboard** by **houtini** — Bitcoin price and the
+**Power Law** on a 4-year-cycle map, plus a live panel of valuation, sentiment, flow and
+network signals that synthesise into a single, plain-English verdict.
+
+**Live:** https://richybaxter.github.io/Mandala/ · **Dashboard:** https://richybaxter.github.io/Mandala/dashboard.html
+
+Static site, zero backend: the page is plain HTML/SVG/JS and hydrates entirely in the browser
+from free public APIs. Deploys to GitHub Pages with no build step.
 
 ![The Bitcoin Spiral](btc-mandala.svg)
 
-## How to read it
+## The spiral — how to read it
 
 | Element | Meaning |
 |---|---|
 | **Angle** | Position within the 4-year cycle (one full turn = 4 years; Jan of 2013/17/21/25 at east). |
 | **Radius** | Price on a log scale — `$1` at the centre, each dashed ring a 10× level (`$10 → $100k`). |
-| **Black line** | BTC monthly price, spiralling outward over time. |
-| **Orange spiral** | Power-Law **support** (cycle bottoms). |
-| **Red spiral** | Power-Law **resistance** (cycle tops). |
-| **Green / red bands** | The Power-Law channel either side of each bound. |
+| **Price line colour** | **Valuation**, green → red, by where price sits in the Power-Law channel (cheap → expensive). *Not* order flow. |
+| **Orange spiral** | Power-Law **floor / support**. |
+| **Red spiral** | Power-Law **resistance / cycle-top** band. |
+| **Dashed line** | Power-Law **fair value**. |
+| **Radial ticks** | Spot-ETF net flow (outward green = buying, inward red = selling). |
+| **Markers** | Events diary — halvings, ETF launches, macro. |
 
-The Power Law follows `log10(P) = a + 5.8·log10(d)`, where `d` is days since the
-genesis block (2009-01-03), with `a = -17.2` (support) and `a = -16.5` (resistance).
+The Power Law follows `log10(P) = a + 5.8·log10(d)`, where `d` is days since the genesis
+block (2009-01-03): `a = -17.32` (floor), `a = -17.01` (fair value), `a = -16.5` (cycle-top band).
+The angle encodes the **calendar** 4-year cycle, not time-since-halving.
 
 ## Live dashboard
 
-[`dashboard.html`](dashboard.html) is a **live Bitcoin monitor** that runs entirely in the
-browser (no server, no build step) — perfect for GitHub Pages. It fetches free public data
-client-side and renders:
+A single static page that fetches everything client-side and renders:
 
-- **Stat tiles** — price + 24h, BTC/Gold ratio, Power-Law fair value, price vs fair, PL oscillator, Mayer Multiple, MVRV, Fear & Greed, next difficulty, Lightning capacity, on-chain fees.
-- **Charts** — price vs Power-Law channel (log), Pi Cycle Top, Mayer Multiple, Fear & Greed (60d), buy/sell taker-volume pressure, network hashrate (1y).
-- **Flows & institutional news** (CoinDesk / Cointelegraph / Bitcoin Magazine, filtered) and a **key-dates diary** (FOMC, CME/Deribit expiries, halving) with countdowns.
+- **Verdict banner** — six signals (Power-Law oscillator, price vs fair value, Mayer Multiple,
+  Pi Cycle distance, Fear & Greed, 7-day taker flow) blended into one weighted call:
+  **Accumulate / Lean buy / Neutral–Hold / Lean sell / Distribute**.
+- **Stat tiles** — price + 24h, BTC/Gold ratio, fair value, price vs fair, PL oscillator,
+  Mayer Multiple, MVRV, Fear & Greed, next difficulty adjustment, Lightning capacity, on-chain fees.
+- **Charts** — price vs Power-Law channel (log), Pi Cycle Top, Mayer Multiple, Fear & Greed (60d),
+  buy/sell taker-volume pressure, network hashrate (1y).
+- **Flows & institutional news** — credible feeds filtered for ETF flows and *who's* buying.
+- **Key-dates diary** — FOMC, CME/Deribit expiries (computed) and the halving, with countdowns.
 
-Data sources (all free): **CoinGecko** (price/history), **Binance public** (taker volume, PAXG, Pi Cycle),
-**alternative.me** (Fear & Greed), **mempool.space** (hashrate, difficulty, Lightning, fees),
-**CoinMetrics community** (MVRV, best-effort), **rss2json** (news bridge). Every panel degrades to
-"n/a" if a feed is rate-limited or CORS-blocked.
+Each panel **degrades to "n/a"** if a feed is rate-limited or CORS-blocked, so the page never breaks.
 
-## Indicators & overlays
+### Data sources (all free)
 
-| Overlay | What it shows | Source |
-|---|---|---|
-| **Buy / sell colour** | The BTC line is shaded **green → amber → red** by its position in the Power-Law channel (a "cheap vs expensive" oscillator). The legend gauge marks where price sits *now*. | computed from price |
-| **Events diary** | Labelled markers for halvings, ETF launches and macro events. | [`data/events.csv`](data/events.csv) |
-| **Institutional flow** | Radial ticks along the recent arc — outward green = spot-ETF **net buying**, inward red = **net selling** — a "who's buying" read. | [`data/flows.csv`](data/flows.csv) |
+| Source | Used for |
+|---|---|
+| CoinGecko | price + 365-day history |
+| Binance public (`data-api.binance.vision`) | taker-volume pressure, PAXG (BTC/Gold), Pi Cycle history |
+| alternative.me | Fear & Greed index |
+| mempool.space | hashrate, difficulty, Lightning, fees |
+| CoinMetrics community | MVRV (best-effort) |
+| rss2json | RSS → JSON bridge for the news feed |
 
-Edit the CSVs and re-run `generate.py` to update any overlay. To refresh ETF flows
-from a live free source, see [`fetch_flows.py`](fetch_flows.py):
+## Embed the chart
 
-```bash
-FLOWS_URL="https://your-free-source/btc-etf-daily.csv" python3 fetch_flows.py
-python3 generate.py
-```
-
-> The flow figures shipped here are **approximate seed values**. Wire `fetch_flows.py`
-> to a free feed (e.g. Farside Investors) for accurate numbers.
-
-## Embed
-
-The chart is a single self-contained `.svg`:
+The spiral is a single self-contained `.svg`:
 
 ```html
-<img src="https://richybaxter.github.io/btc-mandala/btc-mandala.svg"
+<img src="https://richybaxter.github.io/Mandala/btc-mandala.svg"
      alt="The Bitcoin Spiral" style="max-width:100%;height:auto">
 ```
 
-Or inline the contents of `btc-mandala.svg` directly for crisp scaling.
-
 ## Regenerate / update data
 
-Prices live in [`data/btc-monthly.json`](data/btc-monthly.json) as monthly closes.
-Edit them and re-render (only the Python standard library is required):
+The spiral is generated by `generate.py` (Python standard library only):
 
 ```bash
 python3 generate.py            # writes btc-mandala.svg
 python3 generate.py out.svg    # custom output path
 ```
 
-## Data notes
+Editable data lives in `data/`: `btc-monthly.json` (prices), `events.csv` (diary markers),
+`flows.csv` (ETF flows), `diary.json` (dashboard key dates). To refresh ETF flows from a free
+feed, point `fetch_flows.py` at a CSV source:
 
-Prices are **approximate monthly closes**. The 2011–2024 series is well-established
-history; 2025–2026 is anchored to verified data points:
+```bash
+FLOWS_URL="https://your-free-source/btc-etf-daily.csv" python3 fetch_flows.py
+```
 
-- All-time high **$126,198 on 6 Oct 2025**
-- ~30% retrace into year-end (~$87k)
-- ~**$77k in May 2026**
+## Roadmap / TODO
 
-## Credit & licence
+- [ ] **AI market note** — scheduled GitHub Action calling **GitHub Models** (token stays in CI),
+      writing a periodic `commentary.json` rendered under the verdict banner. Static-friendly;
+      freshness = cron cadence.
+- [ ] **Auto-refresh** — optional 60s refresh with an "updated Ns ago" timer.
+- [ ] **Live ETF flows** — replace the seed `flows.csv` with a real feed (e.g. Farside).
+- [ ] **Harden news** — optional CryptoPanic token to reduce reliance on the rss2json bridge.
+- [ ] **Share image** — Open Graph card so links unfurl with the spiral.
 
-Chart by **houtini**. The underlying **Power-Law model** is the work of
-**G. Santostasi**, whose original cyclical "Mandala" visualisation inspired this view.
-This repository is for embedding and education — **not financial advice**.
+## Accuracy notes
 
-Code and SVG output: [MIT](LICENSE).
+Spiral prices are **approximate monthly closes**. 2011–2024 is well-established history;
+2025–2026 is anchored to verified points (ATH **$126,198 on 6 Oct 2025**, ~$77k in May 2026)
+and the most recent months are estimates — the dashboard's *live* tiles use real-time price.
+The Power-Law parameters approximate G. Santostasi's published model.
+
+## Credit, licence & disclaimer
+
+Dashboard and chart by **houtini**. The underlying **Power-Law model** is the work of
+**G. Santostasi**, whose cyclical visualisation inspired the spiral.
+
+**Educational only — not financial advice.** Code and output: [MIT](LICENSE).

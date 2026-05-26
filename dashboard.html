@@ -30,6 +30,16 @@
   .updated { color:var(--faint); font-size:.8rem; margin-top:10px; }
   .updated .dot { color:var(--buy); }
 
+  .verdict { display:flex; align-items:center; gap:22px; flex-wrap:wrap;
+    background:var(--panel); border:1px solid var(--border); border-left:5px solid var(--faint);
+    border-radius:16px; padding:18px 22px; margin:26px 0 6px; box-shadow:0 14px 40px rgba(0,0,0,.3); }
+  .verdict .word { font-size:1.85rem; font-weight:800; letter-spacing:-.5px; line-height:1.1; }
+  .verdict .sub { color:var(--muted); font-size:.88rem; flex:1; min-width:220px; }
+  .verdict .factors { display:flex; gap:7px; flex-wrap:wrap; }
+  .verdict .f { font-size:.72rem; font-weight:600; padding:3px 10px; border-radius:999px;
+    border:1px solid var(--border); color:var(--muted); white-space:nowrap; }
+  .verdict .f b { font-weight:800; margin-left:2px; }
+
   .tiles { display:grid; grid-template-columns:repeat(auto-fit, minmax(158px,1fr)); gap:14px; margin:28px 0; }
   .tile {
     background:var(--panel); border:1px solid var(--border); border-radius:14px;
@@ -81,6 +91,12 @@
     <p class="sub">A live Power-Law dashboard — price vs fair value, the Mayer Multiple, market sentiment and network health. Built on free public data; everything below loads live in your browser.</p>
     <p class="updated"><span class="dot">&#9679;</span> <span id="updated">loading live data&hellip;</span></p>
   </header>
+
+  <section class="verdict" id="verdict">
+    <div><div class="word" id="v-word">Analysing&hellip;</div></div>
+    <div class="sub" id="v-sub">Synthesising live indicators into a single view&hellip;</div>
+    <div class="factors" id="v-factors"></div>
+  </section>
 
   <section class="tiles">
     <div class="tile"><div class="label">BTC Price</div><div class="val" id="t-price">&mdash;</div><div class="meta" id="t-price-chg">24h</div></div>
@@ -193,6 +209,42 @@ const thin = (arr, keepEvery) => arr.map((v,i)=> i % keepEvery === 0 ? v : null)
 function setText(id, txt, cls){ const el=document.getElementById(id); el.innerHTML=txt; if(cls) el.className="val "+cls; }
 function tileErr(id){ const el=document.getElementById(id); if(el && el.innerHTML==="—") el.innerHTML="<span class='err'>n/a</span>"; }
 
+// ---------- the website's opinion: composite verdict ----------
+const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+const signals = {};   // filled in by the loaders below
+function renderVerdict(){
+  // each: [label, signal key, value -> score in [-1(sell) .. +1(buy/accumulate)], weight]
+  const defs = [
+    ["Valuation",   "osc",      s => 1 - 2*s,                                              1.2],
+    ["vs Fair",     "vsFair",   s => clamp((1 - s)/0.4, -1, 1),                            1.0],
+    ["Mayer",       "mayer",    s => clamp((1 - s)/0.6, -1, 1),                            1.0],
+    ["Cycle top",   "piGap",    g => g<=0 ? -1 : g<5 ? -0.7 : g<15 ? -0.2 : clamp((g-15)/40, 0, 0.3), 1.5],
+    ["Sentiment",   "fng",      v => clamp((50 - v)/50, -1, 1),                            0.6],
+    ["Flow 7d",     "pressure", p => clamp((p - 50)/15, -1, 1),                            0.5],
+  ];
+  let wsum=0, ssum=0; const pills=[];
+  for(const [label,key,fn,w] of defs){
+    if(signals[key] == null) continue;
+    const sc = clamp(fn(signals[key]), -1, 1);
+    wsum += w; ssum += w*sc;
+    const lean = sc>0.15 ? [C.buy,"▲"] : sc<-0.15 ? [C.sell,"▼"] : [C.muted,"•"];
+    pills.push(`<span class="f" style="border-color:${lean[0]}44;color:${lean[0]}">${label}<b>${lean[1]}</b></span>`);
+  }
+  if(!wsum) return;
+  const score = ssum/wsum;                       // -1 .. +1
+  let word, col;
+  if(score >= 0.40)      { word="ACCUMULATE";     col=C.buy; }
+  else if(score >= 0.15) { word="LEAN BUY";       col=C.buy; }
+  else if(score > -0.15) { word="NEUTRAL — HOLD"; col=C.fair; }
+  else if(score > -0.40) { word="LEAN SELL";      col=C.sell; }
+  else                   { word="DISTRIBUTE";     col=C.sell; }
+  document.getElementById("verdict").style.borderLeftColor = col;
+  const w = document.getElementById("v-word"); w.textContent = word; w.style.color = col;
+  document.getElementById("v-sub").textContent =
+    `Composite ${score>=0?"+":""}${(score*100).toFixed(0)} from ${pills.length} live signals · the model's read, not financial advice.`;
+  document.getElementById("v-factors").innerHTML = pills.join("");
+}
+
 // ---------- live price + power-law + Mayer ----------
 async function loadPrice(){
   const r = await fetch("https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=365");
@@ -221,6 +273,7 @@ async function loadPrice(){
   setText("t-vsfair", (vf*100).toFixed(0)+"%", vf<1?"up":"down");
   setText("t-osc", zone[0]+" · "+(osc*100).toFixed(0)+"%"); document.getElementById("t-osc").style.color=zone[1];
   setText("t-mayer", mayer.toFixed(2), mayer<1?"up":mayer>2.4?"down":"");
+  signals.osc = osc; signals.vsFair = vf; signals.mayer = mayer; renderVerdict();
   document.getElementById("updated").innerHTML =
     "live · " + new Date(nowMs).toUTCString().replace("GMT","UTC");
 
@@ -265,6 +318,7 @@ async function loadFng(){
   const col = v<25?C.sell : v<45?C.fair : v<55?C.muted : v<75?C.buy : C.buy;
   setText("t-fng", v); document.getElementById("t-fng").style.color = col;
   document.getElementById("t-fng-meta").textContent = latest.value_classification;
+  signals.fng = v; renderVerdict();
   const labels = arr.map(d=> new Date(d.timestamp*1000).toLocaleDateString(undefined,{month:"short",day:"numeric"}));
   new Chart(document.getElementById("c-fng"), {
     type:"line",
@@ -325,6 +379,7 @@ async function loadPiCycle(){
   const a = s111[s111.length-1], b = s350x2[s350x2.length-1];
   if(a && b){
     const gap = (b-a)/b*100;
+    signals.piGap = gap; renderVerdict();
     document.getElementById("pi-hint").innerHTML =
       `111-day MA vs 2× the 350-day MA &mdash; a crossover has marked cycle tops within days. Now: 111DMA is ` +
       `<strong style="color:${gap>=0?C.buy:C.sell}">${gap>=0 ? gap.toFixed(0)+"% below" : Math.abs(gap).toFixed(0)+"% ABOVE"}</strong> the trigger.`;
@@ -365,6 +420,7 @@ async function loadPressure(){
   const last7 = k.slice(-7);
   const tb = last7.reduce((a,c)=>a+ +c[9], 0), tv = last7.reduce((a,c)=>a+ +c[5], 0);
   const buyPct = tv ? tb/tv*100 : 0;
+  signals.pressure = buyPct; renderVerdict();
   document.getElementById("pressure-hint").innerHTML =
     `Net taker volume per day (buy &minus; sell, BTC). 7-day buy share: ` +
     `<strong style="color:${buyPct>=50?C.buy:C.sell}">${buyPct.toFixed(1)}%</strong> ` +

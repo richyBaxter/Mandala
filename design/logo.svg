@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="48" viewBox="0 0 220 48" font-family="Inter, 'Segoe UI', system-ui, sans-serif">
+  <!-- houtini wordmark + spiral mark. Brand stand-in (dark/orange analytics theme);
+       swap the colours to match yubhub.co. -->
+  <g transform="translate(24,24)">
+    <circle r="18" fill="none" stroke="#1e2733" stroke-width="1"/>
+    <path d="M 0,0
+             A 3,3 0 0 1 3,-3
+             A 7,7 0 0 1 -7,3.5
+             A 11,11 0 0 1 11,5.5
+             A 15,15 0 0 1 -15,-7.5"
+          fill="none" stroke="#f7931a" stroke-width="2.4" stroke-linecap="round"/>
+    <circle cx="-15" cy="-7.5" r="2.6" fill="#16c784"/>
+  </g>
+  <text x="50" y="31" font-size="24" font-weight="800" letter-spacing="-0.5" fill="#e8ecf3">houtini</text>
+</svg>

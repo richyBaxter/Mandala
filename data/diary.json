@@ -1,0 +1,11 @@
+{
+  "_comment": "Curated non-recurring key dates. Recurring CME/Deribit expiries are computed in the dashboard. FOMC dates per the Federal Reserve 2026 schedule (decision day). Verify before relying on them.",
+  "events": [
+    { "date": "2026-06-17", "label": "FOMC rate decision", "type": "macro" },
+    { "date": "2026-07-29", "label": "FOMC rate decision", "type": "macro" },
+    { "date": "2026-09-16", "label": "FOMC rate decision", "type": "macro" },
+    { "date": "2026-10-28", "label": "FOMC rate decision", "type": "macro" },
+    { "date": "2026-12-09", "label": "FOMC rate decision", "type": "macro" },
+    { "date": "2028-04-20", "label": "Bitcoin halving (5th, approx.)", "type": "halving" }
+  ]
+}

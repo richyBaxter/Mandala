@@ -55,6 +55,21 @@
   canvas { width:100% !important; }
   .chart-box { position:relative; height:300px; }
 
+  .news { list-style:none; margin:0; padding:0; max-height:360px; overflow:auto; }
+  .news li { padding:10px 2px; border-bottom:1px solid var(--border); }
+  .news li:last-child { border-bottom:0; }
+  .news a { color:var(--ink); text-decoration:none; font-weight:600; font-size:.92rem; }
+  .news a:hover { color:var(--btc); }
+  .news .src { color:var(--faint); font-size:.74rem; margin-top:4px; display:flex; gap:9px; align-items:center; flex-wrap:wrap; }
+  .chip { background:rgba(56,189,248,.14); color:var(--sky); border-radius:999px; padding:1px 9px; font-size:.68rem; font-weight:700; }
+  .diary { list-style:none; margin:0; padding:0; }
+  .diary li { display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding:10px 2px; border-bottom:1px solid var(--border); }
+  .diary li:last-child { border-bottom:0; }
+  .diary .ev { font-size:.88rem; }
+  .diary .ev .cd { color:var(--faint); font-size:.74rem; margin-left:7px; }
+  .diary .when { font-weight:700; font-size:.8rem; white-space:nowrap; }
+  .t-macro{ color:var(--fair);} .t-expiry{ color:var(--sky);} .t-halving{ color:#a78bfa;} .t-etf{ color:var(--btc);}
+
   footer { color:var(--faint); font-size:.82rem; padding:30px 0 70px; border-top:1px solid var(--border); margin-top:26px; }
   footer strong { color:var(--btc); } a { color:var(--btc); }
   .err { color:var(--sell); font-size:.78rem; }
@@ -88,6 +103,19 @@
       <h2>Fear &amp; Greed (60 days)</h2>
       <p class="hint">Market sentiment, 0 (extreme fear) &rarr; 100 (extreme greed).</p>
       <div class="chart-box"><canvas id="c-fng"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Flows &amp; Institutional News</h2>
+      <p class="hint" id="news-hint">Credible sources, filtered for ETF flows, inflows/outflows and who's buying.</p>
+      <ul class="news" id="news"><li class="hint">loading headlines&hellip;</li></ul>
+    </div>
+    <div class="card">
+      <h2>Key Dates &mdash; Diary</h2>
+      <p class="hint">Upcoming catalysts: FOMC, CME/Deribit expiries, halving.</p>
+      <ul class="diary" id="diary"><li class="hint">loading&hellip;</li></ul>
     </div>
   </div>
 
@@ -281,12 +309,98 @@ async function loadHash(){
   });
 }
 
+// ---------- Flows & institutional news ----------
+const FEEDS = [
+  ["CoinDesk", "https://www.coindesk.com/arc/outboundfeeds/rss/"],
+  ["Cointelegraph", "https://cointelegraph.com/rss"],
+  ["Bitcoin Magazine", "https://bitcoinmagazine.com/feed"],
+];
+const FLOW_KW = ["etf","inflow","outflow","flows","blackrock","ibit","fidelity","fbtc",
+  "grayscale","gbtc","ark","microstrategy"," strategy ","metaplanet","saylor","accumulat",
+  "whale","institution","treasury","sovereign","buys","bought","sells","sold","billion",
+  "holdings","reserve","allocation"];
+const ENTITIES = ["BlackRock","IBIT","Fidelity","Grayscale","ARK","MicroStrategy","Strategy",
+  "Metaplanet","Saylor","ETF","Whale","Treasury","Sovereign","SEC"];
+
+async function loadNews(){
+  const all = [];
+  await Promise.all(FEEDS.map(async ([src, url]) => {
+    try {
+      const r = await fetch("https://api.rss2json.com/v1/api.json?count=30&rss_url=" + encodeURIComponent(url));
+      if(!r.ok) return; const j = await r.json();
+      (j.items || []).forEach(it => all.push({ src, title:it.title||"", link:it.link||"", date:new Date(it.pubDate), desc:it.description||"" }));
+    } catch(e){}
+  }));
+  if(!all.length) throw new Error("no feeds");
+  const match = it => { const t = (it.title + " " + it.desc).toLowerCase(); return FLOW_KW.some(k => t.includes(k.trim())); };
+  let items = all.filter(match);
+  const filtered = items.length >= 4;
+  if(!filtered) items = all;
+  items.sort((a,b) => b.date - a.date);
+  items = items.slice(0, 12);
+
+  const ul = document.getElementById("news"); ul.innerHTML = "";
+  items.forEach(it => {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = /^https?:\/\//.test(it.link) ? it.link : "#";
+    a.target = "_blank"; a.rel = "noopener noreferrer"; a.textContent = it.title;
+    const meta = document.createElement("div"); meta.className = "src";
+    const s1 = document.createElement("span"); s1.textContent = it.src;
+    const s2 = document.createElement("span"); s2.textContent = isNaN(it.date) ? "" : it.date.toLocaleDateString();
+    meta.append(s1, s2);
+    const ent = ENTITIES.find(e => it.title.toLowerCase().includes(e.toLowerCase()));
+    if(ent){ const c = document.createElement("span"); c.className = "chip"; c.textContent = ent; meta.append(c); }
+    li.append(a, meta); ul.appendChild(li);
+  });
+  if(!filtered) document.getElementById("news-hint").textContent =
+    "Latest headlines (no flow-specific items right now).";
+}
+
+// ---------- Key dates diary ----------
+async function loadDiary(){
+  const events = [];
+  const now = new Date();
+  const lastFriday = (y,m) => { const d = new Date(Date.UTC(y, m+1, 0)); while(d.getUTCDay() !== 5) d.setUTCDate(d.getUTCDate()-1); return d; };
+  for(let i=0;i<8;i++){
+    const base = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth()+i, 1));
+    const f = lastFriday(base.getUTCFullYear(), base.getUTCMonth());
+    const q = [2,5,8,11].includes(f.getUTCMonth());   // Mar/Jun/Sep/Dec
+    events.push({ date:f, label: q ? "CME quarterly futures + options expiry" : "Monthly options expiry (CME/Deribit)", type:"expiry" });
+  }
+  try {
+    const r = await fetch("data/diary.json");
+    if(r.ok){ const j = await r.json(); (j.events||[]).forEach(e => events.push({ date:new Date(e.date+"T00:00:00Z"), label:e.label, type:e.type })); }
+  } catch(e){}
+  const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+  const up = events.filter(e => e.date >= today).sort((a,b) => a.date - b.date).slice(0, 12);
+
+  const ul = document.getElementById("diary"); ul.innerHTML = "";
+  up.forEach(e => {
+    const days = Math.round((e.date - today) / 86400000);
+    const cd = days === 0 ? "today" : days === 1 ? "tomorrow" : "in " + days + "d";
+    const li = document.createElement("li");
+    const left = document.createElement("span"); left.className = "ev";
+    left.textContent = e.label;
+    const cdspan = document.createElement("span"); cdspan.className = "cd"; cdspan.textContent = cd;
+    left.append(cdspan);
+    const when = document.createElement("span");
+    when.className = "when t-" + e.type;
+    when.textContent = e.date.toLocaleDateString(undefined, { day:"numeric", month:"short" });
+    li.append(left, when); ul.appendChild(li);
+  });
+}
+
 (async()=>{ try{ await loadPrice(); }catch(e){ console.error(e); ["t-price","t-fair","t-vsfair","t-osc","t-mayer"].forEach(tileErr);
   document.getElementById("updated").innerHTML="<span class='err'>price feed unavailable (CoinGecko)</span>"; } })();
 (async()=>{ try{ await loadFng();  }catch(e){ console.error(e); tileErr("t-fng"); } })();
 (async()=>{ try{ await loadPressure(); }catch(e){ console.error(e);
   document.getElementById("pressure-hint").innerHTML="<span class='err'>buy/sell feed unavailable (Binance)</span>"; } })();
 (async()=>{ try{ await loadHash(); }catch(e){ console.error(e); } })();
+(async()=>{ try{ await loadNews(); }catch(e){ console.error(e);
+  document.getElementById("news").innerHTML="<li class='err'>news feed unavailable (rss2json bridge)</li>"; } })();
+(async()=>{ try{ await loadDiary(); }catch(e){ console.error(e);
+  document.getElementById("diary").innerHTML="<li class='err'>diary unavailable</li>"; } })();
 </script>
 </body>
 </html>

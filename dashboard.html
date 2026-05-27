@@ -206,7 +206,13 @@ Chart.defaults.color = C.muted;
 Chart.defaults.borderColor = C.grid;
 Chart.defaults.font.family = "Inter, sans-serif";
 Chart.defaults.font.size = 11;
-const noPoints = { pointRadius:0, pointHoverRadius:4, borderWidth:2, tension:.15 };
+// bigger, clearer labels on hover
+Chart.defaults.plugins.tooltip.titleFont = { size: 14, weight: "700" };
+Chart.defaults.plugins.tooltip.bodyFont = { size: 14 };
+Chart.defaults.plugins.tooltip.padding = 11;
+Chart.defaults.plugins.tooltip.cornerRadius = 8;
+Chart.defaults.plugins.tooltip.boxPadding = 5;
+const noPoints = { pointRadius:0, pointHoverRadius:6, pointHitRadius:12, hoverBorderWidth:2, borderWidth:2, tension:.15 };
 const baseOpts = (logY=false) => ({
   responsive:true, maintainAspectRatio:false,
   plugins:{ legend:{ display:true, labels:{ boxWidth:10, boxHeight:10, usePointStyle:true } },
@@ -215,7 +221,6 @@ const baseOpts = (logY=false) => ({
            y:{ type: logY ? "logarithmic" : "linear", grid:{ color:C.grid } } },
   interaction:{ mode:"index", intersect:false }
 });
-const thin = (arr, keepEvery) => arr.map((v,i)=> i % keepEvery === 0 ? v : null);
 
 function setText(id, txt, cls){ const el=document.getElementById(id); el.innerHTML=txt; if(cls) el.className="val "+cls; }
 function tileErr(id){ const el=document.getElementById(id); if(el && el.innerHTML==="—") el.innerHTML="<span class='err'>n/a</span>"; }

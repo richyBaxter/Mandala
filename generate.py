@@ -197,8 +197,8 @@ s.append(f'<rect width="{W}" height="{H}" fill="{T["bg"]}"/>')
 s.append(f'<circle cx="{CX}" cy="{CY}" r="540" fill="url(#bgglow)"/>')
 
 # header
-s.append(f'<text x="64" y="62" font-size="13" font-weight="700" letter-spacing="3" '
-         f'fill="{T["btc"]}">HOUTINI</text>')
+s.append(f'<a href="https://houtini.com" target="_blank"><text x="64" y="62" font-size="13" '
+         f'font-weight="700" letter-spacing="3" fill="{T["btc"]}">HOUTINI</text></a>')
 s.append(f'<text x="64" y="98" font-size="30" font-weight="800" letter-spacing="0.5" '
          f'fill="{T["ink"]}">The Bitcoin Spiral</text>')
 s.append(f'<text x="64" y="124" font-size="14" fill="{T["muted"]}">'
@@ -368,7 +368,8 @@ s.append(f'<text x="{lx+54}" y="{ky+4}" font-size="10.5" fill="{T["muted"]}">Pow
 s.append(f'<text x="{lx}" y="{ky+24}" font-size="9" fill="{T["faint"]}">Educational, not financial advice.</text>')
 
 # footer
-s.append(f'<text x="64" y="{H-52}" font-size="14" font-weight="800" fill="{T["btc"]}">houtini</text>')
+s.append(f'<a href="https://houtini.com" target="_blank"><text x="64" y="{H-52}" '
+         f'font-size="14" font-weight="800" fill="{T["btc"]}">houtini</text></a>')
 s.append(f'<text x="124" y="{H-52}" font-size="11" fill="{T["muted"]}">'
          f'&#183; data through {LAST_UPDATED} &#183; ATH $126,198 (6 Oct 2025)</text>')
 s.append(f'<text x="64" y="{H-34}" font-size="10" fill="{T["faint"]}">'

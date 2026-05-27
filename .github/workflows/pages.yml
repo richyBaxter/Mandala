@@ -1,17 +1,20 @@
-# Deploys the static site (index.html + btc-mandala.svg) to GitHub Pages.
-# Active when these files sit at the repository root. Enable Pages with
+# Deploys the static site to GitHub Pages and (best-effort) generates the AI
+# market note via GitHub Models at build time. Enable Pages with
 # "Source: GitHub Actions" in repo Settings -> Pages.
 name: Deploy to GitHub Pages
 
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: "0 */6 * * *"   # refresh the live note + redeploy every 6h
   workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
   id-token: write
+  models: read              # GitHub Models inference (preview)
 
 concurrency:
   group: pages
@@ -24,6 +27,21 @@ jobs:
       - uses: actions/checkout@v4
       - name: Regenerate SVG from data
         run: python3 generate.py
+      - name: Build AI prompt from live data
+        run: python3 tools/build_prompt.py
+      - name: Generate market note (GitHub Models)
+        id: ai
+        continue-on-error: true        # preview API — never block the deploy
+        uses: actions/ai-inference@v1
+        with:
+          model: openai/gpt-4o-mini
+          system-prompt: "You are a measured Bitcoin market analyst. Be concise and neutral. Never give financial advice or price predictions."
+          prompt-file: prompt.txt
+          max-tokens: 220
+      - name: Write commentary.json (AI or computed fallback)
+        env:
+          RESPONSE: ${{ steps.ai.outputs.response }}
+        run: python3 tools/write_commentary.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

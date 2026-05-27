@@ -19,6 +19,11 @@ prompts/
 CLAUDE.md
 AGENTS.md
 
+# CI-generated artefacts (built fresh each deploy)
+prompt.txt
+commentary.json
+tools/_metrics.json
+
 # python / os cruft
 __pycache__/
 *.pyc

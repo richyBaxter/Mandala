@@ -25,8 +25,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Refresh real monthly prices (Binance)
+        continue-on-error: true
+        run: python3 tools/update_prices.py
       - name: Regenerate SVG from data
         run: python3 generate.py
+      - name: Fetch institutional news (server-side RSS)
+        continue-on-error: true
+        run: python3 tools/fetch_news.py
       - name: Build AI prompt from live data
         run: python3 tools/build_prompt.py
       - name: Generate market note (GitHub Models)

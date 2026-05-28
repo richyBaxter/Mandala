@@ -22,6 +22,7 @@ AGENTS.md
 # CI-generated artefacts (built fresh each deploy)
 prompt.txt
 commentary.json
+news.json
 tools/_metrics.json
 
 # python / os cruft

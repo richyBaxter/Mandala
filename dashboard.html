@@ -483,52 +483,35 @@ async function loadHash(){
   });
 }
 
-// ---------- Flows & institutional news ----------
-const FEEDS = [
-  ["CoinDesk", "https://www.coindesk.com/arc/outboundfeeds/rss/"],
-  ["Cointelegraph", "https://cointelegraph.com/rss"],
-  ["Bitcoin Magazine", "https://bitcoinmagazine.com/feed"],
-];
-const FLOW_KW = ["etf","inflow","outflow","flows","blackrock","ibit","fidelity","fbtc",
-  "grayscale","gbtc","ark","microstrategy"," strategy ","metaplanet","saylor","accumulat",
-  "whale","institution","treasury","sovereign","buys","bought","sells","sold","billion",
-  "holdings","reserve","allocation"];
+// ---------- Flows & institutional news (static news.json, fetched in CI) ----------
 const ENTITIES = ["BlackRock","IBIT","Fidelity","Grayscale","ARK","MicroStrategy","Strategy",
   "Metaplanet","Saylor","ETF","Whale","Treasury","Sovereign","SEC"];
 
 async function loadNews(){
-  const all = [];
-  await Promise.all(FEEDS.map(async ([src, url]) => {
-    try {
-      const r = await fetch("https://api.rss2json.com/v1/api.json?count=30&rss_url=" + encodeURIComponent(url));
-      if(!r.ok) return; const j = await r.json();
-      (j.items || []).forEach(it => all.push({ src, title:it.title||"", link:it.link||"", date:new Date(it.pubDate), desc:it.description||"" }));
-    } catch(e){}
-  }));
-  if(!all.length) throw new Error("no feeds");
-  const match = it => { const t = (it.title + " " + it.desc).toLowerCase(); return FLOW_KW.some(k => t.includes(k.trim())); };
-  let items = all.filter(match);
-  const filtered = items.length >= 4;
-  if(!filtered) items = all;
-  items.sort((a,b) => b.date - a.date);
-  items = items.slice(0, 12);
+  const r = await fetch("news.json?_=" + Date.now());
+  if(!r.ok) throw new Error("news " + r.status);
+  const j = await r.json();
+  const items = (j.items || []).slice(0, 12);
+  if(!items.length) throw new Error("empty");
 
   const ul = document.getElementById("news"); ul.innerHTML = "";
   items.forEach(it => {
     const li = document.createElement("li");
     const a = document.createElement("a");
-    a.href = /^https?:\/\//.test(it.link) ? it.link : "#";
-    a.target = "_blank"; a.rel = "noopener noreferrer"; a.textContent = it.title;
+    a.href = /^https?:\/\//.test(it.link || "") ? it.link : "#";
+    a.target = "_blank"; a.rel = "noopener noreferrer"; a.textContent = it.title || "";
     const meta = document.createElement("div"); meta.className = "src";
-    const s1 = document.createElement("span"); s1.textContent = it.src;
-    const s2 = document.createElement("span"); s2.textContent = isNaN(it.date) ? "" : it.date.toLocaleDateString();
+    const s1 = document.createElement("span"); s1.textContent = it.src || "";
+    const d = it.date ? new Date(it.date) : null;
+    const s2 = document.createElement("span"); s2.textContent = (d && !isNaN(d)) ? d.toLocaleDateString() : "";
     meta.append(s1, s2);
-    const ent = ENTITIES.find(e => it.title.toLowerCase().includes(e.toLowerCase()));
+    const ent = ENTITIES.find(e => (it.title || "").toLowerCase().includes(e.toLowerCase()));
     if(ent){ const c = document.createElement("span"); c.className = "chip"; c.textContent = ent; meta.append(c); }
     li.append(a, meta); ul.appendChild(li);
   });
-  if(!filtered) document.getElementById("news-hint").textContent =
-    "Latest headlines (no flow-specific items right now).";
+  document.getElementById("news-hint").textContent = j.filtered
+    ? "Credible sources, filtered for ETF flows, inflows/outflows and who's buying."
+    : "Latest headlines from credible sources.";
 }
 
 // ---------- Key dates diary ----------
@@ -597,11 +580,11 @@ function refreshMarket(){
   loadMVRV().catch(e=>{ console.error(e); tileErr("t-mvrv"); });
 }
 
-// Slow feeds: news + AI note refresh rarely (every 20 min) so the rss2json
-// bridge isn't rate-limited. A failed refresh keeps the last good list.
+// Slow feeds: news + AI note are static files generated in CI; re-poll every
+// 20 min. A failed refresh keeps the last good list.
 function refreshSlow(){
   loadNews().then(()=>{ newsLoaded = true; }).catch(e=>{ console.error(e);
-    if(!newsLoaded) document.getElementById("news").innerHTML="<li class='err'>news feed unavailable (rss2json bridge)</li>"; });
+    if(!newsLoaded) document.getElementById("news").innerHTML="<li class='err'>news unavailable</li>"; });
   loadCommentary().catch(e=>console.error(e));
 }
 

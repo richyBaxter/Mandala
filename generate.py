@@ -218,11 +218,9 @@ for price in (10, 100, 1000, 10000, 100000):
 # channel bands
 s.append(f'<path d="{ribbon(A_SUP,0.14)}" fill="{T["buy"]}" opacity="0.10" stroke="none"/>')
 s.append(f'<path d="{ribbon(A_RES,0.14)}" fill="{T["sell"]}" opacity="0.10" stroke="none"/>')
-# channel spirals (with glow) + dashed fair-value line
-s.append('<g filter="url(#glow)">')
-s.append(f'<path d="{spiral(A_SUP)}" fill="none" stroke="{T["support"]}" stroke-width="2" opacity="0.85"/>')
-s.append(f'<path d="{spiral(A_RES)}" fill="none" stroke="{T["resist"]}" stroke-width="2" opacity="0.85"/>')
-s.append('</g>')
+# channel spirals (crisp, lighter — they're the reference, the price line is the hero)
+s.append(f'<path d="{spiral(A_SUP)}" fill="none" stroke="{T["support"]}" stroke-width="1.5" opacity="0.6"/>')
+s.append(f'<path d="{spiral(A_RES)}" fill="none" stroke="{T["resist"]}" stroke-width="1.5" opacity="0.6"/>')
 s.append(f'<path d="{spiral(A_FAIR)}" fill="none" stroke="{T["ink"]}" stroke-width="1.3" '
          f'stroke-dasharray="6,5" opacity="0.45"/>')
 _fvx, _fvy = pl_xy(ymid(LAST_YEAR, 7), A_FAIR)
@@ -273,13 +271,13 @@ if flow_by_month:
         if v is None:
             continue
         a, r0 = angle(d), radius(p)
-        length = 6 + 26 * (abs(v) / fmax)
+        length = 5 + 16 * (abs(v) / fmax)
         r1 = r0 + length if v >= 0 else r0 - length
         col = T["buy"] if v >= 0 else T["sell"]
         x0, y0 = CX + r0 * math.cos(a), CY - r0 * math.sin(a)
         x1, y1 = CX + r1 * math.cos(a), CY - r1 * math.sin(a)
         s.append(f'<line x1="{x0:.1f}" y1="{y0:.1f}" x2="{x1:.1f}" y2="{y1:.1f}" '
-                 f'stroke="{col}" stroke-width="2.4" opacity="0.9"/>')
+                 f'stroke="{col}" stroke-width="1.8" opacity="0.5"/>')
 
 # ---------- events diary ----------
 ev_color = {"halving": T["halving"], "etf": T["etf"], "macro": T["macro"]}

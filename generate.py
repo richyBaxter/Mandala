@@ -229,14 +229,11 @@ _fvx, _fvy = pl_xy(ymid(LAST_YEAR, 7), A_FAIR)
 s.append(f'<text x="{_fvx:.1f}" y="{_fvy:.1f}" font-size="10.5" fill="{T["muted"]}" '
          f'text-anchor="middle" opacity="0.8">fair value</text>')
 
-# BTC price line, coloured by buy/sell zone (with glow)
-s.append('<g filter="url(#glow)">')
-for (d0, p0), (d1, p1) in zip(btc_pts, btc_pts[1:]):
-    x0, y0 = xy(p0, d0); x1, y1 = xy(p1, d1)
-    t = oscillator(d1, p1)
-    s.append(f'<line x1="{x0:.1f}" y1="{y0:.1f}" x2="{x1:.1f}" y2="{y1:.1f}" '
-             f'stroke="{rgb(zone_color(t))}" stroke-width="2.6" stroke-linecap="round"/>')
-s.append('</g>')
+# BTC price line — single colour for legibility (valuation is shown by the
+# channel position and the buy/sell gauge, not by colouring the line itself)
+btc_path = "M " + " L ".join(f"{xy(p, d)[0]:.1f},{xy(p, d)[1]:.1f}" for d, p in btc_pts)
+s.append(f'<path d="{btc_path}" fill="none" stroke="{T["ink"]}" stroke-width="2.8" '
+         f'stroke-linejoin="round" stroke-linecap="round" filter="url(#glow)"/>')
 
 # price labels (one set, upper-left diagonal)
 def plabel(price, txt, ang_deg):
@@ -349,9 +346,8 @@ s.append(f'<text x="{lx}" y="{ly+68}" font-size="13" font-weight="800" '
          f'fill="{zc}">Now: {zone} &#183; {cur_t*100:.0f}% of channel</text>')
 # overlay key
 ky = ly + 92
-s.append(f'<line x1="{lx}" y1="{ky}" x2="{lx+22}" y2="{ky}" stroke="{T["buy"]}" stroke-width="2.6"/>')
-s.append(f'<line x1="{lx+22}" y1="{ky}" x2="{lx+44}" y2="{ky}" stroke="{T["sell"]}" stroke-width="2.6"/>')
-s.append(f'<text x="{lx+54}" y="{ky+4}" font-size="10.5" fill="{T["muted"]}">BTC price (cheap &#8594; expensive)</text>')
+s.append(f'<line x1="{lx}" y1="{ky}" x2="{lx+44}" y2="{ky}" stroke="{T["ink"]}" stroke-width="2.8"/>')
+s.append(f'<text x="{lx+54}" y="{ky+4}" font-size="10.5" fill="{T["muted"]}">BTC price</text>')
 ky += 22
 s.append(f'<line x1="{lx+8}" y1="{ky-6}" x2="{lx+8}" y2="{ky+4}" stroke="{T["buy"]}" stroke-width="2.6"/>')
 s.append(f'<line x1="{lx+20}" y1="{ky}" x2="{lx+20}" y2="{ky+10}" stroke="{T["sell"]}" stroke-width="2.6"/>')

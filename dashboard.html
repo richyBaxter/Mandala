@@ -217,6 +217,7 @@ Chart.defaults.color = C.muted;
 Chart.defaults.borderColor = C.grid;
 Chart.defaults.font.family = "Inter, sans-serif";
 Chart.defaults.font.size = 11;
+Chart.defaults.animation.duration = 500;   // subtle, since charts rebuild on refresh
 // bigger, clearer labels on hover
 Chart.defaults.plugins.tooltip.titleFont = { size: 14, weight: "700" };
 Chart.defaults.plugins.tooltip.bodyFont = { size: 14 };
@@ -579,8 +580,10 @@ async function loadCommentary(){
 }
 
 // ---------- orchestration: load now, refresh every 60s, live "updated Ns ago" ----------
-let lastLoad = null;
-function refreshAll(){
+let lastLoad = null, newsLoaded = false;
+
+// Market data: moderately live, kind to free APIs (every 5 min).
+function refreshMarket(){
   loadPrice().catch(e=>{ console.error(e); ["t-price","t-fair","t-vsfair","t-osc","t-mayer"].forEach(tileErr);
     document.getElementById("updated").innerHTML="<span class='err'>price feed unavailable (CoinGecko)</span>"; });
   loadFng().catch(e=>{ console.error(e); tileErr("t-fng"); });
@@ -592,13 +595,23 @@ function refreshAll(){
     document.getElementById("pi-hint").innerHTML="<span class='err'>Pi Cycle feed unavailable (Binance)</span>"; });
   loadNetwork().catch(e=>{ console.error(e); ["t-diff","t-ln","t-fees"].forEach(tileErr); });
   loadMVRV().catch(e=>{ console.error(e); tileErr("t-mvrv"); });
-  loadNews().catch(e=>{ console.error(e);
-    document.getElementById("news").innerHTML="<li class='err'>news feed unavailable (rss2json bridge)</li>"; });
-  loadDiary().catch(e=>console.error(e));
+}
+
+// Slow feeds: news + AI note refresh rarely (every 20 min) so the rss2json
+// bridge isn't rate-limited. A failed refresh keeps the last good list.
+function refreshSlow(){
+  loadNews().then(()=>{ newsLoaded = true; }).catch(e=>{ console.error(e);
+    if(!newsLoaded) document.getElementById("news").innerHTML="<li class='err'>news feed unavailable (rss2json bridge)</li>"; });
   loadCommentary().catch(e=>console.error(e));
 }
-refreshAll();
-setInterval(refreshAll, 60000);
+
+refreshMarket();
+refreshSlow();
+loadDiary().catch(e=>{ console.error(e);
+  document.getElementById("diary").innerHTML="<li class='err'>diary unavailable</li>"; });   // dates are static this session
+
+setInterval(refreshMarket, 300000);   // 5 min
+setInterval(refreshSlow, 1200000);    // 20 min
 setInterval(()=>{
   if(!lastLoad) return;
   const s = Math.round((Date.now() - lastLoad) / 1000);

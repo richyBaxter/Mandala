@@ -76,6 +76,7 @@
   .card .hint { color:var(--muted); font-size:.8rem; margin:0 0 12px; }
   .card.full { grid-column:1 / -1; }
   .spiral img { width:100%; height:auto; display:block; border-radius:10px; }
+  .spiral.full img { width:auto; max-width:100%; max-height:74vh; margin:0 auto; }
   canvas { width:100% !important; }
   .chart-box { position:relative; height:300px; }
 
@@ -135,12 +136,12 @@
   </section>
 
   <div class="grid">
-    <div class="card spiral">
+    <div class="card spiral full">
       <h2>The Bitcoin Spiral</h2>
-      <p class="hint">Colour = <em>valuation</em> (cheap&rarr;expensive vs Power Law), not order flow. For actual buy/sell pressure see the chart below. <a href="index.html">About &amp; embed &rarr;</a></p>
+      <p class="hint">The white line is BTC price; the orange/red channel and the gauge show <em>valuation</em> (cheap&rarr;expensive vs the Power Law). For order-flow buy/sell pressure see the chart below. <a href="index.html">About &amp; embed &rarr;</a></p>
       <img src="btc-mandala.svg" alt="The Bitcoin Spiral — price spiralling outward on a 4-year-cycle Power-Law map.">
     </div>
-    <div class="card">
+    <div class="card full">
       <h2>Fear &amp; Greed (60 days)</h2>
       <p class="hint">Market sentiment, 0 (extreme fear) &rarr; 100 (extreme greed).</p>
       <div class="chart-box"><canvas id="c-fng"></canvas></div>

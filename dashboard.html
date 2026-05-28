@@ -77,6 +77,13 @@
   .card.full { grid-column:1 / -1; }
   .spiral img { width:100%; height:auto; display:block; border-radius:10px; }
   .spiral.full img { width:auto; max-width:100%; max-height:74vh; margin:0 auto; }
+  #spiral-host svg { width:auto; max-width:100%; max-height:76vh; display:block; margin:0 auto; border-radius:10px; }
+  #spiral-host .pt:hover { fill:rgba(232,236,243,.12); }
+  .spiral-tip { position:fixed; z-index:50; pointer-events:none; background:var(--panel);
+    border:1px solid var(--border); border-radius:10px; padding:9px 12px; font-size:.82rem;
+    color:var(--ink); box-shadow:0 10px 30px rgba(0,0,0,.5); max-width:240px; line-height:1.5; }
+  .spiral-tip b { color:var(--btc); }
+  .spiral-tip .lv { color:var(--muted); font-size:.76rem; }
   canvas { width:100% !important; }
   .chart-box { position:relative; height:300px; }
 
@@ -138,8 +145,8 @@
   <div class="grid">
     <div class="card spiral full">
       <h2>The Bitcoin Spiral</h2>
-      <p class="hint">The white line is BTC price; the orange/red channel and the gauge show <em>valuation</em> (cheap&rarr;expensive vs the Power Law). For order-flow buy/sell pressure see the chart below. <a href="index.html">About &amp; embed &rarr;</a></p>
-      <img src="btc-mandala.svg" alt="The Bitcoin Spiral — price spiralling outward on a 4-year-cycle Power-Law map.">
+      <p class="hint">The white line is BTC price; the orange/red channel and the gauge show <em>valuation</em> (cheap&rarr;expensive vs the Power Law). <strong>Hover any point</strong> for the price and the model levels that month. <a href="index.html">About &amp; embed &rarr;</a></p>
+      <div id="spiral-host" role="img" aria-label="The Bitcoin Spiral — price on a 4-year-cycle Power-Law map. Hover points for details."></div>
     </div>
     <div class="card full">
       <h2>Fear &amp; Greed (60 days)</h2>
@@ -203,6 +210,7 @@
     Power-Law model after G. Santostasi &middot; educational, not financial advice.
   </footer>
 </div>
+<div id="spiral-tip" class="spiral-tip" hidden></div>
 
 <script>
 const C = { bg:"#0b0e14", ink:"#e8ecf3", muted:"#8a93a3", faint:"#525b6b", grid:"#1c2330",
@@ -563,6 +571,34 @@ async function loadCommentary(){
   document.getElementById("ai-note").hidden = false;
 }
 
+// ---------- interactive spiral: inline the SVG, tooltip on hover ----------
+let spiralBound = false;
+async function loadSpiral(){
+  const host = document.getElementById("spiral-host");
+  const r = await fetch("btc-mandala.svg?_=" + Date.now());
+  if(!r.ok) throw new Error("spiral " + r.status);
+  host.innerHTML = await r.text();
+  if(spiralBound) return;            // bind delegated listeners once
+  spiralBound = true;
+  const tip = document.getElementById("spiral-tip");
+  const usd = n => "$" + (+n).toLocaleString();
+  host.addEventListener("mousemove", e => {
+    const pt = e.target.closest && e.target.closest(".pt");
+    if(!pt){ tip.hidden = true; return; }
+    const d = pt.dataset;
+    tip.innerHTML = `<b>${d.d}</b> &middot; ${usd(d.price)}` +
+      `<div class="lv">Fair ${usd(d.fair)} &middot; Floor ${usd(d.floor)} &middot; Top ${usd(d.top)}</div>` +
+      `<div class="lv">${d.osc}% up the channel</div>`;
+    const pad = 16, w = 250, h = 74;
+    let x = e.clientX + pad, y = e.clientY + pad;
+    if(x + w > innerWidth) x = e.clientX - w - pad;
+    if(y + h > innerHeight) y = e.clientY - h - pad;
+    tip.style.left = x + "px"; tip.style.top = y + "px";
+    tip.hidden = false;
+  });
+  host.addEventListener("mouseleave", () => { tip.hidden = true; });
+}
+
 // ---------- orchestration: load now, refresh every 60s, live "updated Ns ago" ----------
 let lastLoad = null, newsLoaded = false;
 
@@ -587,10 +623,13 @@ function refreshSlow(){
   loadNews().then(()=>{ newsLoaded = true; }).catch(e=>{ console.error(e);
     if(!newsLoaded) document.getElementById("news").innerHTML="<li class='err'>news unavailable</li>"; });
   loadCommentary().catch(e=>console.error(e));
+  loadSpiral().catch(e=>console.error(e));   // pick up CI-refreshed real-price spiral
 }
 
 refreshMarket();
 refreshSlow();
+loadSpiral().catch(e=>{ console.error(e);
+  document.getElementById("spiral-host").innerHTML="<p class='err'>spiral unavailable</p>"; });
 loadDiary().catch(e=>{ console.error(e);
   document.getElementById("diary").innerHTML="<li class='err'>diary unavailable</li>"; });   // dates are static this session
 

@@ -305,6 +305,22 @@ for ev in EVENTS:
     s.append(f'<text x="{x1 + (4 if anchor=="start" else -4):.1f}" y="{y1+3:.1f}" font-size="10.5" '
              f'fill="{col}" font-weight="600" text-anchor="{anchor}">{ev.get("label","")}</text>')
 
+# interactive hover points: historic price + the model levels at each month
+# (invisible targets; the dashboard inlines the SVG and shows a tooltip)
+s.append('<g class="pts">')
+for d, p in btc_pts:
+    hx, hy = xy(p, d)
+    fv, flv, tpv = pl(d, A_FAIR), pl(d, A_SUP), pl(d, A_RES)
+    osc = oscillator(d, p)
+    lbl = d.strftime("%b %Y")
+    s.append(
+        f'<circle class="pt" cx="{hx:.1f}" cy="{hy:.1f}" r="9" fill="none" pointer-events="all" '
+        f'data-d="{lbl}" data-price="{p:.0f}" data-fair="{fv:.0f}" data-floor="{flv:.0f}" '
+        f'data-top="{tpv:.0f}" data-osc="{osc*100:.0f}" style="cursor:pointer">'
+        f'<title>{lbl}\nPrice ${p:,.0f}\nFair ${fv:,.0f} · Floor ${flv:,.0f} · Top ${tpv:,.0f}</title>'
+        f'</circle>')
+s.append('</g>')
+
 # captions + you-are-here badge
 s.append(f'<text x="990" y="300" font-size="12" font-weight="700" letter-spacing="1.5" '
          f'fill="{T["sell"]}" opacity="0.85">CYCLE TOPS</text>')

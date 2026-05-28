@@ -92,6 +92,557 @@
 <line x1="767.5" y1="254.6" x2="781.4" y2="219.3" stroke="#94a3b8" stroke-width="1" opacity="0.6"/>
 <circle cx="767.5" cy="254.6" r="3" fill="#94a3b8" stroke="#0b0e14" stroke-width="1"/>
 <text x="785.4" y="222.3" font-size="10.5" fill="#94a3b8" font-weight="600" text-anchor="start">ATH $126k</text>
+<g class="pts">
+<circle class="pt" cx="618.0" cy="630.4" r="9" fill="none" pointer-events="all" data-d="Feb 2011" data-price="1" data-fair="1" data-floor="0" data-top="2" data-osc="69" style="cursor:pointer"><title>Feb 2011
+Price $1
+Fair $1 · Floor $0 · Top $2</title></circle>
+<circle class="pt" cx="601.6" cy="638.8" r="9" fill="none" pointer-events="all" data-d="Apr 2011" data-price="2" data-fair="1" data-floor="0" data-top="3" data-osc="78" style="cursor:pointer"><title>Apr 2011
+Price $2
+Fair $1 · Floor $0 · Top $3</title></circle>
+<circle class="pt" cx="557.0" cy="671.0" r="9" fill="none" pointer-events="all" data-d="May 2011" data-price="9" data-fair="1" data-floor="1" data-top="3" data-osc="100" style="cursor:pointer"><title>May 2011
+Price $9
+Fair $1 · Floor $1 · Top $3</title></circle>
+<circle class="pt" cx="547.0" cy="692.8" r="9" fill="none" pointer-events="all" data-d="Jun 2011" data-price="16" data-fair="1" data-floor="1" data-top="4" data-osc="100" style="cursor:pointer"><title>Jun 2011
+Price $16
+Fair $1 · Floor $1 · Top $4</title></circle>
+<circle class="pt" cx="560.5" cy="696.3" r="9" fill="none" pointer-events="all" data-d="Jul 2011" data-price="13" data-fair="2" data-floor="1" data-top="5" data-osc="100" style="cursor:pointer"><title>Jul 2011
+Price $13
+Fair $2 · Floor $1 · Top $5</title></circle>
+<circle class="pt" cx="577.0" cy="693.1" r="9" fill="none" pointer-events="all" data-d="Aug 2011" data-price="9" data-fair="2" data-floor="1" data-top="6" data-osc="100" style="cursor:pointer"><title>Aug 2011
+Price $9
+Fair $2 · Floor $1 · Top $6</title></circle>
+<circle class="pt" cx="594.9" cy="680.0" r="9" fill="none" pointer-events="all" data-d="Sep 2011" data-price="5" data-fair="2" data-floor="1" data-top="7" data-osc="80" style="cursor:pointer"><title>Sep 2011
+Price $5
+Fair $2 · Floor $1 · Top $7</title></circle>
+<circle class="pt" cx="605.7" cy="671.1" r="9" fill="none" pointer-events="all" data-d="Oct 2011" data-price="4" data-fair="3" data-floor="1" data-top="9" data-osc="52" style="cursor:pointer"><title>Oct 2011
+Price $4
+Fair $3 · Floor $1 · Top $9</title></circle>
+<circle class="pt" cx="612.3" cy="667.4" r="9" fill="none" pointer-events="all" data-d="Nov 2011" data-price="3" data-fair="3" data-floor="2" data-top="10" data-osc="35" style="cursor:pointer"><title>Nov 2011
+Price $3
+Fair $3 · Floor $2 · Top $10</title></circle>
+<circle class="pt" cx="616.1" cy="683.6" r="9" fill="none" pointer-events="all" data-d="Dec 2011" data-price="5" data-fair="4" data-floor="2" data-top="12" data-osc="50" style="cursor:pointer"><title>Dec 2011
+Price $5
+Fair $4 · Floor $2 · Top $12</title></circle>
+<circle class="pt" cx="623.7" cy="692.1" r="9" fill="none" pointer-events="all" data-d="Jan 2012" data-price="6" data-fair="4" data-floor="2" data-top="14" data-osc="54" style="cursor:pointer"><title>Jan 2012
+Price $6
+Fair $4 · Floor $2 · Top $14</title></circle>
+<circle class="pt" cx="630.7" cy="684.9" r="9" fill="none" pointer-events="all" data-d="Feb 2012" data-price="5" data-fair="5" data-floor="3" data-top="17" data-osc="36" style="cursor:pointer"><title>Feb 2012
+Price $5
+Fair $5 · Floor $3 · Top $17</title></circle>
+<circle class="pt" cx="637.2" cy="682.5" r="9" fill="none" pointer-events="all" data-d="Mar 2012" data-price="5" data-fair="6" data-floor="3" data-top="19" data-osc="27" style="cursor:pointer"><title>Mar 2012
+Price $5
+Fair $6 · Floor $3 · Top $19</title></circle>
+<circle class="pt" cx="644.4" cy="680.3" r="9" fill="none" pointer-events="all" data-d="Apr 2012" data-price="5" data-fair="7" data-floor="3" data-top="23" data-osc="20" style="cursor:pointer"><title>Apr 2012
+Price $5
+Fair $7 · Floor $3 · Top $23</title></circle>
+<circle class="pt" cx="651.4" cy="677.9" r="9" fill="none" pointer-events="all" data-d="May 2012" data-price="5" data-fair="8" data-floor="4" data-top="26" data-osc="14" style="cursor:pointer"><title>May 2012
+Price $5
+Fair $8 · Floor $4 · Top $26</title></circle>
+<circle class="pt" cx="663.2" cy="680.0" r="9" fill="none" pointer-events="all" data-d="Jun 2012" data-price="7" data-fair="9" data-floor="5" data-top="30" data-osc="20" style="cursor:pointer"><title>Jun 2012
+Price $7
+Fair $9 · Floor $5 · Top $30</title></circle>
+<circle class="pt" cx="676.9" cy="680.9" r="9" fill="none" pointer-events="all" data-d="Jul 2012" data-price="9" data-fair="11" data-floor="5" data-top="35" data-osc="29" style="cursor:pointer"><title>Jul 2012
+Price $9
+Fair $11 · Floor $5 · Top $35</title></circle>
+<circle class="pt" cx="688.9" cy="676.8" r="9" fill="none" pointer-events="all" data-d="Aug 2012" data-price="11" data-fair="12" data-floor="6" data-top="40" data-osc="32" style="cursor:pointer"><title>Aug 2012
+Price $11
+Fair $12 · Floor $6 · Top $40</title></circle>
+<circle class="pt" cx="697.2" cy="668.6" r="9" fill="none" pointer-events="all" data-d="Sep 2012" data-price="12" data-fair="14" data-floor="7" data-top="45" data-osc="29" style="cursor:pointer"><title>Sep 2012
+Price $12
+Fair $14 · Floor $7 · Top $45</title></circle>
+<circle class="pt" cx="698.7" cy="657.4" r="9" fill="none" pointer-events="all" data-d="Oct 2012" data-price="11" data-fair="16" data-floor="8" data-top="52" data-osc="18" style="cursor:pointer"><title>Oct 2012
+Price $11
+Fair $16 · Floor $8 · Top $52</title></circle>
+<circle class="pt" cx="706.0" cy="647.6" r="9" fill="none" pointer-events="all" data-d="Nov 2012" data-price="12" data-fair="18" data-floor="9" data-top="59" data-osc="18" style="cursor:pointer"><title>Nov 2012
+Price $12
+Fair $18 · Floor $9 · Top $59</title></circle>
+<circle class="pt" cx="710.2" cy="636.6" r="9" fill="none" pointer-events="all" data-d="Dec 2012" data-price="14" data-fair="21" data-floor="10" data-top="66" data-osc="16" style="cursor:pointer"><title>Dec 2012
+Price $14
+Fair $21 · Floor $10 · Top $66</title></circle>
+<circle class="pt" cx="723.9" cy="623.7" r="9" fill="none" pointer-events="all" data-d="Jan 2013" data-price="20" data-fair="23" data-floor="11" data-top="75" data-osc="30" style="cursor:pointer"><title>Jan 2013
+Price $20
+Fair $23 · Floor $11 · Top $75</title></circle>
+<circle class="pt" cx="739.2" cy="606.6" r="9" fill="none" pointer-events="all" data-d="Feb 2013" data-price="33" data-fair="26" data-floor="13" data-top="85" data-osc="50" style="cursor:pointer"><title>Feb 2013
+Price $33
+Fair $26 · Floor $13 · Top $85</title></circle>
+<circle class="pt" cx="769.8" cy="581.3" r="9" fill="none" pointer-events="all" data-d="Mar 2013" data-price="93" data-fair="29" data-floor="14" data-top="94" data-osc="99" style="cursor:pointer"><title>Mar 2013
+Price $93
+Fair $29 · Floor $14 · Top $94</title></circle>
+<circle class="pt" cx="774.6" cy="555.8" r="9" fill="none" pointer-events="all" data-d="Apr 2013" data-price="139" data-fair="33" data-floor="16" data-top="106" data-osc="100" style="cursor:pointer"><title>Apr 2013
+Price $139
+Fair $33 · Floor $16 · Top $106</title></circle>
+<circle class="pt" cx="761.5" cy="537.9" r="9" fill="none" pointer-events="all" data-d="May 2013" data-price="129" data-fair="37" data-floor="18" data-top="118" data-osc="100" style="cursor:pointer"><title>May 2013
+Price $129
+Fair $37 · Floor $18 · Top $118</title></circle>
+<circle class="pt" cx="740.5" cy="526.4" r="9" fill="none" pointer-events="all" data-d="Jun 2013" data-price="97" data-fair="41" data-floor="20" data-top="132" data-osc="84" style="cursor:pointer"><title>Jun 2013
+Price $97
+Fair $41 · Floor $20 · Top $132</title></circle>
+<circle class="pt" cx="727.8" cy="509.9" r="9" fill="none" pointer-events="all" data-d="Jul 2013" data-price="104" data-fair="45" data-floor="22" data-top="147" data-osc="82" style="cursor:pointer"><title>Jul 2013
+Price $104
+Fair $45 · Floor $22 · Top $147</title></circle>
+<circle class="pt" cx="716.5" cy="488.3" r="9" fill="none" pointer-events="all" data-d="Aug 2013" data-price="139" data-fair="51" data-floor="25" data-top="164" data-osc="91" style="cursor:pointer"><title>Aug 2013
+Price $139
+Fair $51 · Floor $25 · Top $164</title></circle>
+<circle class="pt" cx="697.0" cy="476.5" r="9" fill="none" pointer-events="all" data-d="Sep 2013" data-price="140" data-fair="56" data-floor="28" data-top="182" data-osc="86" style="cursor:pointer"><title>Sep 2013
+Price $140
+Fair $56 · Floor $28 · Top $182</title></circle>
+<circle class="pt" cx="680.9" cy="455.4" r="9" fill="none" pointer-events="all" data-d="Oct 2013" data-price="205" data-fair="62" data-floor="30" data-top="201" data-osc="100" style="cursor:pointer"><title>Oct 2013
+Price $205
+Fair $62 · Floor $30 · Top $201</title></circle>
+<circle class="pt" cx="669.1" cy="390.7" r="9" fill="none" pointer-events="all" data-d="Nov 2013" data-price="1130" data-fair="69" data-floor="34" data-top="223" data-osc="100" style="cursor:pointer"><title>Nov 2013
+Price $1,130
+Fair $69 · Floor $34 · Top $223</title></circle>
+<circle class="pt" cx="636.8" cy="400.2" r="9" fill="none" pointer-events="all" data-d="Dec 2013" data-price="760" data-fair="76" data-floor="37" data-top="246" data-osc="100" style="cursor:pointer"><title>Dec 2013
+Price $760
+Fair $76 · Floor $37 · Top $246</title></circle>
+<circle class="pt" cx="605.9" cy="396.9" r="9" fill="none" pointer-events="all" data-d="Jan 2014" data-price="830" data-fair="84" data-floor="41" data-top="271" data-osc="100" style="cursor:pointer"><title>Jan 2014
+Price $830
+Fair $84 · Floor $41 · Top $271</title></circle>
+<circle class="pt" cx="577.6" cy="414.0" r="9" fill="none" pointer-events="all" data-d="Feb 2014" data-price="565" data-fair="92" data-floor="45" data-top="299" data-osc="100" style="cursor:pointer"><title>Feb 2014
+Price $565
+Fair $92 · Floor $45 · Top $299</title></circle>
+<circle class="pt" cx="554.1" cy="427.0" r="9" fill="none" pointer-events="all" data-d="Mar 2014" data-price="465" data-fair="101" data-floor="49" data-top="326" data-osc="100" style="cursor:pointer"><title>Mar 2014
+Price $465
+Fair $101 · Floor $49 · Top $326</title></circle>
+<circle class="pt" cx="528.3" cy="439.0" r="9" fill="none" pointer-events="all" data-d="Apr 2014" data-price="445" data-fair="111" data-floor="54" data-top="358" data-osc="100" style="cursor:pointer"><title>Apr 2014
+Price $445
+Fair $111 · Floor $54 · Top $358</title></circle>
+<circle class="pt" cx="497.9" cy="442.3" r="9" fill="none" pointer-events="all" data-d="May 2014" data-price="630" data-fair="121" data-floor="59" data-top="391" data-osc="100" style="cursor:pointer"><title>May 2014
+Price $630
+Fair $121 · Floor $59 · Top $391</title></circle>
+<circle class="pt" cx="473.7" cy="459.8" r="9" fill="none" pointer-events="all" data-d="Jun 2014" data-price="640" data-fair="132" data-floor="65" data-top="429" data-osc="100" style="cursor:pointer"><title>Jun 2014
+Price $640
+Fair $132 · Floor $65 · Top $429</title></circle>
+<circle class="pt" cx="455.3" cy="482.1" r="9" fill="none" pointer-events="all" data-d="Jul 2014" data-price="585" data-fair="144" data-floor="71" data-top="468" data-osc="100" style="cursor:pointer"><title>Jul 2014
+Price $585
+Fair $144 · Floor $71 · Top $468</title></circle>
+<circle class="pt" cx="441.3" cy="508.2" r="9" fill="none" pointer-events="all" data-d="Aug 2014" data-price="505" data-fair="158" data-floor="77" data-top="511" data-osc="99" style="cursor:pointer"><title>Aug 2014
+Price $505
+Fair $158 · Floor $77 · Top $511</title></circle>
+<circle class="pt" cx="435.1" cy="537.3" r="9" fill="none" pointer-events="all" data-d="Sep 2014" data-price="385" data-fair="172" data-floor="84" data-top="557" data-osc="80" style="cursor:pointer"><title>Sep 2014
+Price $385
+Fair $172 · Floor $84 · Top $557</title></circle>
+<circle class="pt" cx="428.8" cy="563.3" r="9" fill="none" pointer-events="all" data-d="Oct 2014" data-price="340" data-fair="187" data-floor="92" data-top="605" data-osc="69" style="cursor:pointer"><title>Oct 2014
+Price $340
+Fair $187 · Floor $92 · Top $605</title></circle>
+<circle class="pt" cx="417.8" cy="588.5" r="9" fill="none" pointer-events="all" data-d="Nov 2014" data-price="380" data-fair="204" data-floor="100" data-top="659" data-osc="71" style="cursor:pointer"><title>Nov 2014
+Price $380
+Fair $204 · Floor $100 · Top $659</title></circle>
+<circle class="pt" cx="420.1" cy="615.4" r="9" fill="none" pointer-events="all" data-d="Dec 2014" data-price="320" data-fair="221" data-floor="108" data-top="714" data-osc="57" style="cursor:pointer"><title>Dec 2014
+Price $320
+Fair $221 · Floor $108 · Top $714</title></circle>
+<circle class="pt" cx="431.4" cy="641.4" r="9" fill="none" pointer-events="all" data-d="Jan 2015" data-price="230" data-fair="240" data-floor="117" data-top="775" data-osc="36" style="cursor:pointer"><title>Jan 2015
+Price $230
+Fair $240 · Floor $117 · Top $775</title></circle>
+<circle class="pt" cx="431.1" cy="667.1" r="9" fill="none" pointer-events="all" data-d="Feb 2015" data-price="255" data-fair="260" data-floor="127" data-top="841" data-osc="37" style="cursor:pointer"><title>Feb 2015
+Price $255
+Fair $260 · Floor $127 · Top $841</title></circle>
+<circle class="pt" cx="438.2" cy="689.1" r="9" fill="none" pointer-events="all" data-d="Mar 2015" data-price="245" data-fair="279" data-floor="137" data-top="904" data-osc="31" style="cursor:pointer"><title>Mar 2015
+Price $245
+Fair $279 · Floor $137 · Top $904</title></circle>
+<circle class="pt" cx="449.0" cy="712.1" r="9" fill="none" pointer-events="all" data-d="Apr 2015" data-price="235" data-fair="302" data-floor="148" data-top="978" data-osc="24" style="cursor:pointer"><title>Apr 2015
+Price $235
+Fair $302 · Floor $148 · Top $978</title></circle>
+<circle class="pt" cx="461.6" cy="733.0" r="9" fill="none" pointer-events="all" data-d="May 2015" data-price="230" data-fair="326" data-floor="160" data-top="1055" data-osc="19" style="cursor:pointer"><title>May 2015
+Price $230
+Fair $326 · Floor $160 · Top $1,055</title></circle>
+<circle class="pt" cx="473.0" cy="756.4" r="9" fill="none" pointer-events="all" data-d="Jun 2015" data-price="265" data-fair="352" data-floor="172" data-top="1139" data-osc="23" style="cursor:pointer"><title>Jun 2015
+Price $265
+Fair $352 · Floor $172 · Top $1,139</title></circle>
+<circle class="pt" cx="488.8" cy="776.1" r="9" fill="none" pointer-events="all" data-d="Jul 2015" data-price="285" data-fair="379" data-floor="186" data-top="1226" data-osc="23" style="cursor:pointer"><title>Jul 2015
+Price $285
+Fair $379 · Floor $186 · Top $1,226</title></circle>
+<circle class="pt" cx="513.6" cy="786.1" r="9" fill="none" pointer-events="all" data-d="Aug 2015" data-price="230" data-fair="408" data-floor="200" data-top="1321" data-osc="7" style="cursor:pointer"><title>Aug 2015
+Price $230
+Fair $408 · Floor $200 · Top $1,321</title></circle>
+<circle class="pt" cx="534.6" cy="800.2" r="9" fill="none" pointer-events="all" data-d="Sep 2015" data-price="240" data-fair="440" data-floor="215" data-top="1422" data-osc="6" style="cursor:pointer"><title>Sep 2015
+Price $240
+Fair $440 · Floor $215 · Top $1,422</title></circle>
+<circle class="pt" cx="554.2" cy="818.7" r="9" fill="none" pointer-events="all" data-d="Oct 2015" data-price="315" data-fair="472" data-floor="231" data-top="1527" data-osc="16" style="cursor:pointer"><title>Oct 2015
+Price $315
+Fair $472 · Floor $231 · Top $1,527</title></circle>
+<circle class="pt" cx="578.5" cy="832.2" r="9" fill="none" pointer-events="all" data-d="Nov 2015" data-price="380" data-fair="507" data-floor="248" data-top="1641" data-osc="23" style="cursor:pointer"><title>Nov 2015
+Price $380
+Fair $507 · Floor $248 · Top $1,641</title></circle>
+<circle class="pt" cx="604.6" cy="840.1" r="9" fill="none" pointer-events="all" data-d="Dec 2015" data-price="430" data-fair="543" data-floor="266" data-top="1758" data-osc="25" style="cursor:pointer"><title>Dec 2015
+Price $430
+Fair $543 · Floor $266 · Top $1,758</title></circle>
+<circle class="pt" cx="632.4" cy="836.0" r="9" fill="none" pointer-events="all" data-d="Jan 2016" data-price="380" data-fair="583" data-floor="286" data-top="1886" data-osc="15" style="cursor:pointer"><title>Jan 2016
+Price $380
+Fair $583 · Floor $286 · Top $1,886</title></circle>
+<circle class="pt" cx="660.5" cy="837.2" r="9" fill="none" pointer-events="all" data-d="Feb 2016" data-price="435" data-fair="625" data-floor="306" data-top="2022" data-osc="19" style="cursor:pointer"><title>Feb 2016
+Price $435
+Fair $625 · Floor $306 · Top $2,022</title></circle>
+<circle class="pt" cx="685.4" cy="829.0" r="9" fill="none" pointer-events="all" data-d="Mar 2016" data-price="415" data-fair="667" data-floor="326" data-top="2157" data-osc="13" style="cursor:pointer"><title>Mar 2016
+Price $415
+Fair $667 · Floor $326 · Top $2,157</title></circle>
+<circle class="pt" cx="712.6" cy="821.4" r="9" fill="none" pointer-events="all" data-d="Apr 2016" data-price="455" data-fair="713" data-floor="349" data-top="2309" data-osc="14" style="cursor:pointer"><title>Apr 2016
+Price $455
+Fair $713 · Floor $349 · Top $2,309</title></circle>
+<circle class="pt" cx="739.7" cy="812.9" r="9" fill="none" pointer-events="all" data-d="May 2016" data-price="540" data-fair="761" data-floor="373" data-top="2464" data-osc="20" style="cursor:pointer"><title>May 2016
+Price $540
+Fair $761 · Floor $373 · Top $2,464</title></circle>
+<circle class="pt" cx="768.0" cy="801.3" r="9" fill="none" pointer-events="all" data-d="Jun 2016" data-price="675" data-fair="814" data-floor="399" data-top="2633" data-osc="28" style="cursor:pointer"><title>Jun 2016
+Price $675
+Fair $814 · Floor $399 · Top $2,633</title></circle>
+<circle class="pt" cx="786.7" cy="779.1" r="9" fill="none" pointer-events="all" data-d="Jul 2016" data-price="625" data-fair="867" data-floor="425" data-top="2806" data-osc="20" style="cursor:pointer"><title>Jul 2016
+Price $625
+Fair $867 · Floor $425 · Top $2,806</title></circle>
+<circle class="pt" cx="802.6" cy="754.0" r="9" fill="none" pointer-events="all" data-d="Aug 2016" data-price="575" data-fair="925" data-floor="453" data-top="2995" data-osc="13" style="cursor:pointer"><title>Aug 2016
+Price $575
+Fair $925 · Floor $453 · Top $2,995</title></circle>
+<circle class="pt" cx="819.3" cy="729.6" r="9" fill="none" pointer-events="all" data-d="Sep 2016" data-price="610" data-fair="987" data-floor="483" data-top="3194" data-osc="12" style="cursor:pointer"><title>Sep 2016
+Price $610
+Fair $987 · Floor $483 · Top $3,194</title></circle>
+<circle class="pt" cx="835.0" cy="704.8" r="9" fill="none" pointer-events="all" data-d="Oct 2016" data-price="700" data-fair="1050" data-floor="514" data-top="3396" data-osc="16" style="cursor:pointer"><title>Oct 2016
+Price $700
+Fair $1,050 · Floor $514 · Top $3,396</title></circle>
+<circle class="pt" cx="845.1" cy="676.0" r="9" fill="none" pointer-events="all" data-d="Nov 2016" data-price="745" data-fair="1118" data-floor="547" data-top="3617" data-osc="16" style="cursor:pointer"><title>Nov 2016
+Price $745
+Fair $1,118 · Floor $547 · Top $3,617</title></circle>
+<circle class="pt" cx="857.9" cy="647.4" r="9" fill="none" pointer-events="all" data-d="Dec 2016" data-price="960" data-fair="1187" data-floor="581" data-top="3842" data-osc="27" style="cursor:pointer"><title>Dec 2016
+Price $960
+Fair $1,187 · Floor $581 · Top $3,842</title></circle>
+<circle class="pt" cx="858.3" cy="615.6" r="9" fill="none" pointer-events="all" data-d="Jan 2017" data-price="965" data-fair="1263" data-floor="618" data-top="4086" data-osc="24" style="cursor:pointer"><title>Jan 2017
+Price $965
+Fair $1,263 · Floor $618 · Top $4,086</title></circle>
+<circle class="pt" cx="861.4" cy="582.6" r="9" fill="none" pointer-events="all" data-d="Feb 2017" data-price="1190" data-fair="1342" data-floor="657" data-top="4343" data-osc="31" style="cursor:pointer"><title>Feb 2017
+Price $1,190
+Fair $1,342 · Floor $657 · Top $4,343</title></circle>
+<circle class="pt" cx="850.8" cy="555.0" r="9" fill="none" pointer-events="all" data-d="Mar 2017" data-price="1080" data-fair="1417" data-floor="694" data-top="4586" data-osc="23" style="cursor:pointer"><title>Mar 2017
+Price $1,080
+Fair $1,417 · Floor $694 · Top $4,586</title></circle>
+<circle class="pt" cx="845.8" cy="521.6" r="9" fill="none" pointer-events="all" data-d="Apr 2017" data-price="1350" data-fair="1504" data-floor="737" data-top="4868" data-osc="32" style="cursor:pointer"><title>Apr 2017
+Price $1,350
+Fair $1,504 · Floor $737 · Top $4,868</title></circle>
+<circle class="pt" cx="845.4" cy="483.4" r="9" fill="none" pointer-events="all" data-d="May 2017" data-price="2300" data-fair="1593" data-floor="780" data-top="5155" data-osc="57" style="cursor:pointer"><title>May 2017
+Price $2,300
+Fair $1,593 · Floor $780 · Top $5,155</title></circle>
+<circle class="pt" cx="825.9" cy="453.0" r="9" fill="none" pointer-events="all" data-d="Jun 2017" data-price="2480" data-fair="1689" data-floor="827" data-top="5466" data-osc="58" style="cursor:pointer"><title>Jun 2017
+Price $2,480
+Fair $1,689 · Floor $827 · Top $5,466</title></circle>
+<circle class="pt" cx="804.9" cy="424.1" r="9" fill="none" pointer-events="all" data-d="Jul 2017" data-price="2880" data-fair="1787" data-floor="875" data-top="5782" data-osc="63" style="cursor:pointer"><title>Jul 2017
+Price $2,880
+Fair $1,787 · Floor $875 · Top $5,782</title></circle>
+<circle class="pt" cx="785.4" cy="387.2" r="9" fill="none" pointer-events="all" data-d="Aug 2017" data-price="4700" data-fair="1892" data-floor="927" data-top="6124" data-osc="86" style="cursor:pointer"><title>Aug 2017
+Price $4,700
+Fair $1,892 · Floor $927 · Top $6,124</title></circle>
+<circle class="pt" cx="750.4" cy="369.9" r="9" fill="none" pointer-events="all" data-d="Sep 2017" data-price="4340" data-fair="2003" data-floor="981" data-top="6482" data-osc="79" style="cursor:pointer"><title>Sep 2017
+Price $4,340
+Fair $2,003 · Floor $981 · Top $6,482</title></circle>
+<circle class="pt" cx="720.4" cy="342.1" r="9" fill="none" pointer-events="all" data-d="Oct 2017" data-price="6470" data-fair="2115" data-floor="1036" data-top="6845" data-osc="97" style="cursor:pointer"><title>Oct 2017
+Price $6,470
+Fair $2,115 · Floor $1,036 · Top $6,845</title></circle>
+<circle class="pt" cx="684.2" cy="316.9" r="9" fill="none" pointer-events="all" data-d="Nov 2017" data-price="9900" data-fair="2237" data-floor="1095" data-top="7238" data-osc="100" style="cursor:pointer"><title>Nov 2017
+Price $9,900
+Fair $2,237 · Floor $1,095 · Top $7,238</title></circle>
+<circle class="pt" cx="644.2" cy="299.2" r="9" fill="none" pointer-events="all" data-d="Dec 2017" data-price="14000" data-fair="2360" data-floor="1156" data-top="7635" data-osc="100" style="cursor:pointer"><title>Dec 2017
+Price $14,000
+Fair $2,360 · Floor $1,156 · Top $7,635</title></circle>
+<circle class="pt" cx="600.7" cy="309.9" r="9" fill="none" pointer-events="all" data-d="Jan 2018" data-price="10200" data-fair="2492" data-floor="1221" data-top="8065" data-osc="100" style="cursor:pointer"><title>Jan 2018
+Price $10,200
+Fair $2,492 · Floor $1,221 · Top $8,065</title></circle>
+<circle class="pt" cx="558.2" cy="314.6" r="9" fill="none" pointer-events="all" data-d="Feb 2018" data-price="10400" data-fair="2631" data-floor="1289" data-top="8515" data-osc="100" style="cursor:pointer"><title>Feb 2018
+Price $10,400
+Fair $2,631 · Floor $1,289 · Top $8,515</title></circle>
+<circle class="pt" cx="525.1" cy="337.9" r="9" fill="none" pointer-events="all" data-d="Mar 2018" data-price="6900" data-fair="2762" data-floor="1353" data-top="8939" data-osc="86" style="cursor:pointer"><title>Mar 2018
+Price $6,900
+Fair $2,762 · Floor $1,353 · Top $8,939</title></circle>
+<circle class="pt" cx="482.8" cy="344.1" r="9" fill="none" pointer-events="all" data-d="Apr 2018" data-price="9200" data-fair="2914" data-floor="1427" data-top="9428" data-osc="99" style="cursor:pointer"><title>Apr 2018
+Price $9,200
+Fair $2,914 · Floor $1,427 · Top $9,428</title></circle>
+<circle class="pt" cx="451.0" cy="370.1" r="9" fill="none" pointer-events="all" data-d="May 2018" data-price="7500" data-fair="3066" data-floor="1502" data-top="9922" data-osc="85" style="cursor:pointer"><title>May 2018
+Price $7,500
+Fair $3,066 · Floor $1,502 · Top $9,922</title></circle>
+<circle class="pt" cx="421.5" cy="399.1" r="9" fill="none" pointer-events="all" data-d="Jun 2018" data-price="6400" data-fair="3231" data-floor="1583" data-top="10456" data-osc="74" style="cursor:pointer"><title>Jun 2018
+Price $6,400
+Fair $3,231 · Floor $1,583 · Top $10,456</title></circle>
+<circle class="pt" cx="388.6" cy="422.3" r="9" fill="none" pointer-events="all" data-d="Jul 2018" data-price="7700" data-fair="3398" data-floor="1664" data-top="10994" data-osc="81" style="cursor:pointer"><title>Jul 2018
+Price $7,700
+Fair $3,398 · Floor $1,664 · Top $10,994</title></circle>
+<circle class="pt" cx="365.8" cy="456.8" r="9" fill="none" pointer-events="all" data-d="Aug 2018" data-price="7000" data-fair="3577" data-floor="1752" data-top="11574" data-osc="73" style="cursor:pointer"><title>Aug 2018
+Price $7,000
+Fair $3,577 · Floor $1,752 · Top $11,574</title></circle>
+<circle class="pt" cx="346.9" cy="493.0" r="9" fill="none" pointer-events="all" data-d="Sep 2018" data-price="6600" data-fair="3764" data-floor="1843" data-top="12180" data-osc="68" style="cursor:pointer"><title>Sep 2018
+Price $6,600
+Fair $3,764 · Floor $1,843 · Top $12,180</title></circle>
+<circle class="pt" cx="333.0" cy="529.9" r="9" fill="none" pointer-events="all" data-d="Oct 2018" data-price="6300" data-fair="3953" data-floor="1936" data-top="12790" data-osc="62" style="cursor:pointer"><title>Oct 2018
+Price $6,300
+Fair $3,953 · Floor $1,936 · Top $12,790</title></circle>
+<circle class="pt" cx="337.7" cy="572.1" r="9" fill="none" pointer-events="all" data-d="Nov 2018" data-price="4000" data-fair="4156" data-floor="2035" data-top="13448" data-osc="36" style="cursor:pointer"><title>Nov 2018
+Price $4,000
+Fair $4,156 · Floor $2,035 · Top $13,448</title></circle>
+<circle class="pt" cx="335.3" cy="609.1" r="9" fill="none" pointer-events="all" data-d="Dec 2018" data-price="3700" data-fair="4361" data-floor="2136" data-top="14110" data-osc="29" style="cursor:pointer"><title>Dec 2018
+Price $3,700
+Fair $4,361 · Floor $2,136 · Top $14,110</title></circle>
+<circle class="pt" cx="337.5" cy="647.0" r="9" fill="none" pointer-events="all" data-d="Jan 2019" data-price="3450" data-fair="4581" data-floor="2244" data-top="14823" data-osc="23" style="cursor:pointer"><title>Jan 2019
+Price $3,450
+Fair $4,581 · Floor $2,244 · Top $14,823</title></circle>
+<circle class="pt" cx="338.8" cy="685.1" r="9" fill="none" pointer-events="all" data-d="Feb 2019" data-price="3820" data-fair="4810" data-floor="2356" data-top="15566" data-osc="26" style="cursor:pointer"><title>Feb 2019
+Price $3,820
+Fair $4,810 · Floor $2,356 · Top $15,566</title></circle>
+<circle class="pt" cx="345.1" cy="719.3" r="9" fill="none" pointer-events="all" data-d="Mar 2019" data-price="4100" data-fair="5026" data-floor="2461" data-top="16262" data-osc="27" style="cursor:pointer"><title>Mar 2019
+Price $4,100
+Fair $5,026 · Floor $2,461 · Top $16,262</title></circle>
+<circle class="pt" cx="351.4" cy="758.9" r="9" fill="none" pointer-events="all" data-d="Apr 2019" data-price="5300" data-fair="5273" data-floor="2583" data-top="17063" data-osc="38" style="cursor:pointer"><title>Apr 2019
+Price $5,300
+Fair $5,273 · Floor $2,583 · Top $17,063</title></circle>
+<circle class="pt" cx="356.3" cy="801.5" r="9" fill="none" pointer-events="all" data-d="May 2019" data-price="8550" data-fair="5522" data-floor="2705" data-top="17870" data-osc="61" style="cursor:pointer"><title>May 2019
+Price $8,550
+Fair $5,522 · Floor $2,705 · Top $17,870</title></circle>
+<circle class="pt" cx="375.3" cy="840.4" r="9" fill="none" pointer-events="all" data-d="Jun 2019" data-price="10800" data-fair="5790" data-floor="2836" data-top="18736" data-osc="71" style="cursor:pointer"><title>Jun 2019
+Price $10,800
+Fair $5,790 · Floor $2,836 · Top $18,736</title></circle>
+<circle class="pt" cx="406.0" cy="868.4" r="9" fill="none" pointer-events="all" data-d="Jul 2019" data-price="10100" data-fair="6059" data-floor="2968" data-top="19606" data-osc="65" style="cursor:pointer"><title>Jul 2019
+Price $10,100
+Fair $6,059 · Floor $2,968 · Top $19,606</title></circle>
+<circle class="pt" cx="440.6" cy="893.3" r="9" fill="none" pointer-events="all" data-d="Aug 2019" data-price="9600" data-fair="6348" data-floor="3109" data-top="20541" data-osc="60" style="cursor:pointer"><title>Aug 2019
+Price $9,600
+Fair $6,348 · Floor $3,109 · Top $20,541</title></circle>
+<circle class="pt" cx="479.5" cy="910.3" r="9" fill="none" pointer-events="all" data-d="Sep 2019" data-price="8300" data-fair="6648" data-floor="3256" data-top="21513" data-osc="50" style="cursor:pointer"><title>Sep 2019
+Price $8,300
+Fair $6,648 · Floor $3,256 · Top $21,513</title></circle>
+<circle class="pt" cx="515.5" cy="929.4" r="9" fill="none" pointer-events="all" data-d="Oct 2019" data-price="9200" data-fair="6950" data-floor="3404" data-top="22488" data-osc="53" style="cursor:pointer"><title>Oct 2019
+Price $9,200
+Fair $6,950 · Floor $3,404 · Top $22,488</title></circle>
+<circle class="pt" cx="557.6" cy="934.1" r="9" fill="none" pointer-events="all" data-d="Nov 2019" data-price="7600" data-fair="7273" data-floor="3562" data-top="23535" data-osc="40" style="cursor:pointer"><title>Nov 2019
+Price $7,600
+Fair $7,273 · Floor $3,562 · Top $23,535</title></circle>
+<circle class="pt" cx="597.4" cy="937.8" r="9" fill="none" pointer-events="all" data-d="Dec 2019" data-price="7200" data-fair="7598" data-floor="3721" data-top="24586" data-osc="35" style="cursor:pointer"><title>Dec 2019
+Price $7,200
+Fair $7,598 · Floor $3,721 · Top $24,586</title></circle>
+<circle class="pt" cx="639.1" cy="947.3" r="9" fill="none" pointer-events="all" data-d="Jan 2020" data-price="9400" data-fair="7946" data-floor="3892" data-top="25712" data-osc="47" style="cursor:pointer"><title>Jan 2020
+Price $9,400
+Fair $7,946 · Floor $3,892 · Top $25,712</title></circle>
+<circle class="pt" cx="680.4" cy="938.9" r="9" fill="none" pointer-events="all" data-d="Feb 2020" data-price="8600" data-fair="8307" data-floor="4069" data-top="26881" data-osc="40" style="cursor:pointer"><title>Feb 2020
+Price $8,600
+Fair $8,307 · Floor $4,069 · Top $26,881</title></circle>
+<circle class="pt" cx="715.1" cy="919.3" r="9" fill="none" pointer-events="all" data-d="Mar 2020" data-price="6400" data-fair="8657" data-floor="4240" data-top="28014" data-osc="22" style="cursor:pointer"><title>Mar 2020
+Price $6,400
+Fair $8,657 · Floor $4,240 · Top $28,014</title></circle>
+<circle class="pt" cx="757.4" cy="914.1" r="9" fill="none" pointer-events="all" data-d="Apr 2020" data-price="8800" data-fair="9045" data-floor="4430" data-top="29269" data-osc="36" style="cursor:pointer"><title>Apr 2020
+Price $8,800
+Fair $9,045 · Floor $4,430 · Top $29,269</title></circle>
+<circle class="pt" cx="794.2" cy="896.3" r="9" fill="none" pointer-events="all" data-d="May 2020" data-price="9500" data-fair="9434" data-floor="4620" data-top="30527" data-osc="38" style="cursor:pointer"><title>May 2020
+Price $9,500
+Fair $9,434 · Floor $4,620 · Top $30,527</title></circle>
+<circle class="pt" cx="827.0" cy="869.7" r="9" fill="none" pointer-events="all" data-d="Jun 2020" data-price="9100" data-fair="9850" data-floor="4824" data-top="31873" data-osc="34" style="cursor:pointer"><title>Jun 2020
+Price $9,100
+Fair $9,850 · Floor $4,824 · Top $31,873</title></circle>
+<circle class="pt" cx="861.7" cy="846.1" r="9" fill="none" pointer-events="all" data-d="Jul 2020" data-price="11300" data-fair="10267" data-floor="5028" data-top="33223" data-osc="43" style="cursor:pointer"><title>Jul 2020
+Price $11,300
+Fair $10,267 · Floor $5,028 · Top $33,223</title></circle>
+<circle class="pt" cx="889.2" cy="812.8" r="9" fill="none" pointer-events="all" data-d="Aug 2020" data-price="11700" data-fair="10713" data-floor="5247" data-top="34666" data-osc="42" style="cursor:pointer"><title>Aug 2020
+Price $11,700
+Fair $10,713 · Floor $5,247 · Top $34,666</title></circle>
+<circle class="pt" cx="908.6" cy="774.3" r="9" fill="none" pointer-events="all" data-d="Sep 2020" data-price="10800" data-fair="11175" data-floor="5473" data-top="36162" data-osc="36" style="cursor:pointer"><title>Sep 2020
+Price $10,800
+Fair $11,175 · Floor $5,473 · Top $36,162</title></circle>
+<circle class="pt" cx="932.8" cy="738.8" r="9" fill="none" pointer-events="all" data-d="Oct 2020" data-price="13800" data-fair="11638" data-floor="5700" data-top="37659" data-osc="47" style="cursor:pointer"><title>Oct 2020
+Price $13,800
+Fair $11,638 · Floor $5,700 · Top $37,659</title></circle>
+<circle class="pt" cx="956.6" cy="698.8" r="9" fill="none" pointer-events="all" data-d="Nov 2020" data-price="19700" data-fair="12133" data-floor="5942" data-top="39260" data-osc="63" style="cursor:pointer"><title>Nov 2020
+Price $19,700
+Fair $12,133 · Floor $5,942 · Top $39,260</title></circle>
+<circle class="pt" cx="976.0" cy="656.0" r="9" fill="none" pointer-events="all" data-d="Dec 2020" data-price="29000" data-fair="12628" data-floor="6185" data-top="40863" data-osc="82" style="cursor:pointer"><title>Dec 2020
+Price $29,000
+Fair $12,628 · Floor $6,185 · Top $40,863</title></circle>
+<circle class="pt" cx="980.9" cy="608.2" r="9" fill="none" pointer-events="all" data-d="Jan 2021" data-price="33100" data-fair="13157" data-floor="6444" data-top="42576" data-osc="87" style="cursor:pointer"><title>Jan 2021
+Price $33,100
+Fair $13,157 · Floor $6,444 · Top $42,576</title></circle>
+<circle class="pt" cx="985.4" cy="558.3" r="9" fill="none" pointer-events="all" data-d="Feb 2021" data-price="45200" data-fair="13705" data-floor="6712" data-top="44347" data-osc="100" style="cursor:pointer"><title>Feb 2021
+Price $45,200
+Fair $13,705 · Floor $6,712 · Top $44,347</title></circle>
+<circle class="pt" cx="982.9" cy="512.1" r="9" fill="none" pointer-events="all" data-d="Mar 2021" data-price="58800" data-fair="14215" data-floor="6962" data-top="45999" data-osc="100" style="cursor:pointer"><title>Mar 2021
+Price $58,800
+Fair $14,215 · Floor $6,962 · Top $45,999</title></circle>
+<circle class="pt" cx="963.4" cy="465.2" r="9" fill="none" pointer-events="all" data-d="Apr 2021" data-price="57700" data-fair="14799" data-floor="7248" data-top="47888" data-osc="100" style="cursor:pointer"><title>Apr 2021
+Price $57,700
+Fair $14,799 · Floor $7,248 · Top $47,888</title></circle>
+<circle class="pt" cx="926.6" cy="430.6" r="9" fill="none" pointer-events="all" data-d="May 2021" data-price="37300" data-fair="15382" data-floor="7534" data-top="49775" data-osc="85" style="cursor:pointer"><title>May 2021
+Price $37,300
+Fair $15,382 · Floor $7,534 · Top $49,775</title></circle>
+<circle class="pt" cx="895.7" cy="393.0" r="9" fill="none" pointer-events="all" data-d="Jun 2021" data-price="35000" data-fair="16005" data-floor="7839" data-top="51791" data-osc="79" style="cursor:pointer"><title>Jun 2021
+Price $35,000
+Fair $16,005 · Floor $7,839 · Top $51,791</title></circle>
+<circle class="pt" cx="866.8" cy="355.1" r="9" fill="none" pointer-events="all" data-d="Jul 2021" data-price="41500" data-fair="16627" data-floor="8144" data-top="53805" data-osc="86" style="cursor:pointer"><title>Jul 2021
+Price $41,500
+Fair $16,627 · Floor $8,144 · Top $53,805</title></circle>
+<circle class="pt" cx="830.5" cy="321.1" r="9" fill="none" pointer-events="all" data-d="Aug 2021" data-price="47100" data-fair="17291" data-floor="8469" data-top="55953" data-osc="91" style="cursor:pointer"><title>Aug 2021
+Price $47,100
+Fair $17,291 · Floor $8,469 · Top $55,953</title></circle>
+<circle class="pt" cx="786.4" cy="298.1" r="9" fill="none" pointer-events="all" data-d="Sep 2021" data-price="43800" data-fair="17977" data-floor="8805" data-top="58173" data-osc="85" style="cursor:pointer"><title>Sep 2021
+Price $43,800
+Fair $17,977 · Floor $8,805 · Top $58,173</title></circle>
+<circle class="pt" cx="746.2" cy="268.4" r="9" fill="none" pointer-events="all" data-d="Oct 2021" data-price="61300" data-fair="18662" data-floor="9140" data-top="60389" data-osc="100" style="cursor:pointer"><title>Oct 2021
+Price $61,300
+Fair $18,662 · Floor $9,140 · Top $60,389</title></circle>
+<circle class="pt" cx="696.4" cy="257.3" r="9" fill="none" pointer-events="all" data-d="Nov 2021" data-price="57000" data-fair="19392" data-floor="9498" data-top="62753" data-osc="95" style="cursor:pointer"><title>Nov 2021
+Price $57,000
+Fair $19,392 · Floor $9,498 · Top $62,753</title></circle>
+<circle class="pt" cx="647.3" cy="257.8" r="9" fill="none" pointer-events="all" data-d="Dec 2021" data-price="46200" data-fair="20122" data-floor="9855" data-top="65112" data-osc="82" style="cursor:pointer"><title>Dec 2021
+Price $46,200
+Fair $20,122 · Floor $9,855 · Top $65,112</title></circle>
+<circle class="pt" cx="597.9" cy="263.8" r="9" fill="none" pointer-events="all" data-d="Jan 2022" data-price="38500" data-fair="20899" data-floor="10236" data-top="67627" data-osc="70" style="cursor:pointer"><title>Jan 2022
+Price $38,500
+Fair $20,899 · Floor $10,236 · Top $67,627</title></circle>
+<circle class="pt" cx="548.6" cy="266.1" r="9" fill="none" pointer-events="all" data-d="Feb 2022" data-price="43200" data-fair="21701" data-floor="10628" data-top="70222" data-osc="74" style="cursor:pointer"><title>Feb 2022
+Price $43,200
+Fair $21,701 · Floor $10,628 · Top $70,222</title></circle>
+<circle class="pt" cx="504.8" cy="275.6" r="9" fill="none" pointer-events="all" data-d="Mar 2022" data-price="45500" data-fair="22447" data-floor="10994" data-top="72636" data-osc="75" style="cursor:pointer"><title>Mar 2022
+Price $45,500
+Fair $22,447 · Floor $10,994 · Top $72,636</title></circle>
+<circle class="pt" cx="461.6" cy="300.0" r="9" fill="none" pointer-events="all" data-d="Apr 2022" data-price="37600" data-fair="23297" data-floor="11410" data-top="75388" data-osc="63" style="cursor:pointer"><title>Apr 2022
+Price $37,600
+Fair $23,297 · Floor $11,410 · Top $75,388</title></circle>
+<circle class="pt" cx="423.6" cy="328.1" r="9" fill="none" pointer-events="all" data-d="May 2022" data-price="31800" data-fair="24145" data-floor="11826" data-top="78133" data-osc="52" style="cursor:pointer"><title>May 2022
+Price $31,800
+Fair $24,145 · Floor $11,826 · Top $78,133</title></circle>
+<circle class="pt" cx="395.8" cy="369.2" r="9" fill="none" pointer-events="all" data-d="Jun 2022" data-price="19900" data-fair="25049" data-floor="12268" data-top="81056" data-osc="26" style="cursor:pointer"><title>Jun 2022
+Price $19,900
+Fair $25,049 · Floor $12,268 · Top $81,056</title></circle>
+<circle class="pt" cx="360.0" cy="396.6" r="9" fill="none" pointer-events="all" data-d="Jul 2022" data-price="23300" data-fair="25949" data-floor="12709" data-top="83970" data-osc="32" style="cursor:pointer"><title>Jul 2022
+Price $23,300
+Fair $25,949 · Floor $12,709 · Top $83,970</title></circle>
+<circle class="pt" cx="335.7" cy="436.2" r="9" fill="none" pointer-events="all" data-d="Aug 2022" data-price="20000" data-fair="26908" data-floor="13179" data-top="87072" data-osc="22" style="cursor:pointer"><title>Aug 2022
+Price $20,000
+Fair $26,908 · Floor $13,179 · Top $87,072</title></circle>
+<circle class="pt" cx="313.4" cy="476.2" r="9" fill="none" pointer-events="all" data-d="Sep 2022" data-price="19400" data-fair="27896" data-floor="13663" data-top="90269" data-osc="19" style="cursor:pointer"><title>Sep 2022
+Price $19,400
+Fair $27,896 · Floor $13,663 · Top $90,269</title></circle>
+<circle class="pt" cx="294.3" cy="516.4" r="9" fill="none" pointer-events="all" data-d="Oct 2022" data-price="20500" data-fair="28880" data-floor="14145" data-top="93454" data-osc="20" style="cursor:pointer"><title>Oct 2022
+Price $20,500
+Fair $28,880 · Floor $14,145 · Top $93,454</title></circle>
+<circle class="pt" cx="288.1" cy="561.9" r="9" fill="none" pointer-events="all" data-d="Nov 2022" data-price="17200" data-fair="29927" data-floor="14658" data-top="96842" data-osc="8" style="cursor:pointer"><title>Nov 2022
+Price $17,200
+Fair $29,927 · Floor $14,658 · Top $96,842</title></circle>
+<circle class="pt" cx="283.5" cy="605.3" r="9" fill="none" pointer-events="all" data-d="Dec 2022" data-price="16500" data-fair="30970" data-floor="15168" data-top="100217" data-osc="4" style="cursor:pointer"><title>Dec 2022
+Price $16,500
+Fair $30,970 · Floor $15,168 · Top $100,217</title></circle>
+<circle class="pt" cx="271.5" cy="651.0" r="9" fill="none" pointer-events="all" data-d="Jan 2023" data-price="23100" data-fair="32079" data-floor="15712" data-top="103806" data-osc="20" style="cursor:pointer"><title>Jan 2023
+Price $23,100
+Fair $32,079 · Floor $15,712 · Top $103,806</title></circle>
+<circle class="pt" cx="277.4" cy="697.2" r="9" fill="none" pointer-events="all" data-d="Feb 2023" data-price="23100" data-fair="33221" data-floor="16271" data-top="107502" data-osc="19" style="cursor:pointer"><title>Feb 2023
+Price $23,100
+Fair $33,221 · Floor $16,271 · Top $107,502</title></circle>
+<circle class="pt" cx="281.1" cy="740.1" r="9" fill="none" pointer-events="all" data-d="Mar 2023" data-price="28500" data-fair="34281" data-floor="16790" data-top="110932" data-osc="28" style="cursor:pointer"><title>Mar 2023
+Price $28,500
+Fair $34,281 · Floor $16,790 · Top $110,932</title></circle>
+<circle class="pt" cx="298.0" cy="784.6" r="9" fill="none" pointer-events="all" data-d="Apr 2023" data-price="29200" data-fair="35487" data-floor="17381" data-top="114835" data-osc="27" style="cursor:pointer"><title>Apr 2023
+Price $29,200
+Fair $35,487 · Floor $17,381 · Top $114,835</title></circle>
+<circle class="pt" cx="322.6" cy="823.4" r="9" fill="none" pointer-events="all" data-d="May 2023" data-price="27200" data-fair="36688" data-floor="17969" data-top="118720" data-osc="22" style="cursor:pointer"><title>May 2023
+Price $27,200
+Fair $36,688 · Floor $17,969 · Top $118,720</title></circle>
+<circle class="pt" cx="348.0" cy="863.9" r="9" fill="none" pointer-events="all" data-d="Jun 2023" data-price="30500" data-fair="37964" data-floor="18594" data-top="122848" data-osc="26" style="cursor:pointer"><title>Jun 2023
+Price $30,500
+Fair $37,964 · Floor $18,594 · Top $122,848</title></circle>
+<circle class="pt" cx="381.3" cy="895.8" r="9" fill="none" pointer-events="all" data-d="Jul 2023" data-price="29200" data-fair="39233" data-floor="19215" data-top="126955" data-osc="22" style="cursor:pointer"><title>Jul 2023
+Price $29,200
+Fair $39,233 · Floor $19,215 · Top $126,955</title></circle>
+<circle class="pt" cx="421.2" cy="921.8" r="9" fill="none" pointer-events="all" data-d="Aug 2023" data-price="25900" data-fair="40581" data-floor="19876" data-top="131318" data-osc="14" style="cursor:pointer"><title>Aug 2023
+Price $25,900
+Fair $40,581 · Floor $19,876 · Top $131,318</title></circle>
+<circle class="pt" cx="461.2" cy="946.8" r="9" fill="none" pointer-events="all" data-d="Sep 2023" data-price="26900" data-fair="41967" data-floor="20555" data-top="135804" data-osc="14" style="cursor:pointer"><title>Sep 2023
+Price $26,900
+Fair $41,967 · Floor $20,555 · Top $135,804</title></circle>
+<circle class="pt" cx="500.4" cy="972.8" r="9" fill="none" pointer-events="all" data-d="Oct 2023" data-price="34500" data-fair="43346" data-floor="21230" data-top="140265" data-osc="26" style="cursor:pointer"><title>Oct 2023
+Price $34,500
+Fair $43,346 · Floor $21,230 · Top $140,265</title></circle>
+<circle class="pt" cx="546.5" cy="988.6" r="9" fill="none" pointer-events="all" data-d="Nov 2023" data-price="37700" data-fair="44810" data-floor="21947" data-top="145002" data-osc="29" style="cursor:pointer"><title>Nov 2023
+Price $37,700
+Fair $44,810 · Floor $21,947 · Top $145,002</title></circle>
+<circle class="pt" cx="592.9" cy="999.1" r="9" fill="none" pointer-events="all" data-d="Dec 2023" data-price="42300" data-fair="46265" data-floor="22660" data-top="149712" data-osc="33" style="cursor:pointer"><title>Dec 2023
+Price $42,300
+Fair $46,265 · Floor $22,660 · Top $149,712</title></circle>
+<circle class="pt" cx="642.2" cy="999.7" r="9" fill="none" pointer-events="all" data-d="Jan 2024" data-price="42600" data-fair="47810" data-floor="23416" data-top="154710" data-osc="32" style="cursor:pointer"><title>Jan 2024
+Price $42,600
+Fair $47,810 · Floor $23,416 · Top $154,710</title></circle>
+<circle class="pt" cx="693.5" cy="1005.8" r="9" fill="none" pointer-events="all" data-d="Feb 2024" data-price="61200" data-fair="49397" data-floor="24194" data-top="159846" data-osc="49" style="cursor:pointer"><title>Feb 2024
+Price $61,200
+Fair $49,397 · Floor $24,194 · Top $159,846</title></circle>
+<circle class="pt" cx="741.2" cy="998.8" r="9" fill="none" pointer-events="all" data-d="Mar 2024" data-price="71300" data-fair="50921" data-floor="24940" data-top="164778" data-osc="56" style="cursor:pointer"><title>Mar 2024
+Price $71,300
+Fair $50,921 · Floor $24,940 · Top $164,778</title></circle>
+<circle class="pt" cx="786.6" cy="974.4" r="9" fill="none" pointer-events="all" data-d="Apr 2024" data-price="60600" data-fair="52593" data-floor="25759" data-top="170188" data-osc="45" style="cursor:pointer"><title>Apr 2024
+Price $60,600
+Fair $52,593 · Floor $25,759 · Top $170,188</title></circle>
+<circle class="pt" cx="831.5" cy="953.3" r="9" fill="none" pointer-events="all" data-d="May 2024" data-price="67500" data-fair="54254" data-floor="26573" data-top="175563" data-osc="49" style="cursor:pointer"><title>May 2024
+Price $67,500
+Fair $54,254 · Floor $26,573 · Top $175,563</title></circle>
+<circle class="pt" cx="870.9" cy="920.4" r="9" fill="none" pointer-events="all" data-d="Jun 2024" data-price="62700" data-fair="56016" data-floor="27435" data-top="181264" data-osc="44" style="cursor:pointer"><title>Jun 2024
+Price $62,700
+Fair $56,016 · Floor $27,435 · Top $181,264</title></circle>
+<circle class="pt" cx="906.9" cy="886.5" r="9" fill="none" pointer-events="all" data-d="Jul 2024" data-price="64600" data-fair="57766" data-floor="28292" data-top="186926" data-osc="44" style="cursor:pointer"><title>Jul 2024
+Price $64,600
+Fair $57,766 · Floor $28,292 · Top $186,926</title></circle>
+<circle class="pt" cx="935.7" cy="844.4" r="9" fill="none" pointer-events="all" data-d="Aug 2024" data-price="59000" data-fair="59621" data-floor="29201" data-top="192930" data-osc="37" style="cursor:pointer"><title>Aug 2024
+Price $59,000
+Fair $59,621 · Floor $29,201 · Top $192,930</title></circle>
+<circle class="pt" cx="963.6" cy="801.7" r="9" fill="none" pointer-events="all" data-d="Sep 2024" data-price="63300" data-fair="61525" data-floor="30134" data-top="199092" data-osc="39" style="cursor:pointer"><title>Sep 2024
+Price $63,300
+Fair $61,525 · Floor $30,134 · Top $199,092</title></circle>
+<circle class="pt" cx="986.2" cy="757.4" r="9" fill="none" pointer-events="all" data-d="Oct 2024" data-price="70200" data-fair="63416" data-floor="31060" data-top="205210" data-osc="43" style="cursor:pointer"><title>Oct 2024
+Price $70,200
+Fair $63,416 · Floor $31,060 · Top $205,210</title></circle>
+<circle class="pt" cx="1010.6" cy="709.9" r="9" fill="none" pointer-events="all" data-d="Nov 2024" data-price="96400" data-fair="65420" data-floor="32041" data-top="211695" data-osc="58" style="cursor:pointer"><title>Nov 2024
+Price $96,400
+Fair $65,420 · Floor $32,041 · Top $211,695</title></circle>
+<circle class="pt" cx="1016.6" cy="659.0" r="9" fill="none" pointer-events="all" data-d="Dec 2024" data-price="93600" data-fair="67409" data-floor="33015" data-top="218130" data-osc="55" style="cursor:pointer"><title>Dec 2024
+Price $93,600
+Fair $67,409 · Floor $33,015 · Top $218,130</title></circle>
+<circle class="pt" cx="1020.0" cy="605.9" r="9" fill="none" pointer-events="all" data-d="Jan 2025" data-price="102000" data-fair="69516" data-floor="34048" data-top="224950" data-osc="58" style="cursor:pointer"><title>Jan 2025
+Price $102,000
+Fair $69,516 · Floor $34,048 · Top $224,950</title></circle>
+<circle class="pt" cx="1006.6" cy="554.2" r="9" fill="none" pointer-events="all" data-d="Feb 2025" data-price="84000" data-fair="71678" data-floor="35106" data-top="231945" data-osc="46" style="cursor:pointer"><title>Feb 2025
+Price $84,000
+Fair $71,678 · Floor $35,106 · Top $231,945</title></circle>
+<circle class="pt" cx="993.9" cy="508.5" r="9" fill="none" pointer-events="all" data-d="Mar 2025" data-price="82000" data-fair="73678" data-floor="36086" data-top="238417" data-osc="43" style="cursor:pointer"><title>Mar 2025
+Price $82,000
+Fair $73,678 · Floor $36,086 · Top $238,417</title></circle>
+<circle class="pt" cx="978.7" cy="457.8" r="9" fill="none" pointer-events="all" data-d="Apr 2025" data-price="94000" data-fair="75946" data-floor="37197" data-top="245756" data-osc="49" style="cursor:pointer"><title>Apr 2025
+Price $94,000
+Fair $75,946 · Floor $37,197 · Top $245,756</title></circle>
+<circle class="pt" cx="956.5" cy="411.2" r="9" fill="none" pointer-events="all" data-d="May 2025" data-price="104000" data-fair="78195" data-floor="38298" data-top="253035" data-osc="53" style="cursor:pointer"><title>May 2025
+Price $104,000
+Fair $78,195 · Floor $38,298 · Top $253,035</title></circle>
+<circle class="pt" cx="925.3" cy="367.5" r="9" fill="none" pointer-events="all" data-d="Jun 2025" data-price="108000" data-fair="80578" data-floor="39465" data-top="260744" data-osc="53" style="cursor:pointer"><title>Jun 2025
+Price $108,000
+Fair $80,578 · Floor $39,465 · Top $260,744</title></circle>
+<circle class="pt" cx="890.5" cy="328.7" r="9" fill="none" pointer-events="all" data-d="Jul 2025" data-price="115000" data-fair="82940" data-floor="40622" data-top="268388" data-osc="55" style="cursor:pointer"><title>Jul 2025
+Price $115,000
+Fair $82,940 · Floor $40,622 · Top $268,388</title></circle>
+<circle class="pt" cx="847.5" cy="296.2" r="9" fill="none" pointer-events="all" data-d="Aug 2025" data-price="112000" data-fair="85441" data-floor="41847" data-top="276480" data-osc="52" style="cursor:pointer"><title>Aug 2025
+Price $112,000
+Fair $85,441 · Floor $41,847 · Top $276,480</title></circle>
+<circle class="pt" cx="801.3" cy="268.4" r="9" fill="none" pointer-events="all" data-d="Sep 2025" data-price="114000" data-fair="88004" data-floor="43102" data-top="284774" data-osc="52" style="cursor:pointer"><title>Sep 2025
+Price $114,000
+Fair $88,004 · Floor $43,102 · Top $284,774</title></circle>
+<circle class="pt" cx="752.9" cy="249.2" r="9" fill="none" pointer-events="all" data-d="Oct 2025" data-price="110000" data-fair="90544" data-floor="44347" data-top="292995" data-osc="48" style="cursor:pointer"><title>Oct 2025
+Price $110,000
+Fair $90,544 · Floor $44,347 · Top $292,995</title></circle>
+<circle class="pt" cx="699.7" cy="241.4" r="9" fill="none" pointer-events="all" data-d="Nov 2025" data-price="91000" data-fair="93233" data-floor="45663" data-top="301695" data-osc="37" style="cursor:pointer"><title>Nov 2025
+Price $91,000
+Fair $93,233 · Floor $45,663 · Top $301,695</title></circle>
+<circle class="pt" cx="648.9" cy="235.9" r="9" fill="none" pointer-events="all" data-d="Dec 2025" data-price="87000" data-fair="95897" data-floor="46968" data-top="310317" data-osc="33" style="cursor:pointer"><title>Dec 2025
+Price $87,000
+Fair $95,897 · Floor $46,968 · Top $310,317</title></circle>
+<circle class="pt" cx="596.1" cy="233.6" r="9" fill="none" pointer-events="all" data-d="Jan 2026" data-price="92000" data-fair="98716" data-floor="48349" data-top="319440" data-osc="34" style="cursor:pointer"><title>Jan 2026
+Price $92,000
+Fair $98,716 · Floor $48,349 · Top $319,440</title></circle>
+<circle class="pt" cx="543.9" cy="241.8" r="9" fill="none" pointer-events="all" data-d="Feb 2026" data-price="88000" data-fair="101604" data-floor="49763" data-top="328784" data-osc="30" style="cursor:pointer"><title>Feb 2026
+Price $88,000
+Fair $101,604 · Floor $49,763 · Top $328,784</title></circle>
+<circle class="pt" cx="498.3" cy="255.3" r="9" fill="none" pointer-events="all" data-d="Mar 2026" data-price="84000" data-fair="104272" data-floor="51070" data-top="337416" data-osc="26" style="cursor:pointer"><title>Mar 2026
+Price $84,000
+Fair $104,272 · Floor $51,070 · Top $337,416</title></circle>
+<circle class="pt" cx="449.7" cy="275.2" r="9" fill="none" pointer-events="all" data-d="Apr 2026" data-price="83000" data-fair="107293" data-floor="52550" data-top="347192" data-osc="24" style="cursor:pointer"><title>Apr 2026
+Price $83,000
+Fair $107,293 · Floor $52,550 · Top $347,192</title></circle>
+<circle class="pt" cx="406.9" cy="302.3" r="9" fill="none" pointer-events="all" data-d="May 2026" data-price="77000" data-fair="110285" data-floor="54015" data-top="356874" data-osc="19" style="cursor:pointer"><title>May 2026
+Price $77,000
+Fair $110,285 · Floor $54,015 · Top $356,874</title></circle>
+</g>
 <text x="990" y="300" font-size="12" font-weight="700" letter-spacing="1.5" fill="#ea3943" opacity="0.85">CYCLE TOPS</text>
 <text x="92" y="520" font-size="12" font-weight="700" letter-spacing="1.5" fill="#16c784" opacity="0.85">CYCLE BOTTOMS</text>
 <circle cx="406.9" cy="302.3" r="6" fill="rgb(104,188,99)" stroke="#e8ecf3" stroke-width="1.4" filter="url(#glow)"/>

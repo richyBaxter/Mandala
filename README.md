@@ -37,6 +37,7 @@ A single static page that fetches everything client-side and renders:
   **Accumulate / Lean buy / Neutral–Hold / Lean sell / Distribute**.
 - **Stat tiles** — price + 24h, BTC/Gold ratio, fair value, price vs fair, PL oscillator,
   Mayer Multiple, MVRV, Fear & Greed, next difficulty adjustment, Lightning capacity, on-chain fees.
+- **Interactive spiral** — hover any monthly point for its historic price and the model's fair/floor/top levels that month.
 - **Charts** — price vs Power-Law channel (log), Pi Cycle Top, Mayer Multiple, Fear & Greed (60d),
   buy/sell taker-volume pressure, network hashrate (1y).
 - **Flows & institutional news** — credible feeds filtered for ETF flows and *who's* buying.

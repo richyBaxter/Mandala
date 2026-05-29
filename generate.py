@@ -79,10 +79,6 @@ T = {
     "macro":   "#94a3b8",  # slate
 }
 
-def hex2rgb(h):
-    h = h.lstrip("#")
-    return tuple(int(h[i:i + 2], 16) for i in (0, 2, 4))
-
 # ---------- helpers ----------
 def ymid(year, m):
     return datetime.date(year, m, 15)
@@ -118,28 +114,13 @@ def pl_xy(d, a_coef, log_offset=0.0):
     r = max(2.0, K * (math.log10(p) - math.log10(P0)) + K * log_offset)
     return CX + r * math.cos(a), CY - r * math.sin(a)
 
-# ---------- buy/sell oscillator (position in the Power-Law channel) ----------
+# ---------- position in the Power-Law channel (0 = floor, 1 = cycle-top) ----------
 def oscillator(d, price):
-    """0 = on support (cheap / buy), 1 = on resistance (expensive / sell)."""
     if price <= 0:
         return 0.0
     lo, hi = math.log10(pl(d, A_SUP)), math.log10(pl(d, A_RES))
     t = (math.log10(price) - lo) / (hi - lo)
     return max(0.0, min(1.0, t))
-
-ZONE_STOPS = [(0.0, hex2rgb(T["buy"])), (0.5, hex2rgb(T["fair"])), (1.0, hex2rgb(T["sell"]))]
-
-def zone_color(t):
-    """green -> amber -> red across t in [0,1]."""
-    stops = ZONE_STOPS
-    for (t0, c0), (t1, c1) in zip(stops, stops[1:]):
-        if t <= t1:
-            f = 0 if t1 == t0 else (t - t0) / (t1 - t0)
-            return tuple(round(c0[i] + f * (c1[i] - c0[i])) for i in range(3))
-    return stops[-1][1]
-
-def rgb(c):
-    return f"rgb({c[0]},{c[1]},{c[2]})"
 
 # ---------- power-law sampling ----------
 PL_START = datetime.date(2011, 7, 1)
@@ -180,10 +161,6 @@ s = []
 s.append(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" '
          f'viewBox="0 0 {W} {H}" font-family="{FONT}">')
 s.append('<defs>'
-         f'<linearGradient id="osc" x1="0" y1="0" x2="1" y2="0">'
-         f'<stop offset="0%" stop-color="{T["buy"]}"/>'
-         f'<stop offset="50%" stop-color="{T["fair"]}"/>'
-         f'<stop offset="100%" stop-color="{T["sell"]}"/></linearGradient>'
          f'<radialGradient id="bgglow" cx="50%" cy="50%" r="60%">'
          f'<stop offset="0%" stop-color="{T["glow"]}"/>'
          f'<stop offset="100%" stop-color="{T["bg"]}"/></radialGradient>'
@@ -215,14 +192,13 @@ for price in (10, 100, 1000, 10000, 100000):
     s.append(f'<circle cx="{CX}" cy="{CY}" r="{radius(price):.1f}" fill="none" '
              f'stroke="{T["ring"]}" stroke-width="1" stroke-dasharray="1,5"/>')
 
-# channel bands
-s.append(f'<path d="{ribbon(A_SUP,0.14)}" fill="{T["buy"]}" opacity="0.10" stroke="none"/>')
-s.append(f'<path d="{ribbon(A_RES,0.14)}" fill="{T["sell"]}" opacity="0.10" stroke="none"/>')
-# channel spirals (crisp, lighter — they're the reference, the price line is the hero)
-s.append(f'<path d="{spiral(A_SUP)}" fill="none" stroke="{T["support"]}" stroke-width="1.5" opacity="0.6"/>')
-s.append(f'<path d="{spiral(A_RES)}" fill="none" stroke="{T["resist"]}" stroke-width="1.5" opacity="0.6"/>')
-s.append(f'<path d="{spiral(A_FAIR)}" fill="none" stroke="{T["ink"]}" stroke-width="1.3" '
-         f'stroke-dasharray="6,5" opacity="0.45"/>')
+# Power-Law channel — monochrome orange family (floor solid, top lighter dashed,
+# fair value dotted). The white price line is the hero.
+s.append(f'<path d="{spiral(A_SUP)}" fill="none" stroke="{T["btc"]}" stroke-width="1.6" opacity="0.7"/>')
+s.append(f'<path d="{spiral(A_RES)}" fill="none" stroke="#f6b15a" stroke-width="1.4" '
+         f'stroke-dasharray="7,5" opacity="0.6"/>')
+s.append(f'<path d="{spiral(A_FAIR)}" fill="none" stroke="{T["ink"]}" stroke-width="1.2" '
+         f'stroke-dasharray="2,5" opacity="0.4"/>')
 _fvx, _fvy = pl_xy(ymid(LAST_YEAR, 7), A_FAIR)
 s.append(f'<text x="{_fvx:.1f}" y="{_fvy:.1f}" font-size="10.5" fill="{T["muted"]}" '
          f'text-anchor="middle" opacity="0.8">fair value</text>')
@@ -255,32 +231,8 @@ while d <= PL_END:
     dlabel(ymid(d.year, 1), str(d.year))
     d = datetime.date(d.year + 1, 1, 1)
 
-# ---------- institutional flow overlay (spot-ETF net flow) ----------
-# Radial ticks just outside the price line: outward green = net buying,
-# inward red = net selling; length scales with magnitude.
-flow_by_month = {}
-for r in FLOWS:
-    try:
-        flow_by_month[r["date"]] = float(r["net_flow_musd"])
-    except (KeyError, ValueError):
-        continue
-if flow_by_month:
-    fmax = max(abs(v) for v in flow_by_month.values()) or 1.0
-    for d, p in btc_pts:
-        v = flow_by_month.get(d.strftime("%Y-%m"))
-        if v is None:
-            continue
-        a, r0 = angle(d), radius(p)
-        length = 5 + 16 * (abs(v) / fmax)
-        r1 = r0 + length if v >= 0 else r0 - length
-        col = T["buy"] if v >= 0 else T["sell"]
-        x0, y0 = CX + r0 * math.cos(a), CY - r0 * math.sin(a)
-        x1, y1 = CX + r1 * math.cos(a), CY - r1 * math.sin(a)
-        s.append(f'<line x1="{x0:.1f}" y1="{y0:.1f}" x2="{x1:.1f}" y2="{y1:.1f}" '
-                 f'stroke="{col}" stroke-width="1.8" opacity="0.5"/>')
-
-# ---------- events diary ----------
-ev_color = {"halving": T["halving"], "etf": T["etf"], "macro": T["macro"]}
+# ---------- events diary (single neutral colour) ----------
+col = T["muted"]
 for ev in EVENTS:
     try:
         y, m, day = (int(x) for x in ev["date"].split("-"))
@@ -296,10 +248,9 @@ for ev in EVENTS:
     x0, y0 = CX + r0 * math.cos(a), CY - r0 * math.sin(a)
     r1 = r0 + 38
     x1, y1 = CX + r1 * math.cos(a), CY - r1 * math.sin(a)
-    col = ev_color.get(ev.get("type", "macro"), T["macro"])
     anchor = "start" if x1 >= CX else "end"
     s.append(f'<line x1="{x0:.1f}" y1="{y0:.1f}" x2="{x1:.1f}" y2="{y1:.1f}" '
-             f'stroke="{col}" stroke-width="1" opacity="0.6"/>')
+             f'stroke="{col}" stroke-width="1" opacity="0.55"/>')
     s.append(f'<circle cx="{x0:.1f}" cy="{y0:.1f}" r="3" fill="{col}" '
              f'stroke="{T["bg"]}" stroke-width="1"/>')
     s.append(f'<text x="{x1 + (4 if anchor=="start" else -4):.1f}" y="{y1+3:.1f}" font-size="10.5" '
@@ -323,59 +274,40 @@ s.append('</g>')
 
 # captions + you-are-here badge
 s.append(f'<text x="990" y="300" font-size="12" font-weight="700" letter-spacing="1.5" '
-         f'fill="{T["sell"]}" opacity="0.85">CYCLE TOPS</text>')
+         f'fill="{T["muted"]}" opacity="0.85">CYCLE TOPS</text>')
 s.append(f'<text x="92" y="520" font-size="12" font-weight="700" letter-spacing="1.5" '
-         f'fill="{T["buy"]}" opacity="0.85">CYCLE BOTTOMS</text>')
-zc = rgb(zone_color(cur_t))
-s.append(f'<circle cx="{cur_x:.1f}" cy="{cur_y:.1f}" r="6" fill="{zc}" '
+         f'fill="{T["muted"]}" opacity="0.85">CYCLE BOTTOMS</text>')
+s.append(f'<circle cx="{cur_x:.1f}" cy="{cur_y:.1f}" r="6" fill="{T["btc"]}" '
          f'stroke="{T["ink"]}" stroke-width="1.4" filter="url(#glow)"/>')
 hx, hy = cur_x + 120, cur_y + 64
 s.append(f'<line x1="{cur_x+6:.1f}" y1="{cur_y+4:.1f}" x2="{hx+8:.1f}" y2="{hy-9:.1f}" '
          f'stroke="{T["muted"]}" stroke-width="1"/>')
 badge = f'NOW  ~${cur_p:,.0f}  &#183;  {cur_d.strftime("%b %Y")}'
 s.append(f'<rect x="{hx:.1f}" y="{hy-15:.1f}" width="196" height="26" rx="13" '
-         f'fill="{T["panel"]}" stroke="{zc}" stroke-width="1.2"/>')
-s.append(f'<circle cx="{hx+15:.1f}" cy="{hy-2:.1f}" r="4" fill="{zc}"/>')
+         f'fill="{T["panel"]}" stroke="{T["btc"]}" stroke-width="1.2"/>')
+s.append(f'<circle cx="{hx+15:.1f}" cy="{hy-2:.1f}" r="4" fill="{T["btc"]}"/>')
 s.append(f'<text x="{hx+27:.1f}" y="{hy+2:.1f}" font-size="12.5" font-weight="700" '
          f'fill="{T["ink"]}">{badge}</text>')
 
-# ---------- legend + buy/sell gauge (bottom-right) ----------
-lx, ly = 858, H - 280
-s.append(f'<rect x="{lx-18}" y="{ly-30}" width="324" height="250" rx="12" '
+# ---------- compact key (bottom-right) ----------
+lx, ly = 902, H - 196
+s.append(f'<rect x="{lx-18}" y="{ly-26}" width="280" height="150" rx="12" '
          f'fill="{T["panel"]}" stroke="{T["border"]}"/>')
-s.append(f'<text x="{lx}" y="{ly-8}" font-size="12.5" font-weight="700" '
-         f'fill="{T["ink"]}">BUY / SELL ZONE</text>')
-s.append(f'<text x="{lx}" y="{ly+8}" font-size="10.5" fill="{T["muted"]}">'
-         f'Power-Law oscillator</text>')
-s.append(f'<rect x="{lx}" y="{ly+18}" width="270" height="12" rx="6" '
-         f'fill="url(#osc)"/>')
-mx = lx + cur_t * 270
-s.append(f'<polygon points="{mx:.1f},{ly+16} {mx-5:.1f},{ly+8} {mx+5:.1f},{ly+8}" fill="{T["ink"]}"/>')
-s.append(f'<line x1="{mx:.1f}" y1="{ly+16}" x2="{mx:.1f}" y2="{ly+32}" stroke="{T["ink"]}" stroke-width="1.5"/>')
-s.append(f'<text x="{lx}" y="{ly+46}" font-size="10" fill="{T["buy"]}">BUY</text>')
-s.append(f'<text x="{lx+135}" y="{ly+46}" font-size="10" fill="{T["fair"]}" text-anchor="middle">FAIR</text>')
-s.append(f'<text x="{lx+270}" y="{ly+46}" font-size="10" fill="{T["sell"]}" text-anchor="end">SELL</text>')
-zone = "BUY" if cur_t < 0.34 else ("SELL" if cur_t > 0.66 else "FAIR")
-s.append(f'<text x="{lx}" y="{ly+68}" font-size="13" font-weight="800" '
-         f'fill="{zc}">Now: {zone} &#183; {cur_t*100:.0f}% of channel</text>')
-# overlay key
-ky = ly + 92
-s.append(f'<line x1="{lx}" y1="{ky}" x2="{lx+44}" y2="{ky}" stroke="{T["ink"]}" stroke-width="2.8"/>')
-s.append(f'<text x="{lx+54}" y="{ky+4}" font-size="10.5" fill="{T["muted"]}">BTC price</text>')
-ky += 22
-s.append(f'<line x1="{lx+8}" y1="{ky-6}" x2="{lx+8}" y2="{ky+4}" stroke="{T["buy"]}" stroke-width="2.6"/>')
-s.append(f'<line x1="{lx+20}" y1="{ky}" x2="{lx+20}" y2="{ky+10}" stroke="{T["sell"]}" stroke-width="2.6"/>')
-s.append(f'<text x="{lx+54}" y="{ky+4}" font-size="10.5" fill="{T["muted"]}">Spot-ETF net flow (in / out)</text>')
-ky += 22
-s.append(f'<circle cx="{lx+6}" cy="{ky}" r="3.2" fill="{T["halving"]}"/>')
-s.append(f'<circle cx="{lx+20}" cy="{ky}" r="3.2" fill="{T["etf"]}"/>')
-s.append(f'<circle cx="{lx+34}" cy="{ky}" r="3.2" fill="{T["macro"]}"/>')
-s.append(f'<text x="{lx+54}" y="{ky+4}" font-size="10.5" fill="{T["muted"]}">Events: halving / ETF / macro</text>')
-ky += 22
-s.append(f'<line x1="{lx}" y1="{ky}" x2="{lx+44}" y2="{ky}" stroke="{T["ink"]}" '
-         f'stroke-width="1.3" stroke-dasharray="5,4" opacity="0.6"/>')
-s.append(f'<text x="{lx+54}" y="{ky+4}" font-size="10.5" fill="{T["muted"]}">Power-Law fair value</text>')
-s.append(f'<text x="{lx}" y="{ky+24}" font-size="9" fill="{T["faint"]}">Educational, not financial advice.</text>')
+s.append(f'<text x="{lx}" y="{ly-4}" font-size="12" font-weight="700" letter-spacing="1.5" '
+         f'fill="{T["ink"]}">KEY</text>')
+ky = ly + 18
+s.append(f'<line x1="{lx}" y1="{ky}" x2="{lx+40}" y2="{ky}" stroke="{T["ink"]}" stroke-width="2.8"/>')
+s.append(f'<text x="{lx+50}" y="{ky+4}" font-size="10.5" fill="{T["muted"]}">BTC price</text>')
+ky += 24
+s.append(f'<line x1="{lx}" y1="{ky}" x2="{lx+40}" y2="{ky}" stroke="{T["btc"]}" stroke-width="1.8" opacity="0.7"/>')
+s.append(f'<text x="{lx+50}" y="{ky+4}" font-size="10.5" fill="{T["muted"]}">Power-Law floor</text>')
+ky += 24
+s.append(f'<line x1="{lx}" y1="{ky}" x2="{lx+40}" y2="{ky}" stroke="#f6b15a" stroke-width="1.6" stroke-dasharray="7,5"/>')
+s.append(f'<text x="{lx+50}" y="{ky+4}" font-size="10.5" fill="{T["muted"]}">Cycle-top band</text>')
+ky += 24
+s.append(f'<line x1="{lx}" y1="{ky}" x2="{lx+40}" y2="{ky}" stroke="{T["ink"]}" stroke-width="1.4" stroke-dasharray="2,5" opacity="0.6"/>')
+s.append(f'<text x="{lx+50}" y="{ky+4}" font-size="10.5" fill="{T["muted"]}">Fair value &#183; &#9679; events</text>')
+s.append(f'<circle cx="{lx+150}" cy="{ky}" r="3" fill="{T["muted"]}"/>')
 
 # footer
 s.append(f'<a href="https://houtini.com" target="_blank"><text x="64" y="{H-52}" '

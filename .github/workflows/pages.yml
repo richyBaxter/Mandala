@@ -33,6 +33,9 @@ jobs:
       - name: Fetch institutional news (server-side RSS)
         continue-on-error: true
         run: python3 tools/fetch_news.py
+      - name: Fetch BTC ETF flows (Farside)
+        continue-on-error: true
+        run: python3 tools/fetch_etf_flows.py
       - name: Build AI prompt from live data
         run: python3 tools/build_prompt.py
       - name: Generate market note (GitHub Models)

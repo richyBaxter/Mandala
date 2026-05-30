@@ -198,6 +198,14 @@
   </div>
 
   <div class="grid">
+    <div class="card full" id="etf-card" hidden>
+      <h2>Spot BTC ETF Flows (90 days)</h2>
+      <p class="hint" id="etf-hint">Daily net flow into US spot Bitcoin ETFs ($M). Green = institutional buying, red = selling.</p>
+      <div class="chart-box"><canvas id="c-etf"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid">
     <div class="card full">
       <h2>Network hashrate (1 year)</h2>
       <p class="hint">Total mining power securing the network (EH/s). Source: mempool.space.</p>
@@ -523,6 +531,32 @@ async function loadNews(){
     : "Latest headlines from credible sources.";
 }
 
+// ---------- Spot-BTC-ETF daily net flows (static etf_flows.json, scraped in CI) ----------
+async function loadEtfFlows(){
+  const r = await fetch("etf_flows.json?_=" + Date.now());
+  if(!r.ok) return;                              // CI step didn't produce it
+  const j = await r.json();
+  const items = (j.items || []).slice(-90);
+  if(!items.length) return;
+  document.getElementById("etf-card").hidden = false;
+  const labels = items.map(i => new Date(i.date).toLocaleDateString(undefined, {month:"short", day:"numeric"}));
+  const data = items.map(i => i.net_flow_musd);
+  const colors = data.map(v => v >= 0 ? C.buy : C.sell);
+  const cum30 = items.slice(-30).reduce((a,b)=> a + (b.net_flow_musd||0), 0);
+  const latest = items[items.length-1];
+  document.getElementById("etf-hint").innerHTML =
+    `Daily net flow into US spot Bitcoin ETFs ($M). Latest <strong>${latest.date}: ` +
+    `<span style="color:${latest.net_flow_musd>=0?C.buy:C.sell}">${latest.net_flow_musd>=0?"+":""}${latest.net_flow_musd}</span></strong>; ` +
+    `30-day cumulative <strong style="color:${cum30>=0?C.buy:C.sell}">${cum30>=0?"+":""}${Math.round(cum30).toLocaleString()}</strong>. Source: Farside.`;
+  mkChart("c-etf", {
+    type: "bar",
+    data: { labels, datasets: [
+      { label: "Net flow ($M)", data, backgroundColor: colors, borderWidth: 0, barPercentage: 1, categoryPercentage: .96 },
+    ]},
+    options: { ...baseOpts(false), plugins: { ...baseOpts(false).plugins, legend: { display: false } } }
+  });
+}
+
 // ---------- Key dates diary ----------
 async function loadDiary(){
   const events = [];
@@ -623,6 +657,7 @@ function refreshSlow(){
   loadNews().then(()=>{ newsLoaded = true; }).catch(e=>{ console.error(e);
     if(!newsLoaded) document.getElementById("news").innerHTML="<li class='err'>news unavailable</li>"; });
   loadCommentary().catch(e=>console.error(e));
+  loadEtfFlows().catch(e=>console.error(e));
   loadSpiral().catch(e=>console.error(e));   // pick up CI-refreshed real-price spiral
 }
 

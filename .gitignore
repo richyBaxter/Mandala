@@ -23,6 +23,7 @@ AGENTS.md
 prompt.txt
 commentary.json
 news.json
+etf_flows.json
 tools/_metrics.json
 
 # python / os cruft

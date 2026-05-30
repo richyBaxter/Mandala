@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write           # commit the refreshed JSON + SVG back so the repo preview matches live
   pages: write
   id-token: write
   models: read              # GitHub Models inference (preview)
@@ -51,6 +51,19 @@ jobs:
         env:
           RESPONSE: ${{ steps.ai.outputs.response }}
         run: python3 tools/write_commentary.py
+      - name: Commit refreshed data + SVG back to repo
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "houtini-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/btc-monthly.json btc-mandala.svg
+          if git diff --staged --quiet; then
+            echo "no changes to commit"; exit 0
+          fi
+          git commit -m "chore: refresh prices + SVG from live data [skip ci]"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" HEAD:main
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

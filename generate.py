@@ -49,7 +49,8 @@ FLOWS = load_csv("flows.csv")
 
 # ---------- mapping constants ----------
 K = 80.0                 # px per decade of price
-P0 = 1.0                 # price at radius 0 (centre)
+P0 = 1.0                 # price at radius 0 (notional)
+INNER = 56.0             # empty hub radius — opens the crowded centre
 CX, CY = 620.0, 630.0
 N = 5.8                  # power-law exponent
 A_SUP, A_RES = -17.32, -16.5   # support/floor and resistance/cycle-top intercepts
@@ -93,8 +94,8 @@ def dec_year(d):
 
 def radius(price):
     if price <= 0:
-        return 2.0
-    return max(2.0, K * (math.log10(price) - math.log10(P0)))
+        return INNER
+    return INNER + max(2.0, K * (math.log10(price) - math.log10(P0)))
 
 def angle(d):            # CCW radians; Jan 1 2013/17/21/25 -> 0
     phase = ((dec_year(d) - 2013.0) % 4.0) / 4.0
@@ -111,7 +112,7 @@ def pl(d, a_coef):
 def pl_xy(d, a_coef, log_offset=0.0):
     p = pl(d, a_coef)
     a = angle(d)
-    r = max(2.0, K * (math.log10(p) - math.log10(P0)) + K * log_offset)
+    r = INNER + max(2.0, K * (math.log10(p) - math.log10(P0)) + K * log_offset)
     return CX + r * math.cos(a), CY - r * math.sin(a)
 
 # ---------- position in the Power-Law channel (0 = floor, 1 = cycle-top) ----------
@@ -184,8 +185,9 @@ s.append(f'<text x="64" y="124" font-size="14" fill="{T["muted"]}">'
 # spokes
 for k in range(8):
     a = k * math.pi / 4
-    s.append(f'<line x1="{CX}" y1="{CY}" x2="{CX+478*math.cos(a):.1f}" '
-             f'y2="{CY-478*math.sin(a):.1f}" stroke="{T["grid"]}" stroke-width="1"/>')
+    s.append(f'<line x1="{CX+INNER*math.cos(a):.1f}" y1="{CY-INNER*math.sin(a):.1f}" '
+             f'x2="{CX+478*math.cos(a):.1f}" y2="{CY-478*math.sin(a):.1f}" '
+             f'stroke="{T["grid"]}" stroke-width="1"/>')
 
 # price rings + radial price ticks
 for price in (10, 100, 1000, 10000, 100000):
@@ -219,17 +221,19 @@ for price, t in ((10, "$10"), (100, "$100"), (1000, "$1K"),
                  (10000, "$10K"), (100000, "$100K")):
     plabel(price, t, 128)
 
-# year labels along the support spiral
-def dlabel(d, txt):
-    p, a = pl(d, A_SUP), angle(d)
-    r = max(2.0, K * (math.log10(p) - math.log10(P0))) - 12
-    s.append(f'<text x="{CX+r*math.cos(a):.1f}" y="{CY-r*math.sin(a):.1f}" '
-             f'font-size="11" fill="{T["muted"]}" text-anchor="middle">{txt}</text>')
+# year labels on a single radial spoke (north) — a clean radial axis instead
+# of labels overlapping the spiral lines.
+def year_label(year):
+    p = pl(ymid(year, 1), A_SUP)
+    r = INNER + max(2.0, K * (math.log10(p) - math.log10(P0)))
+    x, y = CX, CY - r
+    s.append(f'<rect x="{x-15:.1f}" y="{y-7:.1f}" width="30" height="14" rx="3" '
+             f'fill="{T["bg"]}" opacity="0.88"/>')
+    s.append(f'<text x="{x:.1f}" y="{y+4:.1f}" font-size="11" font-weight="600" '
+             f'fill="{T["muted"]}" text-anchor="middle">{year}</text>')
 
-d = datetime.date(2012, 1, 1)
-while d <= PL_END:
-    dlabel(ymid(d.year, 1), str(d.year))
-    d = datetime.date(d.year + 1, 1, 1)
+for _y in range(2012, LAST_YEAR + 1):
+    year_label(_y)
 
 # ---------- events diary (single neutral colour) ----------
 col = T["muted"]

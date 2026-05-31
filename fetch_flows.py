@@ -5,7 +5,7 @@ This is intentionally source-agnostic: point it at any URL that returns daily
 rows of `YYYY-MM-DD,net_flow` (USD millions). It aggregates to monthly net flow
 and writes data/flows.csv in the format generate.py expects.
 
-Free sources you can adapt (all need network — won't run in a no-egress sandbox):
+Free sources you can adapt (all need network access; they won't run in a no-egress sandbox):
   - Farside Investors BTC ETF flow table   https://farside.co.uk/btc/
   - SoSoValue / public Google-Sheet CSV exports
   - Your own maintained CSV in the repo

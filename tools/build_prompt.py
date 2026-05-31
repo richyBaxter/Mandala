@@ -5,7 +5,7 @@ Outputs:
   prompt.txt          -> user prompt for the model (consumed by actions/ai-inference)
   tools/_metrics.json -> the numbers (consumed by write_commentary.py for the fallback)
 
-Stdlib only. Never raises — if the price feed fails, writes a minimal prompt so
+Stdlib only. Never raises: if the price feed fails, it writes a minimal prompt so
 the pipeline still produces a (neutral) note.
 """
 import json, math, datetime, os, urllib.request

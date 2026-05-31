@@ -10,7 +10,7 @@ Brand assets and the single source of design truth for **The Bitcoin Spiral / Ma
 
 | File | Purpose |
 |---|---|
-| `tokens.json` | Colours, fonts, radii, OG dimensions — the source of truth. |
+| `tokens.json` | Colours, fonts, radii, OG dimensions: the source of truth. |
 | `logo.svg` | houtini wordmark + spiral mark (placeholder; replace with the real logo). |
 | `make_og.py` | Generates `og-image.svg` (the social share card). Stdlib only. |
 | `og-image.svg` | Generated share-card source → rendered to `/og.png` at repo root. |
@@ -19,9 +19,9 @@ Brand assets and the single source of design truth for **The Bitcoin Spiral / Ma
 
 The same palette is duplicated in three places (kept in sync by hand for now):
 
-1. **`generate.py`** — the `T = { … }` dict that styles the spiral SVG.
-2. **`dashboard.html`** — the `:root { --… }` CSS variables.
-3. **`design/make_og.py`** — reads `tokens.json` directly.
+1. **`generate.py`**: the `T = { … }` dict that styles the spiral SVG.
+2. **`dashboard.html`**: the `:root { --… }` CSS variables.
+3. **`design/make_og.py`**: reads `tokens.json` directly.
 
 ## Rebranding (e.g. to yubhub.co)
 

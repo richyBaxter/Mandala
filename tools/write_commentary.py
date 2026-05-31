@@ -23,7 +23,7 @@ elif metrics:
     osc = metrics.get("osc_pct")
     stance = "accumulation" if osc is not None and osc < 34 else \
              "distribution" if osc is not None and osc > 66 else "neutral"
-    text = (f"Bitcoin is around ${metrics['price']:,} — about {metrics['vs_fair_pct']}% of its "
+    text = (f"Bitcoin is around ${metrics['price']:,}, about {metrics['vs_fair_pct']}% of its "
             f"Power-Law fair value (${metrics['fair']:,}) and {osc}% up the floor-to-top channel, "
             f"historically {stance} territory.")
     source = "fallback"

@@ -5,7 +5,7 @@ Farside publishes a free HTML table of daily totals across all US spot Bitcoin
 ETFs. Output: etf_flows.json with the last ~90 days of net flows (USD millions).
 
 Best-effort: never raises. If the page layout changes or the request fails, the
-script just doesn't write the file — the dashboard then hides the ETF chart.
+script just doesn't write the file, and the dashboard then hides the ETF chart.
 """
 import json, os, datetime, re, urllib.request
 from html.parser import HTMLParser

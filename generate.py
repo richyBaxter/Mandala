@@ -50,7 +50,7 @@ FLOWS = load_csv("flows.csv")
 # ---------- mapping constants ----------
 K = 80.0                 # px per decade of price
 P0 = 1.0                 # price at radius 0 (notional)
-INNER = 56.0             # empty hub radius — opens the crowded centre
+INNER = 56.0             # empty hub radius: opens the crowded centre
 CX, CY = 620.0, 630.0
 N = 5.8                  # power-law exponent
 A_SUP, A_RES = -17.32, -16.5   # support/floor and resistance/cycle-top intercepts
@@ -194,7 +194,7 @@ for price in (10, 100, 1000, 10000, 100000):
     s.append(f'<circle cx="{CX}" cy="{CY}" r="{radius(price):.1f}" fill="none" '
              f'stroke="{T["ring"]}" stroke-width="1" stroke-dasharray="1,5"/>')
 
-# Power-Law channel — monochrome orange family (floor solid, top lighter dashed,
+# Power-Law channel: monochrome orange family (floor solid, top lighter dashed,
 # fair value dotted). The white price line is the hero.
 s.append(f'<path d="{spiral(A_SUP)}" fill="none" stroke="{T["btc"]}" stroke-width="1.6" opacity="0.7"/>')
 s.append(f'<path d="{spiral(A_RES)}" fill="none" stroke="#f6b15a" stroke-width="1.4" '
@@ -205,7 +205,7 @@ _fvx, _fvy = pl_xy(ymid(LAST_YEAR, 7), A_FAIR)
 s.append(f'<text x="{_fvx:.1f}" y="{_fvy:.1f}" font-size="10.5" fill="{T["muted"]}" '
          f'text-anchor="middle" opacity="0.8">fair value</text>')
 
-# BTC price line — single colour for legibility (valuation is shown by the
+# BTC price line: single colour for legibility (valuation is shown by the
 # channel position and the buy/sell gauge, not by colouring the line itself)
 btc_path = "M " + " L ".join(f"{xy(p, d)[0]:.1f},{xy(p, d)[1]:.1f}" for d, p in btc_pts)
 s.append(f'<path d="{btc_path}" fill="none" stroke="{T["ink"]}" stroke-width="2.8" '
@@ -221,7 +221,7 @@ for price, t in ((10, "$10"), (100, "$100"), (1000, "$1K"),
                  (10000, "$10K"), (100000, "$100K")):
     plabel(price, t, 128)
 
-# year labels on a single radial spoke (north) — a clean radial axis instead
+# year labels on a single radial spoke (north), a clean radial axis instead
 # of labels overlapping the spiral lines.
 def year_label(year):
     p = pl(ymid(year, 1), A_SUP)

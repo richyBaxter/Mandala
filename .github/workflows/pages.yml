@@ -43,7 +43,7 @@ jobs:
         continue-on-error: true        # preview API — never block the deploy
         uses: actions/ai-inference@v1
         with:
-          model: openai/gpt-4o-mini
+          model: openai/gpt-4.1-mini
           system-prompt: "You are a calm Bitcoin market analyst writing for a smart but non-expert audience. Be concise (2-3 sentences), explain any jargon in passing, and stay neutral. Never give financial advice or price predictions."
           prompt-file: prompt.txt
           max-tokens: 220

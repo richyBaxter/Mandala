@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bitcoin Monitor — live Power-Law dashboard · houtini</title>
-<meta name="description" content="A live read on where Bitcoin sits in its cycle — against the Power-Law model, history, and institutional flows. Free public data. By houtini.">
+<title>Bitcoin Monitor: live Power-Law dashboard · houtini</title>
+<meta name="description" content="A live read on where Bitcoin sits in its cycle: against the Power-Law model, history, and institutional flows. Free public data. By houtini.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://richybaxter.github.io/Mandala/dashboard.html">
-<meta property="og:title" content="Bitcoin Monitor — live Power-Law dashboard">
+<meta property="og:title" content="Bitcoin Monitor: live Power-Law dashboard">
 <meta property="og:description" content="Live Bitcoin dashboard: Power-Law spiral, fair value, Mayer, Pi Cycle, Fear & Greed, ETF flows and a synthesised verdict. By houtini.">
 <meta property="og:image" content="https://richybaxter.github.io/Mandala/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Bitcoin Monitor — live Power-Law dashboard">
+<meta name="twitter:title" content="Bitcoin Monitor: live Power-Law dashboard">
 <meta name="twitter:description" content="Live Bitcoin dashboard with a synthesised buy/hold/sell verdict. By houtini.">
 <meta name="twitter:image" content="https://richybaxter.github.io/Mandala/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -112,7 +112,7 @@
   <header>
     <p class="kicker"><a href="https://houtini.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">HOUTINI</a></p>
     <h1>Bitcoin Monitor</h1>
-    <p class="sub">Where Bitcoin sits in its 4-year cycle — against the Power-Law fair value, against history (Mayer Multiple, Pi Cycle), and through the eyes of institutions and the crowd. Free public data, refreshed live in your browser.</p>
+    <p class="sub">Where Bitcoin sits in its 4-year cycle: against the Power-Law fair value, against history (Mayer Multiple, Pi Cycle), and through the eyes of institutions and the crowd. Free public data, refreshed live in your browser.</p>
     <p class="updated"><span class="dot">&#9679;</span> <span id="updated">loading live data&hellip;</span></p>
   </header>
 
@@ -145,8 +145,8 @@
   <div class="grid">
     <div class="card spiral full">
       <h2>The Bitcoin Spiral</h2>
-      <p class="hint">The white line is Bitcoin's monthly price, spiralling outward through time. The orange band is the <strong>Power-Law channel</strong> — a remarkably stable long-term curve Bitcoin has tracked for fourteen years (Santostasi, 2018): solid = floor, dotted = fair value, dashed = the cycle-top band. <strong>Hover any point</strong> for its price and the model's levels that month. <a href="index.html">About &amp; embed &rarr;</a></p>
-      <div id="spiral-host" role="img" aria-label="The Bitcoin Spiral — price on a 4-year-cycle Power-Law map. Hover points for details."></div>
+      <p class="hint">The white line is Bitcoin's monthly price, spiralling outward through time. The orange band is the <strong>Power-Law channel</strong>, a remarkably stable long-term curve Bitcoin has tracked for fourteen years (Santostasi, 2018): solid = floor, dotted = fair value, dashed = the cycle-top band. <strong>Hover any point</strong> for its price and the model's levels that month. <a href="index.html">About &amp; embed &rarr;</a></p>
+      <div id="spiral-host" role="img" aria-label="The Bitcoin Spiral: price on a 4-year-cycle Power-Law map. Hover points for details."></div>
     </div>
     <div class="card full">
       <h2>Fear &amp; Greed (60 days)</h2>
@@ -162,8 +162,8 @@
       <ul class="news" id="news"><li class="hint">loading headlines&hellip;</li></ul>
     </div>
     <div class="card">
-      <h2>Key Dates &mdash; Diary</h2>
-      <p class="hint">What's coming up that can move price &mdash; Federal Reserve decisions (FOMC), CME &amp; Deribit options expiries (often a volatility catalyst), and the next halving.</p>
+      <h2>Key-Dates Diary</h2>
+      <p class="hint">What's coming up that can move price: Federal Reserve decisions (FOMC), CME &amp; Deribit options expiries (often a volatility catalyst), and the next halving.</p>
       <ul class="diary" id="diary"><li class="hint">loading&hellip;</li></ul>
     </div>
   </div>
@@ -176,7 +176,7 @@
     </div>
     <div class="card">
       <h2>Mayer Multiple</h2>
-      <p class="hint">Price divided by its 200-day moving average. Below <strong>1</strong>, you're paying less than trend — historically a quiet accumulation zone. Above <strong>2.4</strong> has only happened near bull-cycle highs.</p>
+      <p class="hint">Price divided by its 200-day moving average. Below <strong>1</strong>, you're paying less than trend, historically a quiet accumulation zone. Above <strong>2.4</strong> has only happened near bull-cycle highs.</p>
       <div class="chart-box"><canvas id="c-mayer"></canvas></div>
     </div>
   </div>
@@ -200,7 +200,7 @@
   <div class="grid">
     <div class="card full" id="etf-card" hidden>
       <h2>Spot BTC ETF Flows (90 days)</h2>
-      <p class="hint" id="etf-hint">Daily net dollars flowing into US spot Bitcoin ETFs &mdash; the cleanest read on <strong>institutional</strong> positioning since launch in January 2024. Source: Farside Investors.</p>
+      <p class="hint" id="etf-hint">Daily net dollars flowing into US spot Bitcoin ETFs: the cleanest read on<strong>institutional</strong> positioning since launch in January 2024. Source: Farside Investors.</p>
       <div class="chart-box"><canvas id="c-etf"></canvas></div>
     </div>
   </div>
@@ -284,7 +284,7 @@ function renderVerdict(){
   let word, col;
   if(score >= 0.40)      { word="ACCUMULATE";     col=C.buy; }
   else if(score >= 0.15) { word="LEAN BUY";       col=C.buy; }
-  else if(score > -0.15) { word="NEUTRAL — HOLD"; col=C.fair; }
+  else if(score > -0.15) { word="NEUTRAL · HOLD"; col=C.fair; }
   else if(score > -0.40) { word="LEAN SELL";      col=C.sell; }
   else                   { word="DISTRIBUTE";     col=C.sell; }
   document.getElementById("verdict").style.borderLeftColor = col;
@@ -546,7 +546,7 @@ async function loadEtfFlows(){
   const cum30 = items.slice(-30).reduce((a,b)=> a + (b.net_flow_musd||0), 0);
   const latest = items[items.length-1];
   document.getElementById("etf-hint").innerHTML =
-    `Daily net dollars flowing into US spot Bitcoin ETFs &mdash; the cleanest read on institutional positioning. ` +
+    `Daily net dollars flowing into US spot Bitcoin ETFs: the cleanest read oninstitutional positioning. ` +
     `Latest <strong>${latest.date}: <span style="color:${latest.net_flow_musd>=0?C.buy:C.sell}">${latest.net_flow_musd>=0?"+":""}$${latest.net_flow_musd}M</span></strong> &middot; ` +
     `last 30 days <strong style="color:${cum30>=0?C.buy:C.sell}">${cum30>=0?"+":""}$${Math.round(cum30).toLocaleString()}M</strong>. Source: Farside.`;
   mkChart("c-etf", {
@@ -600,7 +600,7 @@ async function loadCommentary(){
   if(!j || !j.text) return;
   document.getElementById("ai-note-text").textContent = j.text;
   const when = j.generated ? new Date(j.generated).toLocaleString() : "";
-  const src = j.source === "github-models" ? "GitHub Models" : "model offline — computed note";
+  const src = j.source === "github-models" ? "GitHub Models" : "model offline, computed note";
   document.getElementById("ai-note-meta").textContent =
     (when ? "Generated " + when + " · " : "") + src + " · not financial advice.";
   document.getElementById("ai-note").hidden = false;

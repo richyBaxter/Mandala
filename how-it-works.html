@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How I built the Bitcoin Spiral (and why) · houtini</title>
+<meta name="description" content="Why I built a live, AI-narrated Bitcoin dashboard to learn GitHub Models, and how the whole free, zero-backend stack fits together. By houtini.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://richybaxter.github.io/Mandala/how-it-works.html">
+<meta property="og:title" content="How I built the Bitcoin Spiral (and why)">
+<meta property="og:description" content="A live, AI-narrated Bitcoin dashboard, built to learn GitHub Models. Free hosting, free data, free inference. Here is how it works.">
+<meta property="og:image" content="https://richybaxter.github.io/Mandala/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How I built the Bitcoin Spiral (and why)">
+<meta name="twitter:description" content="A live, AI-narrated Bitcoin dashboard built to learn GitHub Models. Here is how it works.">
+<meta name="twitter:image" content="https://richybaxter.github.io/Mandala/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0b0e14; --glow: #10202e; --panel: #0f141d; --border: #1e2733;
+    --ink: #e8ecf3; --muted: #8a93a3; --faint: #525b6b; --btc: #f7931a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Inter, "Segoe UI", system-ui, -apple-system, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.7;
+    background-image: radial-gradient(60% 50% at 50% 0%, var(--glow) 0%, var(--bg) 70%);
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+  header { padding-top: 56px; }
+  .kicker { color: var(--btc); font-size: .72rem; font-weight: 700; letter-spacing: 3px; margin: 0 0 14px; }
+  .kicker a { color: inherit; text-decoration: none; }
+  h1 { font-size: 2.5rem; font-weight: 800; line-height: 1.15; margin: 0 0 14px; letter-spacing: -.6px; }
+  .meta { color: var(--faint); font-size: .85rem; margin: 0 0 28px; }
+  .meta a { color: var(--btc); text-decoration: none; }
+  .lead { font-size: 1.18rem; color: var(--ink); margin: 0 0 8px; }
+  article { font-size: 1.04rem; color: #cdd5e1; }
+  article p { margin: 18px 0; }
+  article strong { color: var(--ink); font-weight: 600; }
+  h2 { font-size: 1.45rem; font-weight: 700; color: var(--ink); margin: 46px 0 0; letter-spacing: -.3px; }
+  h2 + p { margin-top: 12px; }
+  blockquote {
+    margin: 30px 0; padding: 18px 22px; border-left: 3px solid var(--btc);
+    background: rgba(247,147,26,.06); border-radius: 0 12px 12px 0;
+    font-size: 1.22rem; font-weight: 600; color: var(--ink); line-height: 1.45;
+  }
+  ol, ul { padding-left: 22px; }
+  li { margin: 10px 0; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9em;
+    background: #070a0f; border: 1px solid var(--border); border-radius: 6px; padding: 1px 6px; color: #cfe3d6; }
+  a { color: var(--btc); }
+  .cta {
+    display: inline-block; margin: 8px 0; padding: 12px 20px; border-radius: 12px;
+    background: var(--btc); color: #0b0e14; font-weight: 700; text-decoration: none;
+  }
+  .cta.ghost { background: transparent; color: var(--btc); border: 1px solid rgba(247,147,26,.4); }
+  .ctas { display: flex; gap: 12px; flex-wrap: wrap; margin: 36px 0 8px; }
+  .disclaim { color: var(--muted); font-style: italic; font-size: .92rem; margin-top: 30px; }
+  footer { color: var(--faint); font-size: .82rem; padding: 36px 24px 72px; border-top: 1px solid var(--border); margin-top: 48px; }
+  footer strong { color: var(--btc); }
+  .wrap-foot { max-width: 720px; margin: 0 auto; }
+  @media (max-width: 560px){ h1 { font-size: 2rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <p class="kicker"><a href="https://houtini.com" target="_blank" rel="noopener">HOUTINI</a></p>
+  <h1>How I built the Bitcoin Spiral (and why)</h1>
+  <p class="meta">A build log by houtini &middot; <a href="dashboard.html">open the live dashboard &rarr;</a></p>
+</header>
+
+<article>
+  <p class="lead">I built this for a slightly nerdy reason: I wanted to understand GitHub's
+  built-in AI model library. Reading about a tool and shipping something with it are
+  different sports, so I shipped something.</p>
+
+  <p>GitHub quietly ships a thing called <strong>GitHub Models</strong>: a catalogue of
+  frontier models (OpenAI, Meta, DeepSeek, Mistral and friends) that you can call
+  straight from a GitHub Action with nothing but your repo's own token. No API key to
+  provision, no billing to set up, no separate account. It runs on a free, rate-limited
+  tier that is more than generous for anything that isn't a production workload. I'd read
+  the docs. I wanted to feel it work.</p>
+
+  <p>This project is here because I happen to like two things: cryptocurrency, and dynamic
+  dashboards. Bitcoin gave me a data set with real signal and a genuinely engaged audience.
+  Dashboards gave me the format. And the more I built, the more I landed on an opinion I'll
+  happily defend to anyone who'll listen:</p>
+
+  <blockquote>A live, public dashboard is one of the most underrated pieces of content a
+  company can make, and almost nobody is making them.</blockquote>
+
+  <p>Think about it. A blog post is read once and dies in the feed. A dashboard is a
+  <strong>destination</strong>. It updates itself, so it stays relevant without anyone
+  touching it. It earns links and embeds because it is genuinely useful. It proves you
+  know your market far better than another listicle ever could, because you cannot fake a
+  working model of the thing your customers care about. And the kicker: with the stack I'm
+  about to describe, it costs <strong>nothing</strong> to run. Free hosting, free data,
+  free inference. Whatever your business is (sim racing gear, coffee, conveyancing) there
+  is a live number your audience cares about, and a dashboard is the content type that owns
+  it.</p>
+
+  <p>So this repo is a prototype. It is the proof that the whole thing fits together and
+  stays free. Here is how it actually works.</p>
+
+  <h2>Zero backend, on purpose</h2>
+  <p>There is no server. There is no database. There is not even a build step. The entire
+  site is plain HTML, SVG and JavaScript that <strong>hydrates in your browser</strong>
+  from free public APIs. Open the dashboard and your own browser fetches the price, the
+  sentiment, the flows and the network stats, and renders them.</p>
+  <p>This matters more than it sounds. No backend means nothing to break at 3am, nothing to
+  pay for, nothing to patch. It deploys to <strong>GitHub Pages</strong> straight from the
+  repo. Every panel is written to fall back to "n/a" if a feed is rate-limited or blocked,
+  so a flaky API never takes the page down. It just quietly shows a dash where a number
+  would be.</p>
+
+  <h2>The spiral</h2>
+  <p>The hero image is generated by a single Python script (standard library only, zero
+  dependencies). It plots Bitcoin's price against the <strong>Power Law</strong> on a polar
+  map where one full turn is a four-year cycle. Angle is <em>when in the cycle</em> you are.
+  Radius is price on a log scale. The orange band is the Power-Law channel that Bitcoin has
+  tracked for fourteen years: floor, fair value, and the cycle-top band. It is, on purpose,
+  a picture you can read in five seconds and then stare at for five minutes.</p>
+
+  <h2>The dashboard</h2>
+  <p>The dashboard is the live read. It pulls a dozen signals in the browser and renders
+  stat tiles, a stack of charts (price versus the Power-Law channel, Pi Cycle, Mayer
+  Multiple, Fear &amp; Greed, taker-volume pressure, hashrate) and a <strong>verdict
+  banner</strong> that blends six indicators into one plain-English call: Accumulate, Lean
+  buy, Neutral, Lean sell, Distribute. The point is not to be clever. It is to take a
+  beginner from "number go up?" to "here is where we actually sit in the cycle, and here is
+  what that has historically meant."</p>
+
+  <h2>The bit I'm proud of: an AI note that doesn't lie</h2>
+  <p>Every six hours a GitHub Action wakes up, and this is where GitHub Models earns its
+  place. The pipeline does five things in order:</p>
+  <ol>
+    <li><strong>Refresh the data.</strong> Pull real monthly closes from Binance, scrape
+    spot-ETF flows from Farside, grab institutional headlines server-side.</li>
+    <li><strong>Redraw the spiral</strong> from the fresh data.</li>
+    <li><strong>Compute the signals.</strong> Four orthogonal reads, all in plain Python:
+    valuation (where price sits in the channel, plus how that ranks against every month
+    since 2011 as a base rate), trajectory (30 and 90-day change, plus the Mayer Multiple),
+    sentiment (Fear &amp; Greed, then versus a month ago) and demand (7 and 30-day ETF net
+    flow).</li>
+    <li><strong>Write the note.</strong> GitHub Models turns those numbers into three or
+    four calm sentences.</li>
+    <li><strong>Commit and deploy.</strong> The refreshed data and image are committed back
+    to the repo and Pages redeploys. The site is never more than six hours stale, and no
+    human touched it.</li>
+  </ol>
+  <p>The discipline in those last two steps is the whole trick, and it is the thing most
+  people get wrong when they bolt an LLM onto data. <strong>The model is a writer, not a
+  calculator.</strong> Every figure it sees is computed in Python first, and the prompt
+  forbids it from inventing or predicting numbers. So the prose always agrees with the
+  dashboard, it never hallucinates a price target, and if the live feeds are down it falls
+  back to a computed note rather than making something up. An LLM is brilliant at turning a
+  pile of numbers into a sentence a human wants to read. It is terrible at being the source
+  of those numbers. Keep those jobs separate and the result is reliable. Blur them and you
+  ship a confident liar.</p>
+
+  <h2>What it costs</h2>
+  <p>Nothing. GitHub Pages hosting: free. The public price, sentiment and network APIs:
+  free. GitHub Models inference: free, on a rate-limited tier that four calls a day does
+  not come close to troubling. The only thing I spent was an afternoon.</p>
+
+  <h2>Take it</h2>
+  <p>This is open source under the MIT licence. Fork it, rip out Bitcoin, point the prompt
+  builder at your own numbers, and you have a self-updating, AI-narrated dashboard for
+  whatever metric your audience actually cares about. That was the experiment. As far as
+  I'm concerned, it worked.</p>
+
+  <div class="ctas">
+    <a class="cta" href="dashboard.html">Open the live dashboard</a>
+    <a class="cta ghost" href="https://github.com/richyBaxter/Mandala" target="_blank" rel="noopener">View the source</a>
+  </div>
+
+  <p class="disclaim">Educational only. Not financial advice.</p>
+</article>
+</div>
+
+<footer>
+  <div class="wrap-foot">
+    By <strong><a href="https://houtini.com" target="_blank" rel="noopener">houtini</a></strong> &middot;
+    open source, MIT licensed &middot; the Power-Law model is the work of Giovanni Santostasi.
+  </div>
+</footer>
+</body>
+</html>

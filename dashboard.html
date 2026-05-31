@@ -129,17 +129,17 @@
   </section>
 
   <section class="tiles">
-    <div class="tile"><div class="label">BTC Price</div><div class="val" id="t-price">&mdash;</div><div class="meta" id="t-price-chg">24h</div></div>
-    <div class="tile"><div class="label">BTC / Gold</div><div class="val" id="t-gold">&mdash;</div><div class="meta" id="t-gold-meta">oz of gold / BTC</div></div>
-    <div class="tile"><div class="label">Power-Law Fair</div><div class="val accent" id="t-fair">&mdash;</div><div class="meta" id="t-fair-meta">model fair value today</div></div>
-    <div class="tile"><div class="label">vs Fair Value</div><div class="val" id="t-vsfair">&mdash;</div><div class="meta">price &divide; fair</div></div>
-    <div class="tile"><div class="label">PL Oscillator</div><div class="val" id="t-osc">&mdash;</div><div class="meta" id="t-osc-meta">floor &rarr; top</div></div>
-    <div class="tile"><div class="label">Mayer Multiple</div><div class="val" id="t-mayer">&mdash;</div><div class="meta" id="t-mayer-meta">price &divide; 200DMA</div></div>
-    <div class="tile"><div class="label">MVRV</div><div class="val" id="t-mvrv">&mdash;</div><div class="meta" id="t-mvrv-meta">market cap &divide; realised cap</div></div>
-    <div class="tile"><div class="label">Fear &amp; Greed</div><div class="val" id="t-fng">&mdash;</div><div class="meta" id="t-fng-meta">sentiment</div></div>
-    <div class="tile"><div class="label">Next Difficulty</div><div class="val" id="t-diff">&mdash;</div><div class="meta" id="t-diff-meta">retarget estimate</div></div>
-    <div class="tile"><div class="label">Lightning</div><div class="val" id="t-ln">&mdash;</div><div class="meta" id="t-ln-meta">second-layer payment capacity</div></div>
-    <div class="tile"><div class="label">Fees</div><div class="val" id="t-fees">&mdash;</div><div class="meta" id="t-fees-meta">on-chain congestion</div></div>
+    <div class="tile"><div class="label">BTC Price</div><div class="val" id="t-price">-</div><div class="meta" id="t-price-chg">24h</div></div>
+    <div class="tile"><div class="label">BTC / Gold</div><div class="val" id="t-gold">-</div><div class="meta" id="t-gold-meta">oz of gold / BTC</div></div>
+    <div class="tile"><div class="label">Power-Law Fair</div><div class="val accent" id="t-fair">-</div><div class="meta" id="t-fair-meta">model fair value today</div></div>
+    <div class="tile"><div class="label">vs Fair Value</div><div class="val" id="t-vsfair">-</div><div class="meta">price &divide; fair</div></div>
+    <div class="tile"><div class="label">PL Oscillator</div><div class="val" id="t-osc">-</div><div class="meta" id="t-osc-meta">floor &rarr; top</div></div>
+    <div class="tile"><div class="label">Mayer Multiple</div><div class="val" id="t-mayer">-</div><div class="meta" id="t-mayer-meta">price &divide; 200DMA</div></div>
+    <div class="tile"><div class="label">MVRV</div><div class="val" id="t-mvrv">-</div><div class="meta" id="t-mvrv-meta">market cap &divide; realised cap</div></div>
+    <div class="tile"><div class="label">Fear &amp; Greed</div><div class="val" id="t-fng">-</div><div class="meta" id="t-fng-meta">sentiment</div></div>
+    <div class="tile"><div class="label">Next Difficulty</div><div class="val" id="t-diff">-</div><div class="meta" id="t-diff-meta">retarget estimate</div></div>
+    <div class="tile"><div class="label">Lightning</div><div class="val" id="t-ln">-</div><div class="meta" id="t-ln-meta">second-layer payment capacity</div></div>
+    <div class="tile"><div class="label">Fees</div><div class="val" id="t-fees">-</div><div class="meta" id="t-fees-meta">on-chain congestion</div></div>
   </section>
 
   <div class="grid">
@@ -256,7 +256,7 @@ const charts = {};
 function mkChart(id, cfg){ if(charts[id]) charts[id].destroy(); charts[id] = new Chart(document.getElementById(id), cfg); return charts[id]; }
 
 function setText(id, txt, cls){ const el=document.getElementById(id); el.innerHTML=txt; if(cls) el.className="val "+cls; }
-function tileErr(id){ const el=document.getElementById(id); if(el && el.innerHTML==="—") el.innerHTML="<span class='err'>n/a</span>"; }
+function tileErr(id){ const el=document.getElementById(id); if(el && el.innerHTML==="-") el.innerHTML="<span class='err'>n/a</span>"; }
 
 // ---------- the website's opinion: composite verdict ----------
 const clamp = (v,a,b) => Math.max(a, Math.min(b, v));

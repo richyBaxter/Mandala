@@ -43,10 +43,10 @@ jobs:
         continue-on-error: true        # preview API — never block the deploy
         uses: actions/ai-inference@v1
         with:
-          model: openai/gpt-4o-mini
-          system-prompt: "You are a calm Bitcoin market analyst writing for a smart but non-expert audience. Be concise (2-3 sentences), explain any jargon in passing, and stay neutral. Never give financial advice or price predictions."
+          model: openai/gpt-4.1-mini
+          system-prompt: "You are a calm, plain-spoken Bitcoin market analyst writing for a smart but non-expert reader. You are given pre-computed signals and must use only those numbers, never inventing or predicting figures. Write 3-4 sentences: where price sits versus the long-term Power-Law model, the recent trajectory, one historical base rate if provided, and a measured stance (accumulate / neutral / distribute). Lead with position rather than prediction, explain any jargon in passing, stay neutral, and never give financial advice or price targets."
           prompt-file: prompt.txt
-          max-tokens: 220
+          max-tokens: 280
       - name: Write commentary.json (AI or computed fallback)
         env:
           RESPONSE: ${{ steps.ai.outputs.response }}

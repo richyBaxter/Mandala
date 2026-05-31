@@ -23,9 +23,17 @@ elif metrics:
     osc = metrics.get("osc_pct")
     stance = "accumulation" if osc is not None and osc < 34 else \
              "distribution" if osc is not None and osc > 66 else "neutral"
-    text = (f"Bitcoin is around ${metrics['price']:,}, about {metrics['vs_fair_pct']}% of its "
-            f"Power-Law fair value (${metrics['fair']:,}) and {osc}% up the floor-to-top channel, "
-            f"historically {stance} territory.")
+    parts = [f"Bitcoin is around ${metrics['price']:,}, about {metrics['vs_fair_pct']}% of its "
+             f"Power-Law fair value (${metrics['fair']:,}) and {osc}% up the floor-to-top channel"]
+    if metrics.get("osc_pctile") is not None:
+        parts.append(f", higher than {metrics['osc_pctile']}% of months since "
+                     f"{metrics.get('first_year', 2011)}")
+    parts.append(f", historically {stance} territory")
+    if metrics.get("chg30") is not None:
+        parts.append(f". Price is {metrics['chg30']:+d}% over 30 days")
+        if metrics.get("mayer") is not None:
+            parts.append(f", Mayer Multiple {metrics['mayer']}")
+    text = "".join(parts) + "."
     source = "fallback"
 else:
     text, source = "Live market data is temporarily unavailable.", "fallback"

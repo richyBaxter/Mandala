@@ -6,6 +6,8 @@ network signals that synthesise into a single, plain-English verdict.
 
 **Live:** https://richybaxter.github.io/Mandala/ · **Dashboard:** https://richybaxter.github.io/Mandala/dashboard.html
 
+**How it works:** [the story and the stack](docs/how-it-works.md), why I built it and how the pieces fit.
+
 Static site, zero backend: the page is plain HTML/SVG/JS and hydrates entirely in the browser
 from free public APIs. Deploys to GitHub Pages with no build step.
 

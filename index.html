@@ -63,7 +63,7 @@
 <header>
   <p class="kicker"><a href="https://houtini.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">HOUTINI</a></p>
   <h1>The Bitcoin Spiral</h1>
-  <p class="sub">Bitcoin price and the Power Law on a 4-year-cycle polar map — with buy/sell zones, an events diary and institutional ETF flows. Open source, with current data.</p>
+  <p class="sub">A polar map of every Bitcoin cycle. Price spirals outward over time around the <strong>Power-Law channel</strong> — a remarkably stable long-term curve Bitcoin has tracked for fourteen years of market history.</p>
   <p><a href="dashboard.html">&rarr; Open the live Bitcoin Monitor dashboard</a></p>
 </header>
 
@@ -74,10 +74,11 @@
 
   <h2>How to read it</h2>
   <ul>
-    <li><strong>Angle</strong> = position within the 4-year cycle (one full turn = 4 years).</li>
-    <li><strong>Radius</strong> = price on a log scale ($1 at the centre); each dashed ring is a 10&times; level.</li>
-    <li><strong>BTC line colour</strong> = buy/sell zone: green where price is cheap vs the Power Law, red where it's expensive. <strong>Orange</strong> = support, <strong>red spiral</strong> = resistance.</li>
-    <li><strong>Markers</strong> = events diary (halvings, ETF launches, macro). <strong>Radial ticks</strong> = spot-ETF net flow (green out = institutions buying, red in = selling).</li>
+    <li><strong>Angle</strong> &mdash; where Bitcoin is in its 4-year cycle. One full turn around the chart = four years, so the same months in 2013, 2017, 2021 and 2025 sit at the same clock position.</li>
+    <li><strong>Radius</strong> &mdash; price on a log scale. Each dashed ring is a 10&times; level ($10 &rarr; $100k), so each turn outward is a different order of magnitude.</li>
+    <li><strong>White line</strong> &mdash; Bitcoin's monthly price, spiralling outward through time.</li>
+    <li><strong>Orange band</strong> &mdash; the <strong>Power-Law channel</strong>: a remarkably stable long-term curve Bitcoin has tracked since 2010. Solid = the historical floor, dotted = fair value, dashed = the cycle-top band.</li>
+    <li><strong>Grey dots</strong> &mdash; the cycle's milestones (halvings, the spot-ETF launch, the all-time high).</li>
   </ul>
 
   <h2>Embed it</h2>
@@ -93,10 +94,11 @@
 # refresh ETF flows from a free source first:
 FLOWS_URL="https://your-source/btc-etf-daily.csv" python3 fetch_flows.py</code></pre>
 
-  <p class="note">An open-source chart by houtini. The underlying Power-Law model is
-  the work of G. Santostasi. Prices are approximate monthly closes; the latest cycle is
-  anchored to verified data (ATH $126,198 on 6 Oct 2025; ~$77k in May 2026).
-  Not financial advice.</p>
+  <p class="note">An open-source chart by houtini. The Power-Law model is the work
+  of <strong>Giovanni Santostasi</strong> &mdash; Bitcoin's price has tracked a single power-law
+  curve since the network was a few months old. Monthly closes refresh in CI from real
+  Binance data, anchored to milestones (ATH <strong>$126,198 on 6 Oct 2025</strong>).
+  <em>Educational, not financial advice.</em></p>
 </main>
 
 <footer>

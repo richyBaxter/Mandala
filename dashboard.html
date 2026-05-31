@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bitcoin Monitor — live Power-Law dashboard · houtini</title>
-<meta name="description" content="A live Bitcoin monitoring dashboard: Power-Law spiral, fair value, Mayer Multiple, Fear & Greed and network hashrate. Free data, by houtini.">
+<meta name="description" content="A live read on where Bitcoin sits in its cycle — against the Power-Law model, history, and institutional flows. Free public data. By houtini.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://richybaxter.github.io/Mandala/dashboard.html">
 <meta property="og:title" content="Bitcoin Monitor — live Power-Law dashboard">
@@ -112,13 +112,13 @@
   <header>
     <p class="kicker"><a href="https://houtini.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">HOUTINI</a></p>
     <h1>Bitcoin Monitor</h1>
-    <p class="sub">A live Power-Law dashboard — price vs fair value, the Mayer Multiple, market sentiment and network health. Built on free public data; everything below loads live in your browser.</p>
+    <p class="sub">Where Bitcoin sits in its 4-year cycle — against the Power-Law fair value, against history (Mayer Multiple, Pi Cycle), and through the eyes of institutions and the crowd. Free public data, refreshed live in your browser.</p>
     <p class="updated"><span class="dot">&#9679;</span> <span id="updated">loading live data&hellip;</span></p>
   </header>
 
   <section class="verdict" id="verdict">
     <div><div class="word" id="v-word">Analysing&hellip;</div></div>
-    <div class="sub" id="v-sub">Synthesising live indicators into a single view&hellip;</div>
+    <div class="sub" id="v-sub">Reading every indicator and putting one view on the page&hellip;</div>
     <div class="factors" id="v-factors"></div>
   </section>
 
@@ -131,26 +131,26 @@
   <section class="tiles">
     <div class="tile"><div class="label">BTC Price</div><div class="val" id="t-price">&mdash;</div><div class="meta" id="t-price-chg">24h</div></div>
     <div class="tile"><div class="label">BTC / Gold</div><div class="val" id="t-gold">&mdash;</div><div class="meta" id="t-gold-meta">oz of gold / BTC</div></div>
-    <div class="tile"><div class="label">Power-Law Fair</div><div class="val accent" id="t-fair">&mdash;</div><div class="meta" id="t-fair-meta">model value today</div></div>
+    <div class="tile"><div class="label">Power-Law Fair</div><div class="val accent" id="t-fair">&mdash;</div><div class="meta" id="t-fair-meta">model fair value today</div></div>
     <div class="tile"><div class="label">vs Fair Value</div><div class="val" id="t-vsfair">&mdash;</div><div class="meta">price &divide; fair</div></div>
     <div class="tile"><div class="label">PL Oscillator</div><div class="val" id="t-osc">&mdash;</div><div class="meta" id="t-osc-meta">floor &rarr; top</div></div>
     <div class="tile"><div class="label">Mayer Multiple</div><div class="val" id="t-mayer">&mdash;</div><div class="meta" id="t-mayer-meta">price &divide; 200DMA</div></div>
-    <div class="tile"><div class="label">MVRV</div><div class="val" id="t-mvrv">&mdash;</div><div class="meta" id="t-mvrv-meta">on-chain valuation</div></div>
+    <div class="tile"><div class="label">MVRV</div><div class="val" id="t-mvrv">&mdash;</div><div class="meta" id="t-mvrv-meta">market cap &divide; realised cap</div></div>
     <div class="tile"><div class="label">Fear &amp; Greed</div><div class="val" id="t-fng">&mdash;</div><div class="meta" id="t-fng-meta">sentiment</div></div>
     <div class="tile"><div class="label">Next Difficulty</div><div class="val" id="t-diff">&mdash;</div><div class="meta" id="t-diff-meta">retarget estimate</div></div>
-    <div class="tile"><div class="label">Lightning</div><div class="val" id="t-ln">&mdash;</div><div class="meta" id="t-ln-meta">network capacity</div></div>
+    <div class="tile"><div class="label">Lightning</div><div class="val" id="t-ln">&mdash;</div><div class="meta" id="t-ln-meta">second-layer payment capacity</div></div>
     <div class="tile"><div class="label">Fees</div><div class="val" id="t-fees">&mdash;</div><div class="meta" id="t-fees-meta">on-chain congestion</div></div>
   </section>
 
   <div class="grid">
     <div class="card spiral full">
       <h2>The Bitcoin Spiral</h2>
-      <p class="hint">The white line is BTC price; the orange Power-Law channel marks the floor, fair value and cycle-top band. <strong>Hover any point</strong> for its price and the model levels that month. Valuation read-outs are in the tiles above. <a href="index.html">About &amp; embed &rarr;</a></p>
+      <p class="hint">The white line is Bitcoin's monthly price, spiralling outward through time. The orange band is the <strong>Power-Law channel</strong> — a remarkably stable long-term curve Bitcoin has tracked for fourteen years (Santostasi, 2018): solid = floor, dotted = fair value, dashed = the cycle-top band. <strong>Hover any point</strong> for its price and the model's levels that month. <a href="index.html">About &amp; embed &rarr;</a></p>
       <div id="spiral-host" role="img" aria-label="The Bitcoin Spiral — price on a 4-year-cycle Power-Law map. Hover points for details."></div>
     </div>
     <div class="card full">
       <h2>Fear &amp; Greed (60 days)</h2>
-      <p class="hint">Market sentiment, 0 (extreme fear) &rarr; 100 (extreme greed).</p>
+      <p class="hint">How the market <em>feels</em>, on a 0&ndash;100 scale. Historically, extreme fear has marked accumulation windows and extreme greed has marked late-cycle exits. Source: alternative.me.</p>
       <div class="chart-box"><canvas id="c-fng"></canvas></div>
     </div>
   </div>
@@ -158,12 +158,12 @@
   <div class="grid">
     <div class="card">
       <h2>Flows &amp; Institutional News</h2>
-      <p class="hint" id="news-hint">Credible sources, filtered for ETF flows, inflows/outflows and who's buying.</p>
+      <p class="hint" id="news-hint">Curated from CoinDesk, Cointelegraph and Bitcoin Magazine, filtered for the news that moves markets: ETF flows, who's buying, and macro catalysts.</p>
       <ul class="news" id="news"><li class="hint">loading headlines&hellip;</li></ul>
     </div>
     <div class="card">
       <h2>Key Dates &mdash; Diary</h2>
-      <p class="hint">Upcoming catalysts: FOMC, CME/Deribit expiries, halving.</p>
+      <p class="hint">What's coming up that can move price &mdash; Federal Reserve decisions (FOMC), CME &amp; Deribit options expiries (often a volatility catalyst), and the next halving.</p>
       <ul class="diary" id="diary"><li class="hint">loading&hellip;</li></ul>
     </div>
   </div>
@@ -171,12 +171,12 @@
   <div class="grid">
     <div class="card">
       <h2>Price vs Power-Law channel</h2>
-      <p class="hint">365 days, log scale. Dashed = fair value; band = floor&rarr;cycle-top.</p>
+      <p class="hint">A year of Bitcoin's price against the Power-Law model (log scale). The dashed line is the model's <strong>fair value</strong>; the band runs from the historical <strong>floor</strong> to the <strong>cycle-top</strong> projection.</p>
       <div class="chart-box"><canvas id="c-price"></canvas></div>
     </div>
     <div class="card">
       <h2>Mayer Multiple</h2>
-      <p class="hint">Price &divide; 200-day MA. &lt;1 = historically cheap, &gt;2.4 = overheated.</p>
+      <p class="hint">Price divided by its 200-day moving average. Below <strong>1</strong>, you're paying less than trend — historically a quiet accumulation zone. Above <strong>2.4</strong> has only happened near bull-cycle highs.</p>
       <div class="chart-box"><canvas id="c-mayer"></canvas></div>
     </div>
   </div>
@@ -184,7 +184,7 @@
   <div class="grid">
     <div class="card full">
       <h2>Pi Cycle Top</h2>
-      <p class="hint" id="pi-hint">111-day MA vs 2&times; the 350-day MA &mdash; a crossover has marked cycle tops within days.</p>
+      <p class="hint" id="pi-hint">A classic cycle-top warning. When the 111-day moving average crosses above <strong>twice</strong> the 350-day, every Bitcoin cycle top so far has landed within days. Useful as an objective counterweight to the Power-Law oscillator.</p>
       <div class="chart-box"><canvas id="c-pi"></canvas></div>
     </div>
   </div>
@@ -192,7 +192,7 @@
   <div class="grid">
     <div class="card full">
       <h2>Buy vs Sell Pressure</h2>
-      <p class="hint" id="pressure-hint">Net taker volume per day (buy &minus; sell, BTC). Green = net buying, red = net selling.</p>
+      <p class="hint" id="pressure-hint">How aggressively buyers vs sellers crossed the spread each day (taker volume, BTC). Sustained green is a <em>patient bid</em>; sustained red is <em>forced selling</em>. Source: Binance.</p>
       <div class="chart-box"><canvas id="c-pressure"></canvas></div>
     </div>
   </div>
@@ -200,7 +200,7 @@
   <div class="grid">
     <div class="card full" id="etf-card" hidden>
       <h2>Spot BTC ETF Flows (90 days)</h2>
-      <p class="hint" id="etf-hint">Daily net flow into US spot Bitcoin ETFs ($M). Green = institutional buying, red = selling.</p>
+      <p class="hint" id="etf-hint">Daily net dollars flowing into US spot Bitcoin ETFs &mdash; the cleanest read on <strong>institutional</strong> positioning since launch in January 2024. Source: Farside Investors.</p>
       <div class="chart-box"><canvas id="c-etf"></canvas></div>
     </div>
   </div>
@@ -208,14 +208,15 @@
   <div class="grid">
     <div class="card full">
       <h2>Network hashrate (1 year)</h2>
-      <p class="hint">Total mining power securing the network (EH/s). Source: mempool.space.</p>
+      <p class="hint">Total computing power securing the Bitcoin network, in <strong>exahashes per second</strong> (10<sup>18</sup>). Rising hashrate signals miner confidence and a more resilient network. Source: mempool.space.</p>
       <div class="chart-box"><canvas id="c-hash"></canvas></div>
     </div>
   </div>
 
   <footer>
-    By <strong><a href="https://houtini.com" target="_blank" rel="noopener">houtini</a></strong> &middot; data: CoinGecko, alternative.me, mempool.space &middot;
-    Power-Law model after G. Santostasi &middot; educational, not financial advice.
+    By <strong><a href="https://houtini.com" target="_blank" rel="noopener">houtini</a></strong> &middot;
+    live data from CoinGecko, Binance, alternative.me, mempool.space, CoinMetrics &amp; Farside &middot;
+    Power-Law model after Giovanni Santostasi &middot; <em>educational, not financial advice</em>.
   </footer>
 </div>
 <div id="spiral-tip" class="spiral-tip" hidden></div>
@@ -289,7 +290,7 @@ function renderVerdict(){
   document.getElementById("verdict").style.borderLeftColor = col;
   const w = document.getElementById("v-word"); w.textContent = word; w.style.color = col;
   document.getElementById("v-sub").textContent =
-    `Composite ${score>=0?"+":""}${(score*100).toFixed(0)} from ${pills.length} live signals · the model's read, not financial advice.`;
+    `A weighted read of ${pills.length} live signals (composite ${score>=0?"+":""}${(score*100).toFixed(0)}) · the model's view, not financial advice.`;
   document.getElementById("v-factors").innerHTML = pills.join("");
 }
 
@@ -429,7 +430,7 @@ async function loadPiCycle(){
     const gap = (b-a)/b*100;
     signals.piGap = gap; renderVerdict();
     document.getElementById("pi-hint").innerHTML =
-      `111-day MA vs 2× the 350-day MA &mdash; a crossover has marked cycle tops within days. Now: 111DMA is ` +
+      `A classic cycle-top warning: when the 111-day moving average crosses above twice the 350-day, every Bitcoin cycle top so far has landed within days. Today the 111-day is ` +
       `<strong style="color:${gap>=0?C.buy:C.sell}">${gap>=0 ? gap.toFixed(0)+"% below" : Math.abs(gap).toFixed(0)+"% ABOVE"}</strong> the trigger.`;
   }
 }
@@ -470,9 +471,9 @@ async function loadPressure(){
   const buyPct = tv ? tb/tv*100 : 0;
   signals.pressure = buyPct; renderVerdict();
   document.getElementById("pressure-hint").innerHTML =
-    `Net taker volume per day (buy &minus; sell, BTC). 7-day buy share: ` +
-    `<strong style="color:${buyPct>=50?C.buy:C.sell}">${buyPct.toFixed(1)}%</strong> ` +
-    `&middot; green = net buying, red = net selling.`;
+    `How aggressively buyers vs sellers crossed the spread (taker volume, BTC). ` +
+    `7-day buy share: <strong style="color:${buyPct>=50?C.buy:C.sell}">${buyPct.toFixed(1)}%</strong>` +
+    ` &middot; sustained green = a patient bid, red = forced selling.`;
   mkChart("c-pressure", {
     type:"bar",
     data:{ labels, datasets:[
@@ -545,9 +546,9 @@ async function loadEtfFlows(){
   const cum30 = items.slice(-30).reduce((a,b)=> a + (b.net_flow_musd||0), 0);
   const latest = items[items.length-1];
   document.getElementById("etf-hint").innerHTML =
-    `Daily net flow into US spot Bitcoin ETFs ($M). Latest <strong>${latest.date}: ` +
-    `<span style="color:${latest.net_flow_musd>=0?C.buy:C.sell}">${latest.net_flow_musd>=0?"+":""}${latest.net_flow_musd}</span></strong>; ` +
-    `30-day cumulative <strong style="color:${cum30>=0?C.buy:C.sell}">${cum30>=0?"+":""}${Math.round(cum30).toLocaleString()}</strong>. Source: Farside.`;
+    `Daily net dollars flowing into US spot Bitcoin ETFs &mdash; the cleanest read on institutional positioning. ` +
+    `Latest <strong>${latest.date}: <span style="color:${latest.net_flow_musd>=0?C.buy:C.sell}">${latest.net_flow_musd>=0?"+":""}$${latest.net_flow_musd}M</span></strong> &middot; ` +
+    `last 30 days <strong style="color:${cum30>=0?C.buy:C.sell}">${cum30>=0?"+":""}$${Math.round(cum30).toLocaleString()}M</strong>. Source: Farside.`;
   mkChart("c-etf", {
     type: "bar",
     data: { labels, datasets: [

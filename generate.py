@@ -180,7 +180,7 @@ s.append(f'<a href="https://houtini.com" target="_blank"><text x="64" y="62" fon
 s.append(f'<text x="64" y="98" font-size="30" font-weight="800" letter-spacing="0.5" '
          f'fill="{T["ink"]}">The Bitcoin Spiral</text>')
 s.append(f'<text x="64" y="124" font-size="14" fill="{T["muted"]}">'
-         f'Price &amp; the Power Law on a 4-year cycle map &#183; a log-spiral view of every cycle</text>')
+         f'Where Bitcoin sits in its 4-year cycle &#183; fourteen years spiralling around the Power-Law curve</text>')
 
 # spokes
 for k in range(8):

@@ -110,7 +110,8 @@
   @keyframes blkflash { 0%{ background:rgba(247,147,26,.20);} 100%{ background:transparent;} }
   .bl-h { font-weight:800; font-size:1.05rem; margin-bottom:6px; }
   .bl-age { color:var(--faint); font-weight:600; font-size:.78rem; margin-left:6px; }
-  .bl-row { display:flex; gap:10px; padding:6px 0; border-bottom:1px solid var(--border); }
+  .bl-row { display:flex; gap:10px; padding:6px 0; border-bottom:1px solid var(--border); align-items:flex-start; }
+  .bl-row .mono { min-width:0; }
   .bl-row:last-child { border-bottom:0; }
   .bl-row .k { color:var(--muted); min-width:138px; flex-shrink:0; font-size:.78rem; }
   .mono { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.8rem; color:var(--ink); text-decoration:none; word-break:break-all; }
@@ -303,6 +304,7 @@
           <div class="bl-row"><span class="k">Reward address</span><a class="mono" id="blk-addr" target="_blank" rel="noopener">-</a></div>
           <div class="bl-row"><span class="k">Mined by</span><span id="blk-pool">-</span></div>
           <div class="bl-row"><span class="k">Txs &middot; reward &middot; avg fee</span><span id="blk-stats">-</span></div>
+          <div class="bl-row"><span class="k">Difficulty &middot; hashrate</span><span id="blk-diff">-</span></div>
         </div>
       </div>
       <div class="fees-row" id="fees-row"></div>
@@ -576,7 +578,12 @@ async function loadNetwork(){
 
 // ---------- Blocks & fees: block timer, latest solution + reward address ----------
 let lastBlockTs = null, lastBlockHeight = null;
-const short = s => s.slice(0,10) + "…" + s.slice(-8);
+const metric = n => {                 // compact metric suffix a miner reads (T/P/E…)
+  if(n==null || !isFinite(n)) return "n/a";
+  const u=["","K","M","G","T","P","E","Z","Y"]; let i=0; n=Math.abs(n);
+  while(n>=1000 && i<u.length-1){ n/=1000; i++; }
+  return (n>=100 ? n.toFixed(0) : n.toFixed(1)) + " " + u[i];
+};
 
 async function loadBlocks(){
   const [fees, blocks] = await Promise.all([
@@ -599,11 +606,11 @@ async function loadBlocks(){
 
   document.getElementById("blk-height").textContent = "#" + tip.height.toLocaleString();
   const ah = document.getElementById("blk-hash");
-  ah.textContent = short(tip.id); ah.href = "https://mempool.space/block/"+tip.id; ah.title = tip.id;
+  ah.textContent = tip.id; ah.href = "https://mempool.space/block/"+tip.id; ah.title = tip.id;
 
   const addr = x.coinbaseAddress || (x.coinbaseAddresses && x.coinbaseAddresses[0]) || null;
   const aa = document.getElementById("blk-addr");
-  if(addr){ aa.textContent = short(addr); aa.href = "https://mempool.space/address/"+addr; aa.title = addr; }
+  if(addr){ aa.textContent = addr; aa.href = "https://mempool.space/address/"+addr; aa.title = addr; }
   else { aa.textContent = "(not disclosed)"; aa.removeAttribute("href"); }
 
   document.getElementById("blk-pool").textContent = (x.pool && x.pool.name) ? x.pool.name : "unknown pool";
@@ -611,6 +618,11 @@ async function loadBlocks(){
   const avg = x.avgFeeRate!=null ? x.avgFeeRate+" sat/vB" : "n/a";
   document.getElementById("blk-stats").textContent =
     `${(tip.tx_count||0).toLocaleString()} txs · ${reward} · ${avg} avg`;
+
+  const diff = detail.difficulty || tip.difficulty;
+  const hr = diff ? diff * Math.pow(2,32) / 600 : null;   // expected hashes/sec from difficulty
+  document.getElementById("blk-diff").textContent =
+    diff ? `${metric(diff)} · ~${(hr/1e18).toFixed(0)} EH/s network` : "n/a";
 
   if(isNew){ const el=document.getElementById("blk-latest"); el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); }
 

@@ -110,7 +110,8 @@
   @keyframes blkflash { 0%{ background:rgba(247,147,26,.20);} 100%{ background:transparent;} }
   .bl-h { font-weight:800; font-size:1.05rem; margin-bottom:6px; }
   .bl-age { color:var(--faint); font-weight:600; font-size:.78rem; margin-left:6px; }
-  .bl-row { display:flex; gap:10px; padding:6px 0; border-bottom:1px solid var(--border); }
+  .bl-row { display:flex; gap:10px; padding:6px 0; border-bottom:1px solid var(--border); align-items:flex-start; }
+  .bl-row .mono { min-width:0; }
   .bl-row:last-child { border-bottom:0; }
   .bl-row .k { color:var(--muted); min-width:138px; flex-shrink:0; font-size:.78rem; }
   .mono { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.8rem; color:var(--ink); text-decoration:none; word-break:break-all; }
@@ -121,6 +122,19 @@
   .blk-list { display:flex; gap:8px; flex-wrap:wrap; }
   .blk-chip { background:var(--panel2); border:1px solid var(--border); border-radius:9px; padding:6px 10px; font-size:.73rem; color:var(--muted); }
   .blk-chip b { color:var(--ink); }
+
+  .pool-stats { display:flex; gap:24px; flex-wrap:wrap; margin:2px 0 14px; }
+  .pool-stats .ps { font-size:.76rem; color:var(--muted); }
+  .pool-stats .ps b { display:block; font-size:1.4rem; font-weight:800; color:var(--ink); letter-spacing:-.5px; }
+  .pool-bar { display:flex; width:100%; height:26px; border-radius:8px; overflow:hidden; border:1px solid var(--border); margin-bottom:14px; }
+  .pool-bar .seg { height:100%; min-width:1px; }
+  .pool-list { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:5px 18px; }
+  .pool-row { display:flex; align-items:center; gap:8px; font-size:.82rem; padding:3px 0; }
+  .pool-row .sw { width:10px; height:10px; border-radius:3px; flex-shrink:0; }
+  .pool-row .pn { color:var(--ink); text-decoration:none; flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .pool-row a.pn:hover { color:var(--btc); }
+  .pool-row .pp { color:var(--muted); font-weight:700; font-variant-numeric:tabular-nums; }
+  .pool-row .pc { color:var(--faint); font-size:.74rem; min-width:52px; text-align:right; }
 
   .news { list-style:none; margin:0; padding:0; max-height:360px; overflow:auto; }
   .news li { padding:10px 2px; border-bottom:1px solid var(--border); }
@@ -181,6 +195,7 @@
     <a href="#pressure">Buy/Sell</a>
     <a href="#etf-card">ETF Flows</a>
     <a href="#blocks-card">Blocks &amp; Fees</a>
+    <a href="#pools">Mining Pools</a>
     <a href="#hashrate">Hashrate</a>
   </nav>
 
@@ -289,6 +304,7 @@
           <div class="bl-row"><span class="k">Reward address</span><a class="mono" id="blk-addr" target="_blank" rel="noopener">-</a></div>
           <div class="bl-row"><span class="k">Mined by</span><span id="blk-pool">-</span></div>
           <div class="bl-row"><span class="k">Txs &middot; reward &middot; avg fee</span><span id="blk-stats">-</span></div>
+          <div class="bl-row"><span class="k">Difficulty &middot; hashrate</span><span id="blk-diff">-</span></div>
         </div>
       </div>
       <div class="fees-row" id="fees-row"></div>
@@ -297,8 +313,18 @@
   </div>
 
   <div class="grid">
+    <div class="card full" id="pools">
+      <h2>Mining Pool Concentration (7 days)</h2>
+      <p class="hint">Who is actually finding blocks, and how concentrated mining has become. The bar is each pool's share of the last week's blocks; the long tail of smaller pools is grouped as <strong>Others</strong>. The fewer pools it takes to pass 50%, the more centralised the network is. Source: mempool.space.</p>
+      <div class="pool-stats" id="pool-stats"></div>
+      <div class="pool-bar" id="pool-bar"></div>
+      <div class="pool-list" id="pool-list"></div>
+    </div>
+  </div>
+
+  <div class="grid">
     <div class="card full" id="hashrate">
-      <h2>Network hashrate (1 year)</h2>
+      <h2>Network hashrate (5 years)</h2>
       <p class="hint">Total computing power securing the Bitcoin network, in <strong>exahashes per second</strong> (10<sup>18</sup>). Rising hashrate signals miner confidence and a more resilient network. Source: mempool.space.</p>
       <div class="chart-box"><canvas id="c-hash"></canvas></div>
     </div>
@@ -307,7 +333,6 @@
   <footer>
     <a href="how-it-works.html">How this works &amp; why I built it</a> &middot;
     <a href="https://github.com/richyBaxter/Mandala/blob/main/docs/how-it-works.md" target="_blank" rel="noopener">technical reference</a> &middot;
-    <a href="dashboards/maritime/">Arterial Flow (maritime)</a> &middot;
     By <strong><a href="https://houtini.com" target="_blank" rel="noopener">houtini</a></strong> &middot;
     live data from CoinGecko, Binance, alternative.me, mempool.space, CoinMetrics &amp; Farside &middot;
     Power-Law model after Giovanni Santostasi &middot; <em>educational, not financial advice</em>.
@@ -553,7 +578,12 @@ async function loadNetwork(){
 
 // ---------- Blocks & fees: block timer, latest solution + reward address ----------
 let lastBlockTs = null, lastBlockHeight = null;
-const short = s => s.slice(0,10) + "…" + s.slice(-8);
+const metric = n => {                 // compact metric suffix a miner reads (T/P/E…)
+  if(n==null || !isFinite(n)) return "n/a";
+  const u=["","K","M","G","T","P","E","Z","Y"]; let i=0; n=Math.abs(n);
+  while(n>=1000 && i<u.length-1){ n/=1000; i++; }
+  return (n>=100 ? n.toFixed(0) : n.toFixed(1)) + " " + u[i];
+};
 
 async function loadBlocks(){
   const [fees, blocks] = await Promise.all([
@@ -576,11 +606,11 @@ async function loadBlocks(){
 
   document.getElementById("blk-height").textContent = "#" + tip.height.toLocaleString();
   const ah = document.getElementById("blk-hash");
-  ah.textContent = short(tip.id); ah.href = "https://mempool.space/block/"+tip.id; ah.title = tip.id;
+  ah.textContent = tip.id; ah.href = "https://mempool.space/block/"+tip.id; ah.title = tip.id;
 
   const addr = x.coinbaseAddress || (x.coinbaseAddresses && x.coinbaseAddresses[0]) || null;
   const aa = document.getElementById("blk-addr");
-  if(addr){ aa.textContent = short(addr); aa.href = "https://mempool.space/address/"+addr; aa.title = addr; }
+  if(addr){ aa.textContent = addr; aa.href = "https://mempool.space/address/"+addr; aa.title = addr; }
   else { aa.textContent = "(not disclosed)"; aa.removeAttribute("href"); }
 
   document.getElementById("blk-pool").textContent = (x.pool && x.pool.name) ? x.pool.name : "unknown pool";
@@ -588,6 +618,11 @@ async function loadBlocks(){
   const avg = x.avgFeeRate!=null ? x.avgFeeRate+" sat/vB" : "n/a";
   document.getElementById("blk-stats").textContent =
     `${(tip.tx_count||0).toLocaleString()} txs · ${reward} · ${avg} avg`;
+
+  const diff = detail.difficulty || tip.difficulty;
+  const hr = diff ? diff * Math.pow(2,32) / 600 : null;   // expected hashes/sec from difficulty
+  document.getElementById("blk-diff").textContent =
+    diff ? `${metric(diff)} · ~${(hr/1e18).toFixed(0)} EH/s network` : "n/a";
 
   if(isNew){ const el=document.getElementById("blk-latest"); el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); }
 
@@ -606,6 +641,42 @@ function tickBlockTimer(){
   document.getElementById("blk-since").textContent = m + ":" + String(sec).padStart(2,"0");
   document.getElementById("blk-bar").style.width = Math.min(100, s/600*100) + "%";
   document.getElementById("blk-age").textContent = " · " + (m>0 ? m+"m " : "") + sec + "s ago";
+}
+
+// ---------- Mining pool concentration (mempool.space) ----------
+const POOL_COLORS = ["#f7931a","#38bdf8","#16c784","#a78bfa","#f0a92b","#ea3943","#22d3ee","#e879a6"];
+async function loadPools(){
+  const j = await fetch("https://mempool.space/api/v1/mining/pools/1w").then(r=>r.json());
+  const pools = (j.pools || []).slice().sort((a,b)=> b.blockCount - a.blockCount);
+  if(!pools.length) throw new Error("no pools");
+  const total = j.blockCount || pools.reduce((s,p)=>s+p.blockCount,0);
+  const share = c => total ? c/total*100 : 0;
+
+  // mining Nakamoto coefficient: how many pools to exceed 50% of blocks
+  let cum=0, nakamoto=0;
+  for(const p of pools){ cum += p.blockCount; nakamoto++; if(cum > total*0.5) break; }
+  const top2 = share(pools[0].blockCount + (pools[1] ? pools[1].blockCount : 0));
+
+  document.getElementById("pool-stats").innerHTML =
+    `<div class="ps"><b>${share(pools[0].blockCount).toFixed(0)}%</b>top pool (${pools[0].name})</div>` +
+    `<div class="ps"><b>${top2.toFixed(0)}%</b>top 2 pools combined</div>` +
+    `<div class="ps"><b>${nakamoto}</b>pools control &gt;50% (Nakamoto coeff.)</div>` +
+    `<div class="ps"><b>${pools.length}</b>distinct pools · ${total} blocks</div>`;
+
+  const N = 8;
+  const segs = pools.slice(0,N).map((p,i)=>({ name:p.name, slug:p.slug, count:p.blockCount, col:POOL_COLORS[i%POOL_COLORS.length] }));
+  const restCount = pools.slice(N).reduce((s,p)=>s+p.blockCount,0);
+  if(restCount > 0) segs.push({ name:"Others ("+(pools.length-N)+" pools)", slug:null, count:restCount, col:"#3a4556" });
+
+  document.getElementById("pool-bar").innerHTML = segs.map(s=>
+    `<div class="seg" style="width:${share(s.count)}%;background:${s.col}" title="${s.name}: ${share(s.count).toFixed(1)}% (${s.count} blocks)"></div>`).join("");
+
+  document.getElementById("pool-list").innerHTML = segs.map(s=>{
+    const nm = s.slug
+      ? `<a class="pn" href="https://mempool.space/mining/pool/${s.slug}" target="_blank" rel="noopener">${s.name}</a>`
+      : `<span class="pn">${s.name}</span>`;
+    return `<div class="pool-row"><span class="sw" style="background:${s.col}"></span>${nm}<span class="pp">${share(s.count).toFixed(1)}%</span><span class="pc">${s.count} blk</span></div>`;
+  }).join("");
 }
 
 // ---------- Buy vs Sell pressure (taker volume, Binance public) ----------
@@ -636,11 +707,12 @@ async function loadPressure(){
 
 // ---------- Hashrate ----------
 async function loadHash(){
-  const r = await fetch("https://mempool.space/api/v1/mining/hashrate/1y");
+  const r = await fetch("https://mempool.space/api/v1/mining/hashrate/all");
   if(!r.ok) throw new Error("hashrate "+r.status);
   const j = await r.json();
-  const hs = j.hashrates || [];
-  const labels = hs.map(h=> new Date(h.timestamp*1000).toLocaleDateString(undefined,{month:"short",day:"numeric"}));
+  const cutoff = Date.now()/1000 - 5*365.25*86400;          // last 5 years
+  const hs = (j.hashrates || []).filter(h=> h.timestamp >= cutoff);
+  const labels = hs.map(h=> new Date(h.timestamp*1000).toLocaleDateString(undefined,{month:"short",year:"2-digit"}));
   const data = hs.map(h=> h.avgHashrate/1e18);   // EH/s
   mkChart("c-hash", {
     type:"line",
@@ -802,6 +874,7 @@ function refreshMarket(){
   loadNetwork().catch(e=>{ console.error(e); ["t-diff","t-ln","t-fees"].forEach(tileErr); });
   loadMVRV().catch(e=>{ console.error(e); tileErr("t-mvrv"); });
   loadBlocks().catch(e=>{ console.error(e); document.getElementById("blk-since").textContent="n/a"; });
+  loadPools().catch(e=>{ console.error(e); document.getElementById("pool-stats").innerHTML="<div class='err'>pool data unavailable</div>"; });
 }
 
 // Slow feeds: news + AI note are static files generated in CI; re-poll every

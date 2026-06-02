@@ -11,11 +11,14 @@ Pipeline:
 import re
 import datetime
 
-# PortWatch's column names have drifted over time, so match defensively.
-TRANSIT_KEYS = ("n_transit_calls", "portcalls", "transit_calls", "n_transit", "vessel_count", "vessels")
+# PortWatch's column names have drifted over time, so match defensively. The live
+# chokepoints layer carries the transit count in `n_total`; older/other layers used
+# n_transit_calls / portcalls. If none is present we sum the per-vessel-type counts.
+TRANSIT_KEYS = ("n_total", "n_transit_calls", "portcalls", "transit_calls", "n_transit", "vessel_count", "vessels")
+TYPE_KEYS = ("n_container", "n_dry_bulk", "n_general_cargo", "n_roro", "n_tanker")
 IMPORT_KEYS = ("import", "import_musd", "imports")
 EXPORT_KEYS = ("export", "export_musd", "exports")
-TRADE_KEYS = ("trade", "trade_musd", "total_trade")
+TRADE_KEYS = ("trade", "trade_musd", "total_trade", "capacity", "capacity_total")
 NAME_KEYS = ("portname", "PORTNAME", "chokepoint", "name", "portid")
 DATE_KEYS = ("date", "Date", "DATE", "day")
 
@@ -62,6 +65,11 @@ def parse_features(arcgis_json):
         if name is None:
             continue
         transit = _num(_first(attrs, TRANSIT_KEYS))
+        if transit is None:                       # fall back to summing vessel-type counts
+            parts = [_num(attrs.get(k)) for k in TYPE_KEYS if attrs.get(k) is not None]
+            parts = [p for p in parts if p is not None]
+            if parts:
+                transit = sum(parts)
         imp = _num(_first(attrs, IMPORT_KEYS))
         exp = _num(_first(attrs, EXPORT_KEYS))
         trade = _num(_first(attrs, TRADE_KEYS))

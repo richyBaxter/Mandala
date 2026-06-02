@@ -58,6 +58,16 @@ def main():
 
     out = transform.build(records, meta, source="imf-portwatch",
                           now=datetime.datetime.now(datetime.timezone.utc))
+
+    # Don't overwrite the last-good/sample data with an all-empty result (e.g. if the
+    # schema drifts again). Log the real field names so the mapping can be corrected.
+    usable = sum(1 for c in out["chokepoints"] if c["transit_7d_avg"] is not None)
+    if usable == 0:
+        keys = sorted((raw.get("features") or [{}])[0].get("attributes", {}).keys())
+        print(f"parsed {len(records)} records but 0 usable chokepoints; keeping existing JSON.")
+        print("field keys seen:", keys)
+        return 0
+
     path = os.path.join(HERE, "chokepoint_deviations.json")
     with open(path, "w") as f:
         json.dump(out, f, separators=(",", ":"))

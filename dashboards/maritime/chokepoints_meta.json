@@ -1,0 +1,18 @@
+{
+  "_comment": "Static metadata for IMF PortWatch maritime chokepoints. Coordinates are fixed geographic facts; 'baseline' is an APPROXIMATE 2024 mean of daily transit calls, refined live in CI by fetch.py via an ArcGIS outStatistics AVG query. 'names' are normalised aliases used to match PortWatch's 'portname' field, since the chokepointN id numbering is not relied upon.",
+  "baseline_year": 2024,
+  "chokepoints": {
+    "suez":       { "name": "Suez Canal",          "names": ["suez canal", "suez"],                         "lat": 30.50,  "lon": 32.35,  "baseline": 55 },
+    "bab":        { "name": "Bab-el-Mandeb",        "names": ["bab el mandeb", "bab-el-mandeb", "bab al mandab"], "lat": 12.60, "lon": 43.40, "baseline": 50 },
+    "hormuz":     { "name": "Strait of Hormuz",     "names": ["strait of hormuz", "hormuz"],                 "lat": 26.57,  "lon": 56.25,  "baseline": 50 },
+    "malacca":    { "name": "Strait of Malacca",    "names": ["strait of malacca", "malacca"],               "lat": 2.50,   "lon": 101.00, "baseline": 230 },
+    "panama":     { "name": "Panama Canal",         "names": ["panama canal", "panama"],                     "lat": 9.08,   "lon": -79.68, "baseline": 33 },
+    "gibraltar":  { "name": "Strait of Gibraltar",  "names": ["strait of gibraltar", "gibraltar"],           "lat": 35.95,  "lon": -5.60,  "baseline": 90 },
+    "bosphorus":  { "name": "Bosphorus Strait",     "names": ["bosphorus strait", "bosphorus", "istanbul strait"], "lat": 41.10, "lon": 29.07, "baseline": 40 },
+    "dover":      { "name": "Strait of Dover",      "names": ["strait of dover", "dover", "english channel"], "lat": 51.00, "lon": 1.50,   "baseline": 150 },
+    "goodhope":   { "name": "Cape of Good Hope",    "names": ["cape of good hope", "good hope"],             "lat": -34.36, "lon": 18.47,  "baseline": 55 },
+    "danish":     { "name": "Danish Straits",       "names": ["danish straits", "oresund", "great belt"],    "lat": 55.70,  "lon": 12.70,  "baseline": 70 },
+    "taiwan":     { "name": "Taiwan Strait",        "names": ["taiwan strait"],                              "lat": 24.50,  "lon": 119.50, "baseline": 120 },
+    "magellan":   { "name": "Strait of Magellan",   "names": ["strait of magellan", "magellan"],             "lat": -53.50, "lon": -70.00, "baseline": 5 }
+  }
+}

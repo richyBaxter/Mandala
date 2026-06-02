@@ -98,6 +98,30 @@
   canvas { width:100% !important; }
   .chart-box { position:relative; height:300px; }
 
+  .blocks-wrap { display:grid; grid-template-columns:.78fr 1.22fr; gap:18px; margin:4px 0 14px; }
+  @media (max-width:680px){ .blocks-wrap{ grid-template-columns:1fr; } }
+  .blk-timer { background:var(--panel2); border:1px solid var(--border); border-radius:12px; padding:18px 16px; text-align:center; }
+  .bt-num { font-size:2.6rem; font-weight:800; letter-spacing:-1px; font-variant-numeric:tabular-nums; line-height:1; }
+  .bt-lab { color:var(--faint); font-size:.74rem; margin-top:6px; }
+  .bt-bar { height:5px; background:var(--border); border-radius:999px; margin-top:14px; overflow:hidden; }
+  .bt-bar i { display:block; height:100%; width:0; background:var(--btc); border-radius:999px; transition:width 1s linear; }
+  .blk-latest { font-size:.86rem; border-radius:10px; }
+  .blk-latest.flash { animation:blkflash 1.4s ease; }
+  @keyframes blkflash { 0%{ background:rgba(247,147,26,.20);} 100%{ background:transparent;} }
+  .bl-h { font-weight:800; font-size:1.05rem; margin-bottom:6px; }
+  .bl-age { color:var(--faint); font-weight:600; font-size:.78rem; margin-left:6px; }
+  .bl-row { display:flex; gap:10px; padding:6px 0; border-bottom:1px solid var(--border); }
+  .bl-row:last-child { border-bottom:0; }
+  .bl-row .k { color:var(--muted); min-width:138px; flex-shrink:0; font-size:.78rem; }
+  .mono { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.8rem; color:var(--ink); text-decoration:none; word-break:break-all; }
+  a.mono:hover { color:var(--btc); }
+  .fees-row { display:flex; gap:10px; flex-wrap:wrap; margin:2px 0 14px; }
+  .fee { background:var(--panel2); border:1px solid var(--border); border-radius:10px; padding:8px 13px; font-size:.74rem; color:var(--muted); }
+  .fee b { color:var(--ink); font-size:1.05rem; font-weight:800; }
+  .blk-list { display:flex; gap:8px; flex-wrap:wrap; }
+  .blk-chip { background:var(--panel2); border:1px solid var(--border); border-radius:9px; padding:6px 10px; font-size:.73rem; color:var(--muted); }
+  .blk-chip b { color:var(--ink); }
+
   .news { list-style:none; margin:0; padding:0; max-height:360px; overflow:auto; }
   .news li { padding:10px 2px; border-bottom:1px solid var(--border); }
   .news li:last-child { border-bottom:0; }
@@ -223,6 +247,29 @@
       <h2>Spot BTC ETF Flows (90 days)</h2>
       <p class="hint" id="etf-hint">Daily net dollars flowing into US spot Bitcoin ETFs: the cleanest read on<strong>institutional</strong> positioning since launch in January 2024. Source: Farside Investors.</p>
       <div class="chart-box"><canvas id="c-etf"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card full" id="blocks-card">
+      <h2>Blocks &amp; Fees</h2>
+      <p class="hint">Bitcoin settles into a new block roughly every 10 minutes, found by whichever miner first solves the proof-of-work puzzle. Below: time since the last block, that block's <strong>solution</strong> (its hash) and the address that collected the reward, plus current fee rates. Source: mempool.space.</p>
+      <div class="blocks-wrap">
+        <div class="blk-timer">
+          <div class="bt-num" id="blk-since">-</div>
+          <div class="bt-lab">since the last block &middot; target ~10 min</div>
+          <div class="bt-bar"><i id="blk-bar"></i></div>
+        </div>
+        <div class="blk-latest" id="blk-latest">
+          <div class="bl-h">Block <span id="blk-height">-</span><span class="bl-age" id="blk-age"></span></div>
+          <div class="bl-row"><span class="k">Solution (hash)</span><a class="mono" id="blk-hash" target="_blank" rel="noopener">-</a></div>
+          <div class="bl-row"><span class="k">Reward address</span><a class="mono" id="blk-addr" target="_blank" rel="noopener">-</a></div>
+          <div class="bl-row"><span class="k">Mined by</span><span id="blk-pool">-</span></div>
+          <div class="bl-row"><span class="k">Txs &middot; reward &middot; avg fee</span><span id="blk-stats">-</span></div>
+        </div>
+      </div>
+      <div class="fees-row" id="fees-row"></div>
+      <div class="blk-list" id="blk-list"></div>
     </div>
   </div>
 
@@ -481,6 +528,63 @@ async function loadNetwork(){
   } catch(e){ tileErr("t-fees"); }
 }
 
+// ---------- Blocks & fees: block timer, latest solution + reward address ----------
+let lastBlockTs = null, lastBlockHeight = null;
+const short = s => s.slice(0,10) + "…" + s.slice(-8);
+
+async function loadBlocks(){
+  const [fees, blocks] = await Promise.all([
+    fetch("https://mempool.space/api/v1/fees/recommended").then(r=>r.json()),
+    fetch("https://mempool.space/api/v1/blocks").then(r=>r.json())
+  ]);
+
+  document.getElementById("fees-row").innerHTML =
+    [["Fastest",fees.fastestFee],["30 min",fees.halfHourFee],["1 hr",fees.hourFee],["Economy",fees.economyFee]]
+    .map(([k,v])=>`<div class="fee">${k} <b>${v}</b> sat/vB</div>`).join("");
+
+  const tip = blocks[0];
+  // the per-block endpoint carries full extras incl. the coinbase reward address
+  let detail = tip;
+  try { detail = await fetch("https://mempool.space/api/v1/block/"+tip.id).then(r=>r.json()); } catch(e){}
+  const x = detail.extras || tip.extras || {};
+
+  const isNew = lastBlockHeight !== null && tip.height !== lastBlockHeight;
+  lastBlockHeight = tip.height; lastBlockTs = tip.timestamp*1000;
+
+  document.getElementById("blk-height").textContent = "#" + tip.height.toLocaleString();
+  const ah = document.getElementById("blk-hash");
+  ah.textContent = short(tip.id); ah.href = "https://mempool.space/block/"+tip.id; ah.title = tip.id;
+
+  const addr = x.coinbaseAddress || (x.coinbaseAddresses && x.coinbaseAddresses[0]) || null;
+  const aa = document.getElementById("blk-addr");
+  if(addr){ aa.textContent = short(addr); aa.href = "https://mempool.space/address/"+addr; aa.title = addr; }
+  else { aa.textContent = "(not disclosed)"; aa.removeAttribute("href"); }
+
+  document.getElementById("blk-pool").textContent = (x.pool && x.pool.name) ? x.pool.name : "unknown pool";
+  const reward = x.reward!=null ? (x.reward/1e8).toFixed(3)+" BTC" : "n/a";
+  const avg = x.avgFeeRate!=null ? x.avgFeeRate+" sat/vB" : "n/a";
+  document.getElementById("blk-stats").textContent =
+    `${(tip.tx_count||0).toLocaleString()} txs · ${reward} · ${avg} avg`;
+
+  if(isNew){ const el=document.getElementById("blk-latest"); el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); }
+
+  document.getElementById("blk-list").innerHTML = blocks.slice(0,6).map(bl=>{
+    const p = (bl.extras && bl.extras.pool && bl.extras.pool.name) || "?";
+    return `<span class="blk-chip"><b>#${bl.height.toLocaleString()}</b> · ${p}</span>`;
+  }).join("");
+
+  tickBlockTimer();
+}
+
+function tickBlockTimer(){
+  if(!lastBlockTs) return;
+  const s = Math.max(0, Math.floor((Date.now()-lastBlockTs)/1000));
+  const m = Math.floor(s/60), sec = s%60;
+  document.getElementById("blk-since").textContent = m + ":" + String(sec).padStart(2,"0");
+  document.getElementById("blk-bar").style.width = Math.min(100, s/600*100) + "%";
+  document.getElementById("blk-age").textContent = " · " + (m>0 ? m+"m " : "") + sec + "s ago";
+}
+
 // ---------- Buy vs Sell pressure (taker volume, Binance public) ----------
 async function loadPressure(){
   const r = await fetch("https://data-api.binance.vision/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=180");
@@ -674,6 +778,7 @@ function refreshMarket(){
     document.getElementById("pi-hint").innerHTML="<span class='err'>Pi Cycle feed unavailable (Binance)</span>"; });
   loadNetwork().catch(e=>{ console.error(e); ["t-diff","t-ln","t-fees"].forEach(tileErr); });
   loadMVRV().catch(e=>{ console.error(e); tileErr("t-mvrv"); });
+  loadBlocks().catch(e=>{ console.error(e); document.getElementById("blk-since").textContent="n/a"; });
 }
 
 // Slow feeds: news + AI note are static files generated in CI; re-poll every
@@ -695,6 +800,8 @@ loadDiary().catch(e=>{ console.error(e);
 
 setInterval(refreshMarket, 300000);   // 5 min
 setInterval(refreshSlow, 1200000);    // 20 min
+setInterval(loadBlocks, 60000);       // new blocks land ~every 10 min; poll every minute
+setInterval(tickBlockTimer, 1000);    // live block timer
 setInterval(()=>{
   if(!lastLoad) return;
   const s = Math.round((Date.now() - lastLoad) / 1000);

@@ -349,6 +349,7 @@ const N = 5.8, A_SUP = -17.32, A_FAIR = -17.01, A_RES = -16.5;
 const daysSince = ms => (ms - GENESIS) / 86400000;
 const pl = (ms, a) => { const d = daysSince(ms); return d <= 0 ? 0 : Math.pow(10, a + N * Math.log10(d)); };
 const fmtUSD = v => v >= 1000 ? "$" + Math.round(v).toLocaleString() : "$" + v.toFixed(2);
+const esc = s => String(s==null?"":s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
 Chart.defaults.color = C.muted;
 Chart.defaults.borderColor = C.grid;
@@ -628,7 +629,7 @@ async function loadBlocks(){
 
   document.getElementById("blk-list").innerHTML = blocks.slice(0,6).map(bl=>{
     const p = (bl.extras && bl.extras.pool && bl.extras.pool.name) || "?";
-    return `<span class="blk-chip"><b>#${bl.height.toLocaleString()}</b> · ${p}</span>`;
+    return `<span class="blk-chip"><b>#${bl.height.toLocaleString()}</b> · ${esc(p)}</span>`;
   }).join("");
 
   tickBlockTimer();
@@ -658,7 +659,7 @@ async function loadPools(){
   const top2 = share(pools[0].blockCount + (pools[1] ? pools[1].blockCount : 0));
 
   document.getElementById("pool-stats").innerHTML =
-    `<div class="ps"><b>${share(pools[0].blockCount).toFixed(0)}%</b>top pool (${pools[0].name})</div>` +
+    `<div class="ps"><b>${share(pools[0].blockCount).toFixed(0)}%</b>top pool (${esc(pools[0].name)})</div>` +
     `<div class="ps"><b>${top2.toFixed(0)}%</b>top 2 pools combined</div>` +
     `<div class="ps"><b>${nakamoto}</b>pools control &gt;50% (Nakamoto coeff.)</div>` +
     `<div class="ps"><b>${pools.length}</b>distinct pools · ${total} blocks</div>`;
@@ -669,12 +670,12 @@ async function loadPools(){
   if(restCount > 0) segs.push({ name:"Others ("+(pools.length-N)+" pools)", slug:null, count:restCount, col:"#3a4556" });
 
   document.getElementById("pool-bar").innerHTML = segs.map(s=>
-    `<div class="seg" style="width:${share(s.count)}%;background:${s.col}" title="${s.name}: ${share(s.count).toFixed(1)}% (${s.count} blocks)"></div>`).join("");
+    `<div class="seg" style="width:${share(s.count)}%;background:${s.col}" title="${esc(s.name)}: ${share(s.count).toFixed(1)}% (${s.count} blocks)"></div>`).join("");
 
   document.getElementById("pool-list").innerHTML = segs.map(s=>{
     const nm = s.slug
-      ? `<a class="pn" href="https://mempool.space/mining/pool/${s.slug}" target="_blank" rel="noopener">${s.name}</a>`
-      : `<span class="pn">${s.name}</span>`;
+      ? `<a class="pn" href="https://mempool.space/mining/pool/${encodeURIComponent(s.slug)}" target="_blank" rel="noopener">${esc(s.name)}</a>`
+      : `<span class="pn">${esc(s.name)}</span>`;
     return `<div class="pool-row"><span class="sw" style="background:${s.col}"></span>${nm}<span class="pp">${share(s.count).toFixed(1)}%</span><span class="pc">${s.count} blk</span></div>`;
   }).join("");
 }

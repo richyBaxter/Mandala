@@ -140,6 +140,13 @@
   footer { color:var(--faint); font-size:.82rem; padding:30px 0 70px; border-top:1px solid var(--border); margin-top:26px; }
   footer strong { color:var(--btc); } a { color:var(--btc); }
   .err { color:var(--sell); font-size:.78rem; }
+
+  html { scroll-behavior:smooth; }
+  .toc { display:flex; flex-wrap:wrap; gap:8px; margin:18px 0 2px; }
+  .toc a { font-size:.75rem; font-weight:600; color:var(--muted); text-decoration:none;
+    background:var(--panel); border:1px solid var(--border); border-radius:999px; padding:5px 11px; }
+  .toc a:hover { color:var(--btc); border-color:var(--btc); }
+  [id]{ scroll-margin-top:18px; }
 </style>
 </head>
 <body>
@@ -161,6 +168,22 @@
     <p class="updated"><span class="dot">&#9679;</span> <span id="updated">loading live data&hellip;</span></p>
   </header>
 
+  <nav class="toc" aria-label="Dashboard sections">
+    <a href="#verdict">Verdict</a>
+    <a href="#stats">Key stats</a>
+    <a href="#spiral">Spiral</a>
+    <a href="#fng">Fear &amp; Greed</a>
+    <a href="#news-card">News</a>
+    <a href="#diary-card">Diary</a>
+    <a href="#plchannel">Power-Law</a>
+    <a href="#mayer">Mayer</a>
+    <a href="#picycle">Pi Cycle</a>
+    <a href="#pressure">Buy/Sell</a>
+    <a href="#etf-card">ETF Flows</a>
+    <a href="#blocks-card">Blocks &amp; Fees</a>
+    <a href="#hashrate">Hashrate</a>
+  </nav>
+
   <section class="verdict" id="verdict">
     <div><div class="word" id="v-word">Analysing&hellip;</div></div>
     <div class="sub" id="v-sub">Reading every indicator and putting one view on the page&hellip;</div>
@@ -173,7 +196,7 @@
     <p class="hint" id="ai-note-meta"></p>
   </section>
 
-  <section class="tiles">
+  <section class="tiles" id="stats">
     <div class="tile"><div class="label">BTC Price</div><div class="val" id="t-price">-</div><div class="meta" id="t-price-chg">24h</div></div>
     <div class="tile"><div class="label">BTC / Gold</div><div class="val" id="t-gold">-</div><div class="meta" id="t-gold-meta">oz of gold / BTC</div></div>
     <div class="tile"><div class="label">Power-Law Fair</div><div class="val accent" id="t-fair">-</div><div class="meta" id="t-fair-meta">model fair value today</div></div>
@@ -188,12 +211,12 @@
   </section>
 
   <div class="grid">
-    <div class="card spiral full">
+    <div class="card spiral full" id="spiral">
       <h2>The Bitcoin Spiral</h2>
       <p class="hint">The white line is Bitcoin's monthly price, spiralling outward through time. The orange band is the <strong>Power-Law channel</strong>, a remarkably stable long-term curve Bitcoin has tracked for fourteen years (Santostasi, 2018): solid = floor, dotted = fair value, dashed = the cycle-top band. <strong>Hover any point</strong> for its price and the model's levels that month. <a href="index.html">About &amp; embed &rarr;</a></p>
       <div id="spiral-host" role="img" aria-label="The Bitcoin Spiral: price on a 4-year-cycle Power-Law map. Hover points for details."></div>
     </div>
-    <div class="card full">
+    <div class="card full" id="fng">
       <h2>Fear &amp; Greed (60 days)</h2>
       <p class="hint">How the market <em>feels</em>, on a 0&ndash;100 scale. Historically, extreme fear has marked accumulation windows and extreme greed has marked late-cycle exits. Source: alternative.me.</p>
       <div class="chart-box"><canvas id="c-fng"></canvas></div>
@@ -201,12 +224,12 @@
   </div>
 
   <div class="grid">
-    <div class="card">
+    <div class="card" id="news-card">
       <h2>Flows &amp; Institutional News</h2>
       <p class="hint" id="news-hint">Curated from CoinDesk, Cointelegraph and Bitcoin Magazine, filtered for the news that moves markets: ETF flows, who's buying, and macro catalysts.</p>
       <ul class="news" id="news"><li class="hint">loading headlines&hellip;</li></ul>
     </div>
-    <div class="card">
+    <div class="card" id="diary-card">
       <h2>Key-Dates Diary</h2>
       <p class="hint">What's coming up that can move price: Federal Reserve decisions (FOMC), CME &amp; Deribit options expiries (often a volatility catalyst), and the next halving.</p>
       <ul class="diary" id="diary"><li class="hint">loading&hellip;</li></ul>
@@ -214,12 +237,12 @@
   </div>
 
   <div class="grid">
-    <div class="card">
+    <div class="card" id="plchannel">
       <h2>Price vs Power-Law channel</h2>
       <p class="hint">A year of Bitcoin's price against the Power-Law model (log scale). The dashed line is the model's <strong>fair value</strong>; the band runs from the historical <strong>floor</strong> to the <strong>cycle-top</strong> projection.</p>
       <div class="chart-box"><canvas id="c-price"></canvas></div>
     </div>
-    <div class="card">
+    <div class="card" id="mayer">
       <h2>Mayer Multiple</h2>
       <p class="hint">Price divided by its 200-day moving average. Below <strong>1</strong>, you're paying less than trend, historically a quiet accumulation zone. Above <strong>2.4</strong> has only happened near bull-cycle highs.</p>
       <div class="chart-box"><canvas id="c-mayer"></canvas></div>
@@ -227,7 +250,7 @@
   </div>
 
   <div class="grid">
-    <div class="card full">
+    <div class="card full" id="picycle">
       <h2>Pi Cycle Top</h2>
       <p class="hint" id="pi-hint">A classic cycle-top warning. When the 111-day moving average crosses above <strong>twice</strong> the 350-day, every Bitcoin cycle top so far has landed within days. Useful as an objective counterweight to the Power-Law oscillator.</p>
       <div class="chart-box"><canvas id="c-pi"></canvas></div>
@@ -235,7 +258,7 @@
   </div>
 
   <div class="grid">
-    <div class="card full">
+    <div class="card full" id="pressure">
       <h2>Buy vs Sell Pressure</h2>
       <p class="hint" id="pressure-hint">How aggressively buyers vs sellers crossed the spread each day (taker volume, BTC). Sustained green is a <em>patient bid</em>; sustained red is <em>forced selling</em>. Source: Binance.</p>
       <div class="chart-box"><canvas id="c-pressure"></canvas></div>
@@ -274,7 +297,7 @@
   </div>
 
   <div class="grid">
-    <div class="card full">
+    <div class="card full" id="hashrate">
       <h2>Network hashrate (1 year)</h2>
       <p class="hint">Total computing power securing the Bitcoin network, in <strong>exahashes per second</strong> (10<sup>18</sup>). Rising hashrate signals miner confidence and a more resilient network. Source: mempool.space.</p>
       <div class="chart-box"><canvas id="c-hash"></canvas></div>

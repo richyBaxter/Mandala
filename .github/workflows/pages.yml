@@ -36,6 +36,9 @@ jobs:
       - name: Fetch BTC ETF flows (Farside)
         continue-on-error: true
         run: python3 tools/fetch_etf_flows.py
+      - name: Refresh maritime chokepoints (IMF PortWatch)
+        continue-on-error: true
+        run: python3 dashboards/maritime/fetch.py
       - name: Build AI prompt from live data
         run: python3 tools/build_prompt.py
       - name: Generate market note (GitHub Models)
@@ -58,11 +61,11 @@ jobs:
         run: |
           git config user.name "houtini-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/btc-monthly.json btc-mandala.svg
+          git add data/btc-monthly.json btc-mandala.svg dashboards/maritime/chokepoint_deviations.json
           if git diff --staged --quiet; then
             echo "no changes to commit"; exit 0
           fi
-          git commit -m "chore: refresh prices + SVG from live data [skip ci]"
+          git commit -m "chore: refresh prices + SVG + maritime data [skip ci]"
           git push "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" HEAD:main
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

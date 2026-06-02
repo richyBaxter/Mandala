@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arterial Flow: maritime chokepoints &amp; trade diversion · houtini</title>
+<meta name="description" content="A live macro map of the world's maritime chokepoints: where ship transits sit versus their 2024 baseline, and how much traffic is bleeding onto longer routes. Free public data from IMF PortWatch.">
+<meta property="og:title" content="Arterial Flow: maritime chokepoints">
+<meta property="og:description" content="Where global shipping is constrained, and how much traffic is diverting. Live from IMF PortWatch.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg:#0b0e14; --panel:#0f141d; --border:#1e2733; --ink:#e8ecf3; --muted:#8a93a3;
+    --faint:#525b6b; --btc:#f7931a; --con:#ea3943; --elev:#38bdf8; --norm:#16c784;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Inter,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.5; }
+  .wrap { max-width:1240px; margin:0 auto; padding:0 22px; }
+  header { padding:40px 0 6px; position:relative; }
+  .kicker { color:var(--btc); font-size:.72rem; font-weight:700; letter-spacing:3px; margin:0 0 8px; }
+  .kicker a { color:inherit; text-decoration:none; }
+  h1 { font-size:2.2rem; font-weight:800; margin:0 0 6px; letter-spacing:-.5px; }
+  .sub { color:var(--muted); margin:0; max-width:70ch; }
+  .badge { display:inline-block; font-size:.66rem; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+    color:var(--btc); border:1px solid var(--btc); border-radius:999px; padding:2px 8px; margin-left:8px; vertical-align:middle; }
+
+  .hero { display:flex; gap:26px; flex-wrap:wrap; align-items:baseline; margin:22px 0 14px;
+    background:var(--panel); border:1px solid var(--border); border-radius:16px; padding:18px 22px; }
+  .hero .big { font-size:2.6rem; font-weight:800; letter-spacing:-1px; color:var(--con); line-height:1; }
+  .hero .cap { color:var(--muted); font-size:.9rem; flex:1; min-width:240px; }
+  .hero .mini { color:var(--faint); font-size:.8rem; }
+
+  #map { height:560px; border-radius:16px; border:1px solid var(--border); overflow:hidden; }
+  .legend { display:flex; gap:16px; flex-wrap:wrap; color:var(--muted); font-size:.8rem; margin:12px 2px 0; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:10px; height:10px; border-radius:50%; display:inline-block; }
+
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:22px 0; }
+  .ck { background:var(--panel); border:1px solid var(--border); border-left:4px solid var(--faint); border-radius:12px; padding:12px 14px; }
+  .ck .nm { font-weight:700; font-size:.95rem; }
+  .ck .dv { font-size:1.5rem; font-weight:800; letter-spacing:-.5px; margin-top:2px; }
+  .ck .mt { color:var(--faint); font-size:.76rem; margin-top:2px; }
+
+  .maplibregl-popup-content { background:var(--panel); color:var(--ink); border:1px solid var(--border);
+    border-radius:10px; font-family:inherit; font-size:.82rem; padding:10px 12px; }
+  .maplibregl-popup-tip { display:none; }
+  footer { color:var(--faint); font-size:.82rem; padding:30px 0 70px; border-top:1px solid var(--border); margin-top:20px; }
+  footer a { color:var(--btc); }
+  a.back { color:var(--btc); text-decoration:none; font-size:.9rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="kicker"><a href="https://houtini.com" target="_blank" rel="noopener">HOUTINI</a></p>
+    <h1>Arterial Flow<span class="badge" id="src-badge" hidden>sample data</span></h1>
+    <p class="sub">The world's maritime chokepoints, the arteries of global trade. Each node is sized by
+    how many ships transit it and coloured by how far that sits from its 2024 baseline. When a chokepoint
+    is constrained, traffic bleeds onto longer routes (the classic case: Suez and Bab-el-Mandeb diverting
+    around the Cape of Good Hope). Live macro data from IMF PortWatch.</p>
+  </header>
+
+  <div class="hero">
+    <div><div class="big" id="hero-num">0</div></div>
+    <div class="cap">transit calls per day below the 2024 baseline across constrained chokepoints, a proxy
+      for the traffic currently diverting onto longer, slower routes.
+      <div class="mini" id="hero-meta">loading&hellip;</div>
+    </div>
+  </div>
+
+  <div id="map"></div>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--con)"></i> Constrained (below baseline)</span>
+    <span><i class="dot" style="background:var(--norm)"></i> Normal</span>
+    <span><i class="dot" style="background:var(--elev)"></i> Elevated (absorbing diversion)</span>
+    <span><i class="dot" style="background:var(--faint)"></i> No data</span>
+    <span>Node size = transit volume</span>
+  </div>
+
+  <div class="grid" id="cards"></div>
+
+  <footer>
+    Data: <a href="https://portwatch.imf.org/" target="_blank" rel="noopener">IMF PortWatch</a> (public, keyless),
+    refreshed in CI &middot; baseline = 2024 mean &middot; node sizes and the diversion overlay are derived,
+    not vessel-level tracking &middot; by <a href="https://houtini.com" target="_blank" rel="noopener">houtini</a> &middot;
+    <a href="../../dashboard.html" class="back">Bitcoin Monitor &rarr;</a>
+  </footer>
+</div>
+
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script>
+const COL = { constrained:"#ea3943", elevated:"#38bdf8", normal:"#16c784", "no-data":"#525b6b" };
+const GOODHOPE = [18.47, -34.36];
+
+function arc(a, b, n=48, lift=0.18){
+  // simple curved interpolation between two [lon,lat] points for the diversion overlay
+  const pts = [];
+  for(let i=0;i<=n;i++){
+    const t=i/n;
+    const lon=a[0]+(b[0]-a[0])*t;
+    const lat=a[1]+(b[1]-a[1])*t + Math.sin(Math.PI*t)*(b[0]-a[0])*lift*-0.0;
+    // bow the path westward to suggest the Cape route
+    pts.push([lon - Math.sin(Math.PI*t)*22*lift, lat]);
+  }
+  return pts;
+}
+
+const map = new maplibregl.Map({
+  container:"map",
+  style:"https://demotiles.maplibre.org/style.json",   // keyless MapLibre demo basemap
+  center:[35,20], zoom:1.4, attributionControl:true, dragRotate:false
+});
+map.addControl(new maplibregl.NavigationControl({showCompass:false}), "top-right");
+
+function recolour(){
+  // repaint the demo basemap into the Mandala dark palette (layer ids vary; guard each)
+  const sets = [
+    ["background","background-color","#0b0e14"],
+    ["countries-fill","fill-color","#0f141d"],
+    ["countries-boundary","line-color","#1e2733"],
+    ["coastline","line-color","#243042"],
+    ["geolines","line-color","#141b26"],
+  ];
+  for(const [id,prop,val] of sets){ try{ if(map.getLayer(id)) map.setPaintProperty(id,prop,val); }catch(e){} }
+  try{ map.getStyle().layers.forEach(l=>{ if(/label/.test(l.id)) map.setLayoutProperty(l.id,"visibility","none"); }); }catch(e){}
+}
+
+async function load(){
+  let data;
+  try{ data = await (await fetch("chokepoint_deviations.json?_="+Date.now())).json(); }
+  catch(e){ document.getElementById("hero-meta").textContent="could not load data"; return; }
+
+  if(data.source !== "imf-portwatch") document.getElementById("src-badge").hidden = false;
+
+  // hero count-up
+  const target = data.summary.transits_below_baseline_per_day || 0;
+  const el = document.getElementById("hero-num"); let cur=0;
+  const step = Math.max(1, Math.round(target/40));
+  (function tick(){ cur=Math.min(target,cur+step); el.textContent=cur.toLocaleString();
+    if(cur<target) requestAnimationFrame(tick); })();
+  document.getElementById("hero-meta").textContent =
+    `${data.summary.constrained_count} of ${data.summary.tracked} chokepoints constrained `+
+    `· baseline ${data.baseline_year} · updated ${new Date(data.generated).toLocaleDateString()}`+
+    (data.source!=="imf-portwatch" ? " · illustrative sample" : "");
+
+  // side cards
+  const cards = document.getElementById("cards");
+  cards.innerHTML = data.chokepoints.map(c=>{
+    const d = c.deviation_pct;
+    const col = COL[c.status] || COL["no-data"];
+    const dv = d==null ? "n/a" : (d>0?"+":"")+d+"%";
+    return `<div class="ck" style="border-left-color:${col}">
+      <div class="nm">${c.name}</div>
+      <div class="dv" style="color:${col}">${dv}</div>
+      <div class="mt">${c.transit_7d_avg==null?"no transits":c.transit_7d_avg+" calls/day"} vs ${c.baseline} baseline</div>
+    </div>`;
+  }).join("");
+
+  const features = data.chokepoints.map(c=>({
+    type:"Feature",
+    geometry:{ type:"Point", coordinates:[c.lon, c.lat] },
+    properties:{ name:c.name, status:c.status, dev:c.deviation_pct,
+      vol:c.transit_7d_avg ?? c.baseline ?? 5,
+      col: COL[c.status] || COL["no-data"] }
+  }));
+
+  // diversion overlays: each constrained major canal -> Cape of Good Hope
+  const diversions = data.chokepoints
+    .filter(c=>c.status==="constrained" && (c.id==="suez"||c.id==="bab"))
+    .map(c=>({ type:"Feature", geometry:{ type:"LineString", coordinates:arc([c.lon,c.lat],GOODHOPE) }, properties:{} }));
+
+  function draw(){
+    map.addSource("ck",{ type:"geojson", data:{ type:"FeatureCollection", features } });
+    map.addSource("div",{ type:"geojson", data:{ type:"FeatureCollection", features:diversions } });
+
+    map.addLayer({ id:"div-line", type:"line", source:"div",
+      paint:{ "line-color":"#ea3943", "line-width":1.6, "line-opacity":0.55, "line-dasharray":[2,2] } });
+
+    map.addLayer({ id:"ck-halo", type:"circle", source:"ck",
+      filter:["==",["get","status"],"constrained"],
+      paint:{ "circle-radius":18, "circle-color":"#ea3943", "circle-opacity":0.18 } });
+
+    map.addLayer({ id:"ck", type:"circle", source:"ck",
+      paint:{
+        "circle-radius":["interpolate",["linear"],["sqrt",["get","vol"]],1,5,16,34],
+        "circle-color":["get","col"],
+        "circle-stroke-color":"#0b0e14", "circle-stroke-width":1.4, "circle-opacity":0.92 } });
+
+    // pulse the constrained halos
+    let t=0;
+    (function pulse(){ t+=0.05; const r=16+Math.sin(t)*7;
+      try{ map.setPaintProperty("ck-halo","circle-radius",r);
+           map.setPaintProperty("ck-halo","circle-opacity",0.10+Math.abs(Math.sin(t))*0.16);}catch(e){}
+      requestAnimationFrame(pulse); })();
+
+    const pop = new maplibregl.Popup({ closeButton:false, offset:12 });
+    map.on("mouseenter","ck",e=>{ map.getCanvas().style.cursor="pointer";
+      const p=e.features[0].properties; const d=p.dev;
+      pop.setLngLat(e.features[0].geometry.coordinates)
+         .setHTML(`<b>${p.name}</b><br>${d==null?"no data":(d>0?"+":"")+d+"% vs 2024"} · ${p.status}`)
+         .addTo(map); });
+    map.on("mouseleave","ck",()=>{ map.getCanvas().style.cursor=""; pop.remove(); });
+  }
+
+  if(map.isStyleLoaded()) draw(); else map.on("load", draw);
+}
+
+map.on("load", recolour);
+load();
+</script>
+</body>
+</html>

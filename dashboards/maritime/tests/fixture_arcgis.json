@@ -1,0 +1,29 @@
+{
+  "_comment": "Synthetic ArcGIS FeatureServer response mimicking IMF PortWatch chokepoints. Suez is constrained, Cape of Good Hope is elevated (diversion), Panama is normal. Panama uses the alternate 'portcalls' field and Suez carries an 8th, older record that must fall outside the 7-day window.",
+  "features": [
+    { "attributes": { "portname": "Suez Canal", "date": 108, "n_transit_calls": 22, "import": 100, "export": 50 } },
+    { "attributes": { "portname": "Suez Canal", "date": 107, "n_transit_calls": 22, "import": 100, "export": 50 } },
+    { "attributes": { "portname": "Suez Canal", "date": 106, "n_transit_calls": 22, "import": 100, "export": 50 } },
+    { "attributes": { "portname": "Suez Canal", "date": 105, "n_transit_calls": 22, "import": 100, "export": 50 } },
+    { "attributes": { "portname": "Suez Canal", "date": 104, "n_transit_calls": 22, "import": 100, "export": 50 } },
+    { "attributes": { "portname": "Suez Canal", "date": 103, "n_transit_calls": 22, "import": 100, "export": 50 } },
+    { "attributes": { "portname": "Suez Canal", "date": 102, "n_transit_calls": 22, "import": 100, "export": 50 } },
+    { "attributes": { "portname": "Suez Canal", "date": 101, "n_transit_calls": 100, "import": 100, "export": 50 } },
+
+    { "attributes": { "portname": "Cape of Good Hope", "date": 207, "n_transit_calls": 80, "import": 300, "export": 100 } },
+    { "attributes": { "portname": "Cape of Good Hope", "date": 206, "n_transit_calls": 80, "import": 300, "export": 100 } },
+    { "attributes": { "portname": "Cape of Good Hope", "date": 205, "n_transit_calls": 80, "import": 300, "export": 100 } },
+    { "attributes": { "portname": "Cape of Good Hope", "date": 204, "n_transit_calls": 80, "import": 300, "export": 100 } },
+    { "attributes": { "portname": "Cape of Good Hope", "date": 203, "n_transit_calls": 80, "import": 300, "export": 100 } },
+    { "attributes": { "portname": "Cape of Good Hope", "date": 202, "n_transit_calls": 80, "import": 300, "export": 100 } },
+    { "attributes": { "portname": "Cape of Good Hope", "date": 201, "n_transit_calls": 80, "import": 300, "export": 100 } },
+
+    { "attributes": { "portname": "Panama Canal", "date": 307, "portcalls": 33 } },
+    { "attributes": { "portname": "Panama Canal", "date": 306, "portcalls": 33 } },
+    { "attributes": { "portname": "Panama Canal", "date": 305, "portcalls": 33 } },
+    { "attributes": { "portname": "Panama Canal", "date": 304, "portcalls": 33 } },
+    { "attributes": { "portname": "Panama Canal", "date": 303, "portcalls": 33 } },
+    { "attributes": { "portname": "Panama Canal", "date": 302, "portcalls": 33 } },
+    { "attributes": { "portname": "Panama Canal", "date": 301, "portcalls": 33 } }
+  ]
+}

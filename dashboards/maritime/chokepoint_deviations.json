@@ -1,1 +1,25 @@
-{"generated":"2026-06-02T14:03:57Z","source":"imf-portwatch","baseline_year":2024,"chokepoints":[{"id":"suez","name":"Suez Canal","lat":30.5,"lon":32.35,"transit_7d_avg":null,"baseline":55.0,"deviation_pct":null,"status":"no-data","trade_musd_7d_avg":null},{"id":"bab","name":"Bab-el-Mandeb","lat":12.6,"lon":43.4,"transit_7d_avg":null,"baseline":50.0,"deviation_pct":null,"status":"no-data","trade_musd_7d_avg":null},{"id":"hormuz","name":"Strait of Hormuz","lat":26.57,"lon":56.25,"transit_7d_avg":null,"baseline":50.0,"deviation_pct":null,"status":"no-data","trade_musd_7d_avg":null},{"id":"malacca","name":"Strait of Malacca","lat":2.5,"lon":101.0,"transit_7d_avg":null,"baseline":230.0,"deviation_pct":null,"status":"no-data","trade_musd_7d_avg":null},{"id":"panama","name":"Panama Canal","lat":9.08,"lon":-79.68,"transit_7d_avg":null,"baseline":33.0,"deviation_pct":null,"status":"no-data","trade_musd_7d_avg":null},{"id":"gibraltar","name":"Strait of Gibraltar","lat":35.95,"lon":-5.6,"transit_7d_avg":null,"baseline":90.0,"deviation_pct":null,"status":"no-data","trade_musd_7d_avg":null},{"id":"bosphorus","name":"Bosphorus Strait","lat":41.1,"lon":29.07,"transit_7d_avg":null,"baseline":40.0,"deviation_pct":null,"status":"no-data","trade_musd_7d_avg":null},{"id":"dover","name":"Strait of Dover","lat":51.0,"lon":1.5,"transit_7d_avg":null,"baseline":150.0,"deviation_pct":null,"status":"no-data","trade_musd_7d_avg":null},{"id":"goodhope","name":"Cape of Good Hope","lat":-34.36,"lon":18.47,"transit_7d_avg":null,"baseline":55.0,"deviation_pct":null,"status":"no-data","trade_musd_7d_avg":null},{"id":"danish","name":"Danish Straits","lat":55.7,"lon":12.7,"transit_7d_avg":null,"baseline":70.0,"deviation_pct":null,"status":"no-data","trade_musd_7d_avg":null},{"id":"taiwan","name":"Taiwan Strait","lat":24.5,"lon":119.5,"transit_7d_avg":null,"baseline":120.0,"deviation_pct":null,"status":"no-data","trade_musd_7d_avg":null},{"id":"magellan","name":"Strait of Magellan","lat":-53.5,"lon":-70.0,"transit_7d_avg":null,"baseline":5.0,"deviation_pct":null,"status":"no-data","trade_musd_7d_avg":null}],"summary":{"tracked":12,"constrained_count":0,"transits_below_baseline_per_day":0,"most_constrained":null}}
+{
+  "generated": "2026-01-01T00:00:00Z",
+  "source": "sample",
+  "baseline_year": 2024,
+  "chokepoints": [
+    { "id": "bab", "name": "Bab-el-Mandeb", "lat": 12.6, "lon": 43.4, "transit_7d_avg": 18, "baseline": 50, "deviation_pct": -64, "status": "constrained", "trade_musd_7d_avg": 410 },
+    { "id": "suez", "name": "Suez Canal", "lat": 30.5, "lon": 32.35, "transit_7d_avg": 22, "baseline": 55, "deviation_pct": -60, "status": "constrained", "trade_musd_7d_avg": 520 },
+    { "id": "panama", "name": "Panama Canal", "lat": 9.08, "lon": -79.68, "transit_7d_avg": 30, "baseline": 33, "deviation_pct": -9, "status": "normal", "trade_musd_7d_avg": 240 },
+    { "id": "hormuz", "name": "Strait of Hormuz", "lat": 26.57, "lon": 56.25, "transit_7d_avg": 49, "baseline": 50, "deviation_pct": -2, "status": "normal", "trade_musd_7d_avg": 1100 },
+    { "id": "bosphorus", "name": "Bosphorus Strait", "lat": 41.1, "lon": 29.07, "transit_7d_avg": 39, "baseline": 40, "deviation_pct": -2, "status": "normal", "trade_musd_7d_avg": 180 },
+    { "id": "taiwan", "name": "Taiwan Strait", "lat": 24.5, "lon": 119.5, "transit_7d_avg": 118, "baseline": 120, "deviation_pct": -2, "status": "normal", "trade_musd_7d_avg": 900 },
+    { "id": "danish", "name": "Danish Straits", "lat": 55.7, "lon": 12.7, "transit_7d_avg": 69, "baseline": 70, "deviation_pct": -1, "status": "normal", "trade_musd_7d_avg": 160 },
+    { "id": "dover", "name": "Strait of Dover", "lat": 51.0, "lon": 1.5, "transit_7d_avg": 152, "baseline": 150, "deviation_pct": 1, "status": "normal", "trade_musd_7d_avg": 300 },
+    { "id": "malacca", "name": "Strait of Malacca", "lat": 2.5, "lon": 101.0, "transit_7d_avg": 235, "baseline": 230, "deviation_pct": 2, "status": "normal", "trade_musd_7d_avg": 1300 },
+    { "id": "gibraltar", "name": "Strait of Gibraltar", "lat": 35.95, "lon": -5.6, "transit_7d_avg": 96, "baseline": 90, "deviation_pct": 7, "status": "normal", "trade_musd_7d_avg": 280 },
+    { "id": "magellan", "name": "Strait of Magellan", "lat": -53.5, "lon": -70.0, "transit_7d_avg": 6, "baseline": 5, "deviation_pct": 20, "status": "elevated", "trade_musd_7d_avg": 20 },
+    { "id": "goodhope", "name": "Cape of Good Hope", "lat": -34.36, "lon": 18.47, "transit_7d_avg": 96, "baseline": 55, "deviation_pct": 75, "status": "elevated", "trade_musd_7d_avg": 690 }
+  ],
+  "summary": {
+    "tracked": 12,
+    "constrained_count": 2,
+    "transits_below_baseline_per_day": 73,
+    "most_constrained": "bab"
+  }
+}

@@ -46,6 +46,30 @@ class ParseFeatures(unittest.TestCase):
         self.assertEqual(transform.parse_features({"features": [{"bad": 1}, 7]}), [])
 
 
+class FieldVariants(unittest.TestCase):
+    """The live PortWatch chokepoints layer uses n_total for the transit count."""
+
+    def _one(self, attrs):
+        return transform.parse_features({"features": [{"attributes": attrs}]})[0]
+
+    def test_n_total_is_read(self):
+        r = self._one({"portname": "Suez Canal", "date": 1, "n_total": 40})
+        self.assertEqual(r["transit"], 40.0)
+
+    def test_n_total_preferred_over_types(self):
+        r = self._one({"portname": "Suez Canal", "date": 1, "n_total": 40, "n_container": 10})
+        self.assertEqual(r["transit"], 40.0)
+
+    def test_per_type_sum_fallback(self):
+        r = self._one({"portname": "Suez Canal", "date": 1,
+                       "n_container": 10, "n_tanker": 5, "n_dry_bulk": 3})
+        self.assertEqual(r["transit"], 18.0)
+
+    def test_capacity_used_as_trade(self):
+        r = self._one({"portname": "Suez Canal", "date": 1, "n_total": 40, "capacity": 1234})
+        self.assertEqual(r["trade"], 1234.0)
+
+
 class Build(unittest.TestCase):
     def setUp(self):
         self.recs = transform.parse_features(FIXTURE)

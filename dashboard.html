@@ -298,7 +298,7 @@
 
   <div class="grid">
     <div class="card full" id="hashrate">
-      <h2>Network hashrate (1 year)</h2>
+      <h2>Network hashrate (5 years)</h2>
       <p class="hint">Total computing power securing the Bitcoin network, in <strong>exahashes per second</strong> (10<sup>18</sup>). Rising hashrate signals miner confidence and a more resilient network. Source: mempool.space.</p>
       <div class="chart-box"><canvas id="c-hash"></canvas></div>
     </div>
@@ -307,7 +307,6 @@
   <footer>
     <a href="how-it-works.html">How this works &amp; why I built it</a> &middot;
     <a href="https://github.com/richyBaxter/Mandala/blob/main/docs/how-it-works.md" target="_blank" rel="noopener">technical reference</a> &middot;
-    <a href="dashboards/maritime/">Arterial Flow (maritime)</a> &middot;
     By <strong><a href="https://houtini.com" target="_blank" rel="noopener">houtini</a></strong> &middot;
     live data from CoinGecko, Binance, alternative.me, mempool.space, CoinMetrics &amp; Farside &middot;
     Power-Law model after Giovanni Santostasi &middot; <em>educational, not financial advice</em>.
@@ -636,11 +635,12 @@ async function loadPressure(){
 
 // ---------- Hashrate ----------
 async function loadHash(){
-  const r = await fetch("https://mempool.space/api/v1/mining/hashrate/1y");
+  const r = await fetch("https://mempool.space/api/v1/mining/hashrate/all");
   if(!r.ok) throw new Error("hashrate "+r.status);
   const j = await r.json();
-  const hs = j.hashrates || [];
-  const labels = hs.map(h=> new Date(h.timestamp*1000).toLocaleDateString(undefined,{month:"short",day:"numeric"}));
+  const cutoff = Date.now()/1000 - 5*365.25*86400;          // last 5 years
+  const hs = (j.hashrates || []).filter(h=> h.timestamp >= cutoff);
+  const labels = hs.map(h=> new Date(h.timestamp*1000).toLocaleDateString(undefined,{month:"short",year:"2-digit"}));
   const data = hs.map(h=> h.avgHashrate/1e18);   // EH/s
   mkChart("c-hash", {
     type:"line",

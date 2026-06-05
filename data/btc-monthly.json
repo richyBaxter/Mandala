@@ -1,6 +1,6 @@
 {
   "_comment": "Approximate monthly BTC close in USD. 2011-2024 = established history; 2025-2026 anchored to verified data: ATH $126,198 on 2025-10-06, ~30% retrace into year-end, ~$77k May 2026. Edit values then re-run generate.py.",
-  "_last_updated": "2026-06-04",
+  "_last_updated": "2026-06-05",
   "months": {
     "2011": [
       0.3,
@@ -218,7 +218,7 @@
       68284,
       76347,
       73674,
-      64038
+      63653
     ]
   }
 }

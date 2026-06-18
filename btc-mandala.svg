@@ -626,8 +626,8 @@ Fair $107,293 · Floor $52,550 · Top $347,192</title></circle>
 <circle class="pt" cx="377.2" cy="256.6" r="9" fill="none" pointer-events="all" data-d="May 2026" data-price="73674" data-fair="110285" data-floor="54015" data-top="356874" data-osc="16" style="cursor:pointer"><title>May 2026
 Price $73,674
 Fair $110,285 · Floor $54,015 · Top $356,874</title></circle>
-<circle class="pt" cx="332.7" cy="295.8" r="9" fill="none" pointer-events="all" data-d="Jun 2026" data-price="64508" data-fair="113449" data-floor="55565" data-top="367113" data-osc="8" style="cursor:pointer"><title>Jun 2026
-Price $64,508
+<circle class="pt" cx="332.7" cy="295.8" r="9" fill="none" pointer-events="all" data-d="Jun 2026" data-price="64432" data-fair="113449" data-floor="55565" data-top="367113" data-osc="8" style="cursor:pointer"><title>Jun 2026
+Price $64,432
 Fair $113,449 · Floor $55,565 · Top $367,113</title></circle>
 </g>
 <text x="990" y="300" font-size="12" font-weight="700" letter-spacing="1.5" fill="#8a93a3" opacity="0.85">CYCLE TOPS</text>
@@ -636,7 +636,7 @@ Fair $113,449 · Floor $55,565 · Top $367,113</title></circle>
 <line x1="338.7" y1="299.8" x2="460.7" y2="350.8" stroke="#8a93a3" stroke-width="1"/>
 <rect x="452.7" y="344.8" width="196" height="26" rx="13" fill="#0f141d" stroke="#f7931a" stroke-width="1.2"/>
 <circle cx="467.7" cy="357.8" r="4" fill="#f7931a"/>
-<text x="479.7" y="361.8" font-size="12.5" font-weight="700" fill="#e8ecf3">NOW  ~$64,508  &#183;  Jun 2026</text>
+<text x="479.7" y="361.8" font-size="12.5" font-weight="700" fill="#e8ecf3">NOW  ~$64,432  &#183;  Jun 2026</text>
 <rect x="884" y="1018" width="280" height="150" rx="12" fill="#0f141d" stroke="#1e2733"/>
 <text x="902" y="1040" font-size="12" font-weight="700" letter-spacing="1.5" fill="#e8ecf3">KEY</text>
 <line x1="902" y1="1062" x2="942" y2="1062" stroke="#e8ecf3" stroke-width="2.8"/>

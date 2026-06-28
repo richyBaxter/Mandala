@@ -1,0 +1,28 @@
+{
+  "_comment": "The trigger window. A narrative timeline, not a chart. danger_window drives the crimson band shaded across every time-series on the page.",
+  "_last_updated": "2026-06-28",
+  "danger_window": { "start": "2026-12", "end": "2027-05", "label": "Dec 2026 – May 2027" },
+  "phases": [
+    {
+      "id": "cycle",
+      "range": "Apr – Oct 2026",
+      "title": "Presidential-cycle weakness",
+      "tone": "warn",
+      "body": "The historically weakest stretch of the four-year cycle. Seasonality turns against the market just as valuations sit at record highs."
+    },
+    {
+      "id": "election",
+      "range": "Nov 2026",
+      "title": "Mid-term election uncertainty",
+      "tone": "warn",
+      "body": "Policy and tax uncertainty around the mid-terms adds volatility. Institutions de-risk into the unknown."
+    },
+    {
+      "id": "lockup",
+      "range": "Dec 2026 – May 2027",
+      "title": "IPO lock-up expirations",
+      "tone": "danger",
+      "body": "The trigger. Lock-ups expire on a wave of mega-IPOs — SpaceX, OpenAI, Anthropic — releasing trillions in insider shares to sell. Liquidity drains from an already overextended market. This is when the music stops."
+    }
+  ]
+}

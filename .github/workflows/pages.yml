@@ -54,6 +54,24 @@ jobs:
         env:
           RESPONSE: ${{ steps.ai.outputs.response }}
         run: python3 tools/write_commentary.py
+      - name: Refresh music-stops live data (FRED + multpl)
+        continue-on-error: true
+        run: python3 dashboards/music-stops/fetch.py
+      - name: Build music-stops AI prompt from live data
+        run: python3 dashboards/music-stops/build_prompt.py
+      - name: Generate music-stops narratives (GitHub Models)
+        id: ai_music
+        continue-on-error: true        # preview API — never block the deploy
+        uses: actions/ai-inference@v1
+        with:
+          model: openai/gpt-4.1-mini
+          system-prompt: "You are a calm, plain-spoken market analyst writing for a smart but non-expert reader. Use only the numbers you are given; never invent or predict figures. Return only the requested JSON object, no markdown."
+          prompt-file: dashboards/music-stops/prompt.txt
+          max-tokens: 600
+      - name: Write music-stops narrative.json (AI or fallback)
+        env:
+          RESPONSE: ${{ steps.ai_music.outputs.response }}
+        run: python3 dashboards/music-stops/write_narrative.py
       - name: Commit refreshed data + SVG back to repo
         continue-on-error: true
         env:
@@ -61,7 +79,9 @@ jobs:
         run: |
           git config user.name "houtini-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/btc-monthly.json btc-mandala.svg dashboards/maritime/chokepoint_deviations.json
+          git add data/btc-monthly.json btc-mandala.svg dashboards/maritime/chokepoint_deviations.json \
+                  dashboards/music-stops/data/yieldcurve.json dashboards/music-stops/data/cape.json \
+                  dashboards/music-stops/narrative.json
           if git diff --staged --quiet; then
             echo "no changes to commit"; exit 0
           fi

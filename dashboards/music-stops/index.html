@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>When Does the Music Stop? · houtini</title>
+<meta name="description" content="A data-driven walk through the 2026/27 market-bubble warning signs — CAPE, the Buffett Indicator, index concentration, the yield curve and institutional dry powder — and the trigger window when the music could stop. By houtini.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://richybaxter.github.io/Mandala/dashboards/music-stops/">
+<meta property="og:title" content="When Does the Music Stop?">
+<meta property="og:description" content="Five alarming market indicators and the Dec 2026 – May 2027 trigger window. A data story by houtini.">
+<meta property="og:image" content="https://richybaxter.github.io/Mandala/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="When Does the Music Stop?">
+<meta name="twitter:description" content="Five alarming market indicators and the trigger window when the music could stop.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    color-scheme: dark;
+    /* houtini / Mandala house tokens */
+    --bg:#0b0e14; --panel:#0f141d; --panel2:#0c111a; --border:#1e2733;
+    --ink:#e8ecf3; --muted:#8a93a3; --faint:#525b6b;
+    --btc:#f7931a; --buy:#16c784; --fair:#f0a92b; --sell:#ea3943; --sky:#38bdf8;
+    /* complementary data-viz extension */
+    --violet:#a78bfa; --pink:#ec4899; --crimson:#b11226;
+    --danger:#ea3943; --danger-band:rgba(234,57,67,.12);
+  }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    margin:0; font-family:Inter,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.6;
+    background-image:radial-gradient(70% 45% at 50% -5%, #1a0f14 0%, var(--bg) 55%);
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:1040px; margin:0 auto; padding:0 24px; }
+  a { color:var(--btc); }
+
+  /* progress bar */
+  .progress { position:fixed; top:0; left:0; height:3px; width:0%; z-index:60;
+    background:linear-gradient(90deg,var(--btc),var(--danger)); transition:width .1s linear; }
+
+  /* header / hero */
+  header { padding:72px 0 8px; text-align:center; }
+  .kicker { color:var(--btc); font-size:.72rem; font-weight:700; letter-spacing:3px; margin:0 0 14px; }
+  .kicker a { color:inherit; text-decoration:none; }
+  h1 { font-size:clamp(2.4rem,7vw,4rem); font-weight:900; margin:0 0 14px; letter-spacing:-1.5px; line-height:1.02; }
+  h1 .stop { color:var(--danger); }
+  .lede { color:var(--muted); margin:0 auto 10px; max-width:60ch; font-size:1.08rem; }
+  .youhere { display:inline-block; margin-top:18px; font-size:.78rem; color:var(--faint);
+    border:1px solid var(--border); border-radius:999px; padding:5px 14px; }
+  .youhere b { color:var(--btc); }
+  .scrollcue { margin:46px auto 0; color:var(--faint); font-size:.78rem; letter-spacing:2px; animation:bob 2s ease-in-out infinite; }
+  @keyframes bob { 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(6px);} }
+
+  /* chapters */
+  section.chapter { padding:64px 0; border-top:1px solid var(--border); }
+  section.chapter:first-of-type { border-top:0; }
+  .chnum { font-size:.74rem; font-weight:700; letter-spacing:3px; color:var(--danger); margin:0 0 8px; }
+  .chtitle { font-size:clamp(1.5rem,4vw,2.1rem); font-weight:800; letter-spacing:-.6px; margin:0 0 6px; }
+  .chsub { color:var(--muted); margin:0 0 24px; max-width:64ch; }
+
+  .stat-row { display:flex; flex-wrap:wrap; gap:14px; margin:0 0 22px; }
+  .stat { background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:14px 18px; flex:1; min-width:150px; }
+  .stat .big { font-size:1.9rem; font-weight:900; letter-spacing:-1px; line-height:1; }
+  .stat .big.alarm { color:var(--danger); }
+  .stat .big.accent { color:var(--btc); }
+  .stat .lab { color:var(--muted); font-size:.76rem; margin-top:7px; }
+
+  .card { background:var(--panel); border:1px solid var(--border); border-radius:18px;
+    padding:18px 20px 14px; box-shadow:0 24px 60px rgba(0,0,0,.4); }
+  .card h3 { font-size:.98rem; font-weight:700; margin:0 0 2px; }
+  .card .hint { color:var(--muted); font-size:.8rem; margin:0 0 14px; }
+  .chart-box { position:relative; height:340px; }
+  .chart-box.short { height:230px; }
+  canvas { width:100% !important; }
+  .twin { display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:center; }
+  @media (max-width:720px){ .twin { grid-template-columns:1fr; } }
+
+  /* AI narrative block */
+  .ai { margin:20px 0 0; background:var(--panel2); border:1px solid var(--border);
+    border-left:3px solid var(--sky); border-radius:12px; padding:16px 18px; }
+  .ai .badge { font-size:.6rem; font-weight:800; letter-spacing:1.5px; color:var(--sky);
+    border:1px solid var(--sky); border-radius:999px; padding:2px 8px; vertical-align:middle; }
+  .ai .src { font-size:.66rem; color:var(--faint); margin-left:8px; }
+  .ai p { margin:12px 0 0; font-size:1.04rem; color:var(--ink); }
+
+  /* finale timeline */
+  .finale { background:linear-gradient(180deg, rgba(177,18,38,.08), transparent 60%); }
+  .timeline { display:grid; gap:16px; margin:26px 0 6px; }
+  .phase { display:grid; grid-template-columns:170px 1fr; gap:18px; align-items:start;
+    background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:18px 20px; }
+  .phase.warn { border-left:4px solid var(--fair); }
+  .phase.danger { border-left:4px solid var(--danger); background:linear-gradient(90deg, rgba(234,57,67,.10), var(--panel) 55%);
+    box-shadow:0 0 0 1px rgba(234,57,67,.25), 0 24px 60px rgba(177,18,38,.25); }
+  .phase .when { font-weight:800; font-size:1.02rem; color:var(--ink); }
+  .phase.danger .when { color:var(--danger); }
+  .phase .ptitle { font-weight:700; margin-bottom:4px; }
+  .phase .pbody { color:var(--muted); font-size:.92rem; }
+  @media (max-width:560px){ .phase { grid-template-columns:1fr; gap:6px; } }
+  .verdict { text-align:center; margin:40px auto 0; max-width:60ch; }
+  .verdict .big { font-size:clamp(1.6rem,5vw,2.4rem); font-weight:900; letter-spacing:-.8px; }
+  .verdict .big .win { color:var(--danger); }
+
+  /* reveal-on-scroll */
+  .reveal { opacity:0; transform:translateY(26px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){ .reveal { opacity:1; transform:none; transition:none; } .scrollcue{ animation:none; } }
+
+  footer { color:var(--faint); font-size:.84rem; padding:48px 0 80px; border-top:1px solid var(--border); margin-top:40px; }
+  footer a { color:var(--btc); }
+  footer .src { font-size:.78rem; margin-top:10px; }
+  .back { display:inline-block; margin-bottom:18px; color:var(--btc); text-decoration:none; font-size:.9rem; }
+  .disc { background:rgba(247,147,26,.07); border:1px solid rgba(247,147,26,.3);
+    padding:12px 16px; border-radius:12px; font-size:.84rem; color:var(--muted); margin-top:18px; }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="wrap">
+
+  <header>
+    <p class="kicker"><a href="https://houtini.com" target="_blank" rel="noopener">HOUTINI</a></p>
+    <h1>When Does the<br>Music <span class="stop">Stop?</span></h1>
+    <p class="lede">Five warning lights are flashing on the dashboard of the US stock market at once. None of them, alone, calls the top. Together, they describe a bubble — and a window when it could burst.</p>
+    <span class="youhere" id="youhere">You are here · <b>June 2026</b></span>
+    <div class="scrollcue">SCROLL ↓</div>
+  </header>
+
+  <!-- CHAPTER 1 — CAPE -->
+  <section class="chapter reveal" id="ch-cape">
+    <p class="chnum">01 · VALUATION</p>
+    <h2 class="chtitle">The Shiller CAPE Ratio</h2>
+    <p class="chsub">How expensive are stocks against a decade of smoothed earnings? The single most-watched gauge of long-run value.</p>
+    <div class="stat-row">
+      <div class="stat"><div class="big alarm" id="s-cape-now">41.6</div><div class="lab">CAPE today (May 2026)</div></div>
+      <div class="stat"><div class="big" id="s-cape-avg">17.3</div><div class="lab">140-year average</div></div>
+      <div class="stat"><div class="big" id="s-cape-peak">44.19</div><div class="lab">Only higher: Dec 1999</div></div>
+    </div>
+    <div class="card">
+      <h3>Shiller CAPE, 1901 – 2026</h3>
+      <p class="hint">Cyclically-adjusted P/E. Dashed lines: the historical average and the "danger" zone.</p>
+      <div class="chart-box"><canvas id="chart-cape"></canvas></div>
+    </div>
+    <div class="ai" data-note="cape"><span class="badge">AI ANALYSIS</span><span class="src"></span><p></p></div>
+  </section>
+
+  <!-- CHAPTER 2 — BUFFETT -->
+  <section class="chapter reveal" id="ch-buffett">
+    <p class="chnum">02 · THE WHOLE MARKET</p>
+    <h2 class="chtitle">The Buffett Indicator</h2>
+    <p class="chsub">Total US market capitalisation divided by GDP — stocks measured against the real economy that supports them.</p>
+    <div class="stat-row">
+      <div class="stat"><div class="big alarm" id="s-buf-now">231.7%</div><div class="lab">Market cap / GDP (Jun 2026)</div></div>
+      <div class="stat"><div class="big" id="s-buf-dot">146%</div><div class="lab">Dot-com peak (2000)</div></div>
+      <div class="stat"><div class="big" id="s-buf-08">110%</div><div class="lab">2007 peak</div></div>
+    </div>
+    <div class="card">
+      <h3>Buffett Indicator, 1971 – 2026</h3>
+      <p class="hint">Percent of GDP. Dashed lines: "fair value" (100%) and "overvalued" (120%).</p>
+      <div class="chart-box"><canvas id="chart-buffett"></canvas></div>
+    </div>
+    <div class="ai" data-note="buffett"><span class="badge">AI ANALYSIS</span><span class="src"></span><p></p></div>
+  </section>
+
+  <!-- CHAPTER 3 — CONCENTRATION -->
+  <section class="chapter reveal" id="ch-conc">
+    <p class="chnum">03 · THE TIME-BOMB</p>
+    <h2 class="chtitle">Concentration</h2>
+    <p class="chsub">When a handful of names <em>are</em> the index, their wobble becomes everyone's crash. The "Nifty 50" problem, modernised.</p>
+    <div class="stat-row">
+      <div class="stat"><div class="big alarm" id="s-conc-top5">~30%</div><div class="lab">Top 5 names of the S&amp;P 500</div></div>
+      <div class="stat"><div class="big accent" id="s-conc-tech">48%</div><div class="lab">Tech-sector weight</div></div>
+    </div>
+    <div class="card">
+      <div class="twin">
+        <div>
+          <h3>Five companies, ~30% of the index</h3>
+          <p class="hint">Nvidia · Microsoft · Apple · Alphabet · Amazon vs the other 495.</p>
+          <div class="chart-box short"><canvas id="chart-conc-doughnut"></canvas></div>
+        </div>
+        <div>
+          <h3>Top-10 weight, 2015 – 2026</h3>
+          <p class="hint">Concentration has more than doubled in a decade.</p>
+          <div class="chart-box short"><canvas id="chart-conc-hist"></canvas></div>
+        </div>
+      </div>
+    </div>
+    <div class="ai" data-note="concentration"><span class="badge">AI ANALYSIS</span><span class="src"></span><p></p></div>
+  </section>
+
+  <!-- CHAPTER 4 — YIELD CURVE -->
+  <section class="chapter reveal" id="ch-yield">
+    <p class="chnum">04 · THE SMART MONEY</p>
+    <h2 class="chtitle">The Yield Curve</h2>
+    <p class="chsub">The 3-month/10-year spread. When it goes negative, the bond market is betting on recession — and it has been right before every modern downturn.</p>
+    <div class="stat-row">
+      <div class="stat"><div class="big alarm" id="s-yc-now">−0.15</div><div class="lab">10Y − 3M spread (Jun 2026)</div></div>
+      <div class="stat"><div class="big alarm" id="s-yc-prob">&gt;30%</div><div class="lab">NY Fed recession probability</div></div>
+    </div>
+    <div class="card">
+      <h3>10-Year minus 3-Month Treasury spread</h3>
+      <p class="hint">Below the zero line = inverted = the classic recession signal.</p>
+      <div class="chart-box"><canvas id="chart-yield"></canvas></div>
+    </div>
+    <div class="ai" data-note="yieldcurve"><span class="badge">AI ANALYSIS</span><span class="src"></span><p></p></div>
+  </section>
+
+  <!-- CHAPTER 5 — DRY POWDER -->
+  <section class="chapter reveal" id="ch-dry">
+    <p class="chnum">05 · DRY POWDER</p>
+    <h2 class="chtitle">Institutional Cash Reserves</h2>
+    <p class="chsub">The most patient money in the world is sitting on its hands — not because it missed the rally, but because it is waiting for the wreckage.</p>
+    <div class="stat-row">
+      <div class="stat"><div class="big alarm" id="s-dry-cash">$397B</div><div class="lab">Berkshire cash (record, Q1 2026)</div></div>
+      <div class="stat"><div class="big alarm" id="s-dry-survey">79%</div><div class="lab">Of institutions expect a decline</div></div>
+    </div>
+    <div class="card">
+      <h3>Berkshire Hathaway cash pile, 2017 – 2026</h3>
+      <p class="hint">Cash &amp; T-bills, $bn. The 2026 bar is an all-time record.</p>
+      <div class="chart-box"><canvas id="chart-dry"></canvas></div>
+    </div>
+    <div class="ai" data-note="drypowder"><span class="badge">AI ANALYSIS</span><span class="src"></span><p></p></div>
+  </section>
+
+  <!-- FINALE — TIMELINE -->
+  <section class="chapter finale reveal" id="ch-finale">
+    <p class="chnum" style="color:var(--danger)">FINALE · THE TRIGGER</p>
+    <h2 class="chtitle">When the Music Stops</h2>
+    <p class="chsub">Valuation alone never causes a crash — a trigger does. Here is the sequence, and the window where the liquidity drains.</p>
+    <div class="timeline" id="timeline"></div>
+    <div class="verdict">
+      <p class="big">The music stops between <span class="win" id="v-window">December 2026 and May 2027</span>.</p>
+      <p class="chsub" style="margin:14px auto 0; max-width:62ch;">When lock-ups expire on SpaceX, OpenAI and Anthropic, trillions in insider shares become sellable — draining liquidity from an already overextended market.</p>
+    </div>
+    <div class="ai" data-note="finale"><span class="badge">AI ANALYSIS</span><span class="src"></span><p></p></div>
+  </section>
+
+  <footer>
+    <a class="back" href="../../index.html">← Back to The Bitcoin Spiral</a>
+    <p>A data story by <strong><a href="https://houtini.com" target="_blank" rel="noopener">houtini</a></strong> · open source, MIT licensed · part of the <a href="../../index.html">Mandala</a> project.</p>
+    <p class="src">Sources: Robert Shiller / multpl.com (CAPE); FRED — Wilshire 5000, GDP, T10Y3M (Buffett Indicator, yield curve); NY Fed (recession model); slickcharts &amp; public S&amp;P data (concentration); company filings &amp; fund-manager surveys (dry powder). Live series refresh daily in CI; curated series are dated in each JSON file.</p>
+    <p class="disc"><strong>Educational only. Not financial advice.</strong> Forward-looking dates and the "trigger window" are a narrative interpretation of public commentary, not a forecast. Markets can stay irrational longer than you can stay solvent.</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  const $ = s => document.querySelector(s);
+  const C = getComputedStyle(document.documentElement);
+  const tok = n => C.getPropertyValue(n).trim();
+  const INK=tok('--ink'), MUTED=tok('--muted'), FAINT=tok('--faint'), BORDER=tok('--border'),
+        BTC=tok('--btc'), BUY=tok('--buy'), FAIR=tok('--fair'), SELL=tok('--sell'), SKY=tok('--sky'),
+        VIOLET=tok('--violet'), PINK=tok('--pink');
+  const SERIES = [SKY, BTC, BUY, VIOLET, FAIR, PINK];
+
+  function hexA(hex, a){
+    const h = hex.replace('#',''); const n = parseInt(h.length===3 ? h.split('').map(c=>c+c).join('') : h, 16);
+    return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;
+  }
+  function vGrad(chart, color, a1){
+    const {ctx, chartArea} = chart; if(!chartArea) return hexA(color,a1||.25);
+    const g = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+    g.addColorStop(0, hexA(color, a1||.28)); g.addColorStop(1, hexA(color, 0)); return g;
+  }
+
+  if (window.Chart){
+    Chart.defaults.font.family = 'Inter, sans-serif';
+    Chart.defaults.color = MUTED;
+    Chart.defaults.plugins.legend.display = false;
+    // horizontal dashed threshold lines
+    Chart.register({
+      id:'thresholds',
+      afterDatasetsDraw(chart){
+        const lines = (chart.options.plugins.thresholds||{}).lines || [];
+        const {ctx, chartArea, scales} = chart; const y = scales.y; if(!y) return;
+        lines.forEach(l=>{
+          const yy = y.getPixelForValue(l.value); if(yy<chartArea.top||yy>chartArea.bottom) return;
+          ctx.save(); ctx.beginPath(); ctx.setLineDash([5,5]); ctx.lineWidth=1;
+          ctx.strokeStyle = l.color || FAINT; ctx.moveTo(chartArea.left, yy); ctx.lineTo(chartArea.right, yy); ctx.stroke();
+          if(l.label){ ctx.setLineDash([]); ctx.font='600 11px Inter'; ctx.fillStyle = l.color || MUTED;
+            ctx.textAlign='right'; ctx.fillText(l.label, chartArea.right-6, yy-5); }
+          ctx.restore();
+        });
+      }
+    });
+  }
+
+  const DATA = {};
+  const FILES = ['cape','buffett','concentration','yieldcurve','drypowder','timeline'];
+  async function loadAll(){
+    await Promise.all(FILES.map(async f=>{ try{ DATA[f]=await (await fetch('data/'+f+'.json')).json(); }catch(e){ DATA[f]=null; } }));
+    try{ DATA.narrative = await (await fetch('narrative.json')).json(); }catch(e){ DATA.narrative=null; }
+  }
+
+  function setText(id, v){ const el=document.getElementById(id); if(el && v!=null) el.textContent=v; }
+
+  function fillNarratives(){
+    const n = DATA.narrative; if(!n || !n.notes) return;
+    document.querySelectorAll('.ai').forEach(block=>{
+      const key = block.getAttribute('data-note'); const txt = n.notes[key];
+      if(txt){ block.querySelector('p').textContent = txt; }
+      const src = block.querySelector('.src');
+      if(src) src.textContent = n.source==='github-models' ? 'live · GitHub Models' : 'computed';
+    });
+  }
+
+  const baseLine = (extra) => Object.assign({
+    responsive:true, maintainAspectRatio:false,
+    interaction:{ intersect:false, mode:'index' },
+    plugins:{ tooltip:{ backgroundColor:'#0f141d', borderColor:BORDER, borderWidth:1, padding:10 } },
+    scales:{
+      x:{ grid:{ color:'rgba(255,255,255,.04)' }, ticks:{ maxRotation:0, autoSkipPadding:16 } },
+      y:{ grid:{ color:'rgba(255,255,255,.05)' } }
+    }
+  }, extra||{});
+
+  // ---- renderers ----
+  const drawn = {};
+  function renderCape(){
+    const d=DATA.cape; if(!d||drawn.cape) return; drawn.cape=true;
+    setText('s-cape-now', d.current.value); setText('s-cape-avg', d.average); setText('s-cape-peak', d.peak_1999.value);
+    new Chart($('#chart-cape'), { type:'line',
+      data:{ labels:d.series.map(p=>p.t), datasets:[{
+        data:d.series.map(p=>p.v), borderColor:SELL, borderWidth:2,
+        pointRadius:d.series.map(p=>p.v>=40?4:0), pointBackgroundColor:BTC, pointBorderColor:BTC,
+        tension:.3, fill:true, backgroundColor:c=>vGrad(c.chart, SELL, .26) }] },
+      options:baseLine({ plugins:{ thresholds:{ lines:[
+        { value:d.average, color:MUTED, label:'140-yr avg '+d.average },
+        { value:d.danger_threshold, color:FAIR, label:'danger '+d.danger_threshold } ] } } })
+    });
+  }
+  function renderBuffett(){
+    const d=DATA.buffett; if(!d||drawn.buffett) return; drawn.buffett=true;
+    setText('s-buf-now', d.current.value+'%'); setText('s-buf-dot', d.peak_dotcom.value+'%'); setText('s-buf-08', d.peak_2007.value+'%');
+    new Chart($('#chart-buffett'), { type:'line',
+      data:{ labels:d.series.map(p=>p.t), datasets:[{
+        data:d.series.map(p=>p.v), borderColor:SELL, borderWidth:2,
+        pointRadius:d.series.map(p=>p.v>=200?4:0), pointBackgroundColor:BTC, pointBorderColor:BTC,
+        tension:.3, fill:true, backgroundColor:c=>vGrad(c.chart, SELL, .24) }] },
+      options:baseLine({ scales:{ y:{ ticks:{ callback:v=>v+'%' }, grid:{ color:'rgba(255,255,255,.05)' } },
+        x:{ grid:{ color:'rgba(255,255,255,.04)' } } },
+        plugins:{ thresholds:{ lines:[
+          { value:d.fair_value, color:BUY, label:'fair '+d.fair_value+'%' },
+          { value:d.overvalued_threshold, color:FAIR, label:'overvalued '+d.overvalued_threshold+'%' } ] } } })
+    });
+  }
+  function renderConc(){
+    const d=DATA.concentration; if(!d||drawn.conc) return; drawn.conc=true;
+    setText('s-conc-tech', d.tech_sector_weight+'%');
+    new Chart($('#chart-conc-doughnut'), { type:'doughnut',
+      data:{ labels:[...d.top5.map(c=>c.name),'Other 495'],
+        datasets:[{ data:[...d.top5.map(c=>c.weight), d.rest_total],
+          backgroundColor:[...SERIES.slice(0,5), '#222b38'], borderColor:'#0b0e14', borderWidth:2 }] },
+      options:{ responsive:true, maintainAspectRatio:false, cutout:'58%',
+        plugins:{ legend:{ display:true, position:'right', labels:{ boxWidth:10, padding:8, font:{size:11} } },
+          tooltip:{ callbacks:{ label:c=>` ${c.label}: ${c.parsed}%` } } } }
+    });
+    new Chart($('#chart-conc-hist'), { type:'line',
+      data:{ labels:d.top10_history.map(p=>p.t), datasets:[{
+        data:d.top10_history.map(p=>p.v), borderColor:BTC, borderWidth:2, tension:.3,
+        pointRadius:0, fill:true, backgroundColor:c=>vGrad(c.chart, BTC, .24) }] },
+      options:baseLine({ scales:{ y:{ ticks:{ callback:v=>v+'%' }, grid:{ color:'rgba(255,255,255,.05)' } },
+        x:{ grid:{ color:'rgba(255,255,255,.04)' } } } })
+    });
+  }
+  function renderYield(){
+    const d=DATA.yieldcurve; if(!d||drawn.yield) return; drawn.yield=true;
+    setText('s-yc-now', d.current.value); setText('s-yc-prob', Math.round(d.recession_prob*100)+'%');
+    new Chart($('#chart-yield'), { type:'line',
+      data:{ labels:d.series.map(p=>p.t), datasets:[{
+        data:d.series.map(p=>p.v), borderWidth:2, tension:.25, pointRadius:0,
+        segment:{ borderColor:ctx=> ctx.p1.parsed.y<0 ? SELL : BUY },
+        borderColor:SELL,
+        fill:{ target:{ value:0 }, above:hexA(BUY,.14), below:hexA(SELL,.18) } }] },
+      options:baseLine({ plugins:{ thresholds:{ lines:[ { value:0, color:MUTED, label:'inversion line' } ] } } })
+    });
+  }
+  function renderDry(){
+    const d=DATA.drypowder; if(!d||drawn.dry) return; drawn.dry=true;
+    setText('s-dry-survey', d.survey_expect_decline+'%');
+    const last = d.berkshire_cash.length-1;
+    new Chart($('#chart-dry'), { type:'bar',
+      data:{ labels:d.berkshire_cash.map(p=>p.t), datasets:[{
+        data:d.berkshire_cash.map(p=>p.v),
+        backgroundColor:d.berkshire_cash.map((p,i)=> i===last ? SELL : hexA(BTC,.7)),
+        borderRadius:5 }] },
+      options:baseLine({ scales:{ y:{ ticks:{ callback:v=>'$'+v+'B' }, grid:{ color:'rgba(255,255,255,.05)' } },
+        x:{ grid:{ display:false } } },
+        plugins:{ tooltip:{ callbacks:{ label:c=>` $${c.parsed.y}B` } } } })
+    });
+  }
+  function renderTimeline(){
+    const d=DATA.timeline; if(!d) return;
+    const el=$('#timeline'); if(!el) return;
+    el.innerHTML = d.phases.map(p=>`
+      <div class="phase ${p.tone}">
+        <div class="when">${p.range}</div>
+        <div><div class="ptitle">${p.title}</div><div class="pbody">${p.body}</div></div>
+      </div>`).join('');
+    if(d.danger_window && d.danger_window.label){ setText('v-window', d.danger_window.label.replace('Dec','December').replace('May','May')); }
+  }
+
+  const RENDER = { 'ch-cape':renderCape, 'ch-buffett':renderBuffett, 'ch-conc':renderConc,
+                   'ch-yield':renderYield, 'ch-dry':renderDry, 'ch-finale':renderTimeline };
+
+  // progress bar
+  const prog=$('#progress');
+  function onScroll(){ const h=document.documentElement; const sc=(h.scrollTop)/(h.scrollHeight-h.clientHeight); prog.style.width=(sc*100)+'%'; }
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  function init(){
+    document.querySelectorAll('.reveal').forEach(s=>{
+      // pre-render is fine; observer just toggles visibility + lazy-inits charts
+    });
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('in');
+          const fn = RENDER[e.target.id]; if(fn) try{ fn(); }catch(err){ console.warn('render',e.target.id,err); }
+        }
+      });
+    }, { threshold:.12 });
+    document.querySelectorAll('.chapter').forEach(s=>io.observe(s));
+    onScroll();
+  }
+
+  loadAll().then(()=>{
+    setText('youhere', null);
+    const yh=$('#youhere'); if(DATA.yieldcurve&&DATA.yieldcurve.current){ yh.innerHTML='You are here · <b>'+DATA.yieldcurve.current.label+'</b>'; }
+    fillNarratives();
+    init();
+  });
+})();
+</script>
+</body>
+</html>

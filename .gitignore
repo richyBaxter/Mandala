@@ -25,6 +25,7 @@ commentary.json
 news.json
 etf_flows.json
 tools/_metrics.json
+dashboards/music-stops/prompt.txt
 
 # python / os cruft
 __pycache__/

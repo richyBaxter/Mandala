@@ -1,0 +1,32 @@
+{
+  "_comment": "Buffett Indicator = total US market cap / GDP, as a percentage. Series via FRED (Wilshire 5000 'WILL5000PR' / GDP 'GDP'); refreshed by fetch.py. Current value verified Jun 2026 (~231.6%). Representative annual points before 2015.",
+  "_last_updated": "2026-06-28",
+  "unit": "percent",
+  "fair_value": 100,
+  "overvalued_threshold": 120,
+  "severely_overvalued_threshold": 150,
+  "current": { "value": 231.7, "date": "2026-06", "label": "Jun 2026" },
+  "peak_dotcom": { "value": 146, "date": "2000-03", "label": "Dot-com peak" },
+  "peak_2007": { "value": 110, "date": "2007-10", "label": "2007 peak" },
+  "series": [
+    { "t": "1971", "v": 42 },
+    { "t": "1975", "v": 40 },
+    { "t": "1980", "v": 45 },
+    { "t": "1985", "v": 50 },
+    { "t": "1990", "v": 55 },
+    { "t": "1995", "v": 90 },
+    { "t": "2000", "v": 146 },
+    { "t": "2002", "v": 75 },
+    { "t": "2007", "v": 110 },
+    { "t": "2009", "v": 56 },
+    { "t": "2012", "v": 90 },
+    { "t": "2015", "v": 125 },
+    { "t": "2018", "v": 135 },
+    { "t": "2020", "v": 190 },
+    { "t": "2021", "v": 210 },
+    { "t": "2022", "v": 160 },
+    { "t": "2024", "v": 195 },
+    { "t": "2025", "v": 215 },
+    { "t": "2026", "v": 231.7 }
+  ]
+}

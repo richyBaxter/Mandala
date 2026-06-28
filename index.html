@@ -3,107 +3,189 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Bitcoin Spiral: Power Law on a 4-year cycle map · houtini</title>
-<meta name="description" content="Bitcoin price and the Power Law plotted on a 4-year-cycle polar map. Open source, by houtini.">
+<title>Mandala · free macro data stories by houtini</title>
+<meta name="description" content="Free, no-paywall data stories about the world economy — markets, work, prices, retail, commodities, energy and bond yields. Every chart hydrates from public data; every source is free.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://richybaxter.github.io/Mandala/">
-<meta property="og:title" content="The Bitcoin Spiral">
-<meta property="og:description" content="Bitcoin price and the Power Law on a 4-year-cycle polar map. By houtini.">
+<meta property="og:title" content="Mandala · free macro data stories">
+<meta property="og:description" content="Free, no-paywall data stories about the world economy. By houtini.">
 <meta property="og:image" content="https://richybaxter.github.io/Mandala/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="The Bitcoin Spiral">
-<meta name="twitter:description" content="Bitcoin price and the Power Law on a 4-year-cycle polar map. By houtini.">
+<meta name="twitter:title" content="Mandala · free macro data stories">
+<meta name="twitter:description" content="Free, no-paywall data stories about the world economy. By houtini.">
 <meta name="twitter:image" content="https://richybaxter.github.io/Mandala/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    color-scheme: dark;
-    --bg: #0b0e14; --panel: #0f141d; --border: #1e2733;
-    --ink: #e8ecf3; --muted: #8a93a3; --faint: #525b6b; --btc: #f7931a;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    font-family: Inter, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg); color: var(--ink); line-height: 1.6;
-    background-image: radial-gradient(60% 50% at 50% 0%, #10202e 0%, var(--bg) 70%);
-  }
-  header, main, footer { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
-  header { padding-top: 56px; }
-  .kicker { color: var(--btc); font-size: .72rem; font-weight: 700; letter-spacing: 3px; margin: 0 0 8px; }
-  h1 { font-size: 2.4rem; font-weight: 800; margin: 0 0 6px; letter-spacing: -.5px; }
-  .sub { color: var(--muted); margin: 0 0 28px; max-width: 60ch; }
-  .chart {
-    background: var(--panel); border: 1px solid var(--border); border-radius: 16px;
-    padding: 10px; box-shadow: 0 20px 60px rgba(0,0,0,.45);
-  }
-  .chart img { width: 100%; height: auto; display: block; border-radius: 10px; }
-  h2 { font-size: 1.25rem; font-weight: 700; margin-top: 44px; }
-  ul { padding-left: 18px; } li { margin: 6px 0; color: var(--muted); }
-  li strong { color: var(--ink); font-weight: 600; }
-  pre {
-    background: #070a0f; color: #cfe3d6; padding: 16px 18px; border-radius: 12px;
-    border: 1px solid var(--border); overflow-x: auto; font-size: .85rem;
-  }
-  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
-  .note {
-    background: rgba(247,147,26,.07); border: 1px solid rgba(247,147,26,.3);
-    padding: 14px 18px; border-radius: 12px; font-size: .9rem; color: var(--muted);
-  }
-  footer { color: var(--faint); font-size: .85rem; padding: 44px 24px 72px; border-top: 1px solid var(--border); margin-top: 48px; }
-  footer strong { color: var(--btc); }
-  a { color: var(--btc); }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/macro.css">
 </head>
 <body>
-<header>
-  <p class="kicker"><a href="https://houtini.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">HOUTINI</a></p>
-  <h1>The Bitcoin Spiral</h1>
-  <p class="sub">A polar map of every Bitcoin cycle. Price spirals outward over time around the <strong>Power-Law channel</strong>, a remarkably stable long-term curve Bitcoin has tracked for fourteen years of market history.</p>
-  <p><a href="dashboard.html">&rarr; Open the live Bitcoin Monitor dashboard</a></p>
-  <p style="margin-top:6px"><a href="dashboards/music-stops/index.html">&rarr; When Does the Music Stop?</a> &mdash; a data story on the 2026/27 market-bubble warning signs.</p>
-</header>
+<div class="wrap">
 
-<main>
-  <div class="chart">
-    <img src="btc-mandala.svg" alt="The Bitcoin Spiral: Bitcoin price spiralling outward on a 4-year-cycle map, riding the Power Law support/resistance channel.">
-  </div>
+  <header class="hub-header reveal">
+    <p class="kicker"><a href="https://houtini.com" target="_blank" rel="noopener">HOUTINI</a></p>
+    <h1>Free macro,<br>told as <span class="accent">data stories</span>.</h1>
+    <p class="lede">No-paywall charts about the world economy — markets, work, prices, retail, commodities, energy and the bond market. Every page hydrates in your browser from public data (FRED, the World Bank, Our World in Data); every source is free, and the code is open.</p>
+    <nav class="themenav">
+      <a href="#markets">Markets</a>
+      <a href="#employment">Employment</a>
+      <a href="#lifestyle">Lifestyle</a>
+      <a href="#retail">Retail</a>
+      <a href="#commodities">Commodities &amp; energy</a>
+      <a href="#bonds">Bond yields</a>
+      <a href="#trade">Trade</a>
+    </nav>
+  </header>
 
-  <h2>How to read it</h2>
-  <ul>
-    <li><strong>Angle</strong>: where Bitcoin is in its 4-year cycle. One full turn around the chart = four years, so the same months in 2013, 2017, 2021 and 2025 sit at the same clock position.</li>
-    <li><strong>Radius</strong>: price on a log scale. Each dashed ring is a 10&times; level ($10 &rarr; $100k), so each turn outward is a different order of magnitude.</li>
-    <li><strong>White line</strong>: Bitcoin's monthly price, spiralling outward through time.</li>
-    <li><strong>Orange band</strong>: the <strong>Power-Law channel</strong>: a remarkably stable long-term curve Bitcoin has tracked since 2010. Solid = the historical floor, dotted = fair value, dashed = the cycle-top band.</li>
-    <li><strong>Grey dots</strong>: the cycle's milestones (halvings, the spot-ETF launch, the all-time high).</li>
-  </ul>
+  <!-- MARKETS -->
+  <section class="theme-sec reveal" id="markets">
+    <h2>Markets &amp; valuation</h2>
+    <p class="th-sub">Where prices sit against history — and what the smart money is doing.</p>
+    <div class="cards">
+      <a class="scard" href="dashboard.html">
+        <div class="ic">🟠</div>
+        <div class="t">The Bitcoin Spiral</div>
+        <div class="hook">Bitcoin's whole history on a 4-year-cycle polar map, riding the Power-Law channel, with a live buy/hold/sell verdict.</div>
+        <div class="meta"><span class="badge live">Live</span><span class="srcline">CoinGecko · Binance · mempool</span></div>
+      </a>
+      <a class="scard" href="dashboards/music-stops/index.html">
+        <div class="ic">🎵</div>
+        <div class="t">When Does the Music Stop?</div>
+        <div class="hook">Five bubble warning lights — CAPE, the Buffett Indicator, concentration, the yield curve, dry powder — and the trigger window.</div>
+        <div class="meta"><span class="badge live">Live</span><span class="srcline">FRED · multpl · Shiller</span></div>
+      </a>
+    </div>
+  </section>
 
-  <h2>Embed it</h2>
-  <p>The chart is a single self-contained SVG. Drop it in with an <code>&lt;img&gt;</code> or <code>&lt;object&gt;</code>:</p>
-  <pre><code>&lt;img src="https://richybaxter.github.io/Mandala/btc-mandala.svg"
-     alt="The Bitcoin Spiral" style="max-width:100%;height:auto"&gt;</code></pre>
-  <p>Or inline the SVG markup directly from <code>btc-mandala.svg</code> for crisp scaling and themable styling.</p>
+  <!-- EMPLOYMENT -->
+  <section class="theme-sec reveal" id="employment">
+    <h2>World employment</h2>
+    <p class="th-sub">How, where and how much the world works.</p>
+    <div class="cards">
+      <div class="scard soon">
+        <div class="ic">⏳</div>
+        <div class="t">Working Less, Living Longer</div>
+        <div class="hook">Annual hours worked has fallen for a century while lifespans rose. The quiet story of a richer world.</div>
+        <div class="meta"><span class="badge soon">Coming soon</span><span class="srcline">Our World in Data</span></div>
+      </div>
+      <div class="scard soon">
+        <div class="ic">🔁</div>
+        <div class="t">The Quit Economy</div>
+        <div class="hook">Job openings vs quits — the labour market's temperature, and what it says before a downturn.</div>
+        <div class="meta"><span class="badge soon">Coming soon</span><span class="srcline">FRED · JOLTS</span></div>
+      </div>
+    </div>
+  </section>
 
-  <h2>Update the data</h2>
-  <p>Edit <code>data/btc-monthly.json</code> (price), <code>data/events.csv</code> (diary)
-     or <code>data/flows.csv</code> (ETF flows), then re-render:</p>
-  <pre><code>python3 generate.py
-# refresh ETF flows from a free source first:
-FLOWS_URL="https://your-source/btc-etf-daily.csv" python3 fetch_flows.py</code></pre>
+  <!-- LIFESTYLE -->
+  <section class="theme-sec reveal" id="lifestyle">
+    <h2>Lifestyle</h2>
+    <p class="th-sub">The cost — and shape — of a modern life.</p>
+    <div class="cards">
+      <div class="scard soon">
+        <div class="ic">🏷️</div>
+        <div class="t">What Got Cheaper, What Got Dearer</div>
+        <div class="hook">TVs collapsed, software went near-free — while college, healthcare and childcare soared. Price change by category since 2000.</div>
+        <div class="meta"><span class="badge soon">Coming soon</span><span class="srcline">FRED · CPI components</span></div>
+      </div>
+      <div class="scard soon">
+        <div class="ic">🚭</div>
+        <div class="t">The Vanishing Smoker</div>
+        <div class="hook">A generational public-health win, in one falling line.</div>
+        <div class="meta"><span class="badge soon">Coming soon</span><span class="srcline">Our World in Data</span></div>
+      </div>
+    </div>
+  </section>
 
-  <p class="note">An open-source chart by houtini. The Power-Law model is the work
-  of <strong>Giovanni Santostasi</strong>: Bitcoin's price has tracked a single power-law
-  curve since the network was a few months old. Monthly closes refresh in CI from real
-  Binance data, anchored to milestones (ATH <strong>$126,198 on 6 Oct 2025</strong>).
-  <em>Educational, not financial advice.</em></p>
-</main>
+  <!-- RETAIL -->
+  <section class="theme-sec reveal" id="retail">
+    <h2>Retail</h2>
+    <p class="th-sub">Where the money actually gets spent.</p>
+    <div class="cards">
+      <div class="scard soon">
+        <div class="ic">🛒</div>
+        <div class="t">The Death &amp; Life of the Store</div>
+        <div class="hook">E-commerce's relentless climb — now ~17% of every US retail dollar, up from 4% in 2010.</div>
+        <div class="meta"><span class="badge soon">Coming soon</span><span class="srcline">FRED · ECOMPCTSA</span></div>
+      </div>
+      <div class="scard soon">
+        <div class="ic">📈</div>
+        <div class="t">The Consumer Pulse</div>
+        <div class="hook">Real vs nominal retail sales — is spending actually growing, or just inflating?</div>
+        <div class="meta"><span class="badge soon">Coming soon</span><span class="srcline">FRED · RSAFS</span></div>
+      </div>
+    </div>
+  </section>
 
-<footer>
-  By <strong><a href="https://houtini.com" target="_blank" rel="noopener">houtini</a></strong> &middot; open source, MIT licensed &middot; Power-Law model after G. Santostasi.
-</footer>
+  <!-- COMMODITIES & ENERGY -->
+  <section class="theme-sec reveal" id="commodities">
+    <h2>Commodities &amp; energy</h2>
+    <p class="th-sub">The raw price of running the world.</p>
+    <div class="cards">
+      <div class="scard soon">
+        <div class="ic">☕</div>
+        <div class="t">The Breakfast Index</div>
+        <div class="hook">Coffee, sugar, wheat and orange juice — what your morning costs, and why it keeps climbing.</div>
+        <div class="meta"><span class="badge soon">Coming soon</span><span class="srcline">FRED · IMF commodity prices</span></div>
+      </div>
+      <div class="scard soon">
+        <div class="ic">⚡</div>
+        <div class="t">The Price of Power</div>
+        <div class="hook">Natural gas, crude, and the price at the pump — the energy market that sets the cost of everything else.</div>
+        <div class="meta"><span class="badge soon">Coming soon</span><span class="srcline">FRED · EIA</span></div>
+      </div>
+      <div class="scard soon">
+        <div class="ic">🩺</div>
+        <div class="t">Dr. Copper's Diagnosis</div>
+        <div class="hook">The metal with a PhD in economics — copper as the global bellwether.</div>
+        <div class="meta"><span class="badge soon">Coming soon</span><span class="srcline">FRED · PCOPPUSDM</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BONDS -->
+  <section class="theme-sec reveal" id="bonds">
+    <h2>Bond yields</h2>
+    <p class="th-sub">The plumbing the whole economy is priced off.</p>
+    <div class="cards">
+      <div class="scard soon">
+        <div class="ic">📉</div>
+        <div class="t">The Curve</div>
+        <div class="hook">The whole Treasury term structure, 1-month to 30-year — and what its shape has predicted for 60 years.</div>
+        <div class="meta"><span class="badge soon">Coming soon</span><span class="srcline">FRED · DGS1MO–DGS30</span></div>
+      </div>
+      <div class="scard soon">
+        <div class="ic">💳</div>
+        <div class="t">The Fear Gauge</div>
+        <div class="hook">High-yield credit spreads — the bond market's smoke alarm.</div>
+        <div class="meta"><span class="badge soon">Coming soon</span><span class="srcline">FRED · BAMLH0A0HYM2</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRADE -->
+  <section class="theme-sec reveal" id="trade">
+    <h2>Trade &amp; logistics</h2>
+    <p class="th-sub">How the physical economy moves.</p>
+    <div class="cards">
+      <a class="scard" href="dashboards/maritime/index.html">
+        <div class="ic">🚢</div>
+        <div class="t">Arterial Flow</div>
+        <div class="hook">The world's maritime chokepoints — where ship transits sit versus baseline, and how much traffic is bleeding onto longer routes.</div>
+        <div class="meta"><span class="badge live">Live</span><span class="srcline">IMF PortWatch</span></div>
+      </a>
+    </div>
+  </section>
+
+  <footer class="site reveal">
+    <p>An open-source project by <strong><a href="https://houtini.com" target="_blank" rel="noopener">houtini</a></strong> · MIT licensed · <a href="https://github.com/richyBaxter/Mandala" target="_blank" rel="noopener">source on GitHub</a> · <a href="docs/how-it-works.md">how it works</a>.</p>
+    <p class="src">All data is free and public: FRED (St. Louis Fed), the World Bank, Our World in Data, IMF PortWatch, CoinGecko, Binance and mempool.space. Live series refresh in CI; curated series are dated in each dataset.</p>
+    <p class="disc"><strong>Educational only. Not financial advice.</strong> Stories are interpretations of public data, not forecasts.</p>
+  </footer>
+
+</div>
+<script src="assets/macro.js"></script>
 </body>
 </html>

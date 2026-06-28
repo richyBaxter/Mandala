@@ -103,6 +103,24 @@ canvas { width:100% !important; }
 .reveal.in { opacity:1; transform:none; }
 @media (prefers-reduced-motion: reduce){ .reveal { opacity:1; transform:none; transition:none; } .scrollcue{ animation:none; } }
 
+/* ---------- share bar ---------- */
+.share { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.share .lbl { color:var(--faint); font-size:.72rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-right:2px; }
+.share button { display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; padding:0;
+  background:var(--panel); border:1px solid var(--border); border-radius:999px; color:var(--muted);
+  cursor:pointer; transition:border-color .15s, color .15s, transform .15s; }
+.share button:hover { border-color:var(--btc); color:var(--btc); transform:translateY(-2px); }
+.share button svg { width:16px; height:16px; fill:currentColor; }
+.share .copied { color:var(--buy); font-size:.74rem; font-weight:600; opacity:0; transition:opacity .2s; }
+.share .copied.show { opacity:1; }
+
+/* ---------- page stats ---------- */
+.stats { display:inline-flex; align-items:center; gap:14px; flex-wrap:wrap; color:var(--faint); font-size:.8rem; }
+.stats .pill { display:inline-flex; align-items:baseline; gap:6px; border:1px solid var(--border);
+  border-radius:999px; padding:5px 12px; }
+.stats .pill b { color:var(--ink); font-weight:800; font-variant-numeric:tabular-nums; font-size:.92rem; }
+.stats .pill .dot { width:7px; height:7px; border-radius:50%; background:var(--buy); display:inline-block; align-self:center; }
+
 /* ---------- shared footer ---------- */
 footer.site { color:var(--faint); font-size:.84rem; padding:48px 0 80px; border-top:1px solid var(--border); margin-top:40px; }
 footer.site a { color:var(--btc); }

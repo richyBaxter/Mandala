@@ -20,6 +20,71 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/macro.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://richybaxter.github.io/Mandala/#website",
+      "url": "https://richybaxter.github.io/Mandala/",
+      "name": "Mandala — free macro data stories",
+      "description": "Free, no-paywall data stories about the world economy: markets, employment, lifestyle, retail, commodities, energy and bond yields.",
+      "publisher": { "@id": "https://houtini.com/#org" },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://houtini.com/#org",
+      "name": "houtini",
+      "url": "https://houtini.com",
+      "sameAs": ["https://github.com/richyBaxter/Mandala"]
+    },
+    {
+      "@type": "DataCatalog",
+      "@id": "https://richybaxter.github.io/Mandala/#catalog",
+      "name": "Mandala data stories",
+      "description": "A catalogue of free, browser-rendered macroeconomic data stories, each sourced from public data (FRED, the World Bank, Our World in Data, IMF PortWatch).",
+      "url": "https://richybaxter.github.io/Mandala/",
+      "publisher": { "@id": "https://houtini.com/#org" },
+      "isAccessibleForFree": true,
+      "license": "https://opensource.org/licenses/MIT",
+      "dataset": [
+        {
+          "@type": "Dataset",
+          "name": "The Bitcoin Spiral & Monitor",
+          "description": "Bitcoin price on a 4-year-cycle Power-Law map, plus live valuation, sentiment, flow and network signals synthesised into a single verdict.",
+          "url": "https://richybaxter.github.io/Mandala/dashboard.html",
+          "keywords": ["Bitcoin", "Power Law", "valuation", "ETF flows", "cryptocurrency"],
+          "creator": { "@id": "https://houtini.com/#org" },
+          "isAccessibleForFree": true,
+          "license": "https://opensource.org/licenses/MIT"
+        },
+        {
+          "@type": "Dataset",
+          "name": "When Does the Music Stop? — US market-bubble indicators",
+          "description": "Five valuation and risk indicators (Shiller CAPE, Buffett Indicator, S&P 500 concentration, the 10Y-3M yield curve, institutional cash reserves) and a trigger-window timeline.",
+          "url": "https://richybaxter.github.io/Mandala/dashboards/music-stops/",
+          "keywords": ["Shiller CAPE", "Buffett Indicator", "yield curve", "market concentration", "stock market valuation"],
+          "creator": { "@id": "https://houtini.com/#org" },
+          "isAccessibleForFree": true,
+          "license": "https://opensource.org/licenses/MIT"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Arterial Flow — maritime chokepoints",
+          "description": "Daily ship-transit deviation from baseline at the world's maritime chokepoints, and how much traffic is diverting onto longer routes.",
+          "url": "https://richybaxter.github.io/Mandala/dashboards/maritime/",
+          "keywords": ["maritime trade", "chokepoints", "shipping", "trade diversion", "logistics"],
+          "creator": { "@id": "https://houtini.com/#org" },
+          "isAccessibleForFree": true,
+          "license": "https://opensource.org/licenses/MIT"
+        }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <div class="wrap">
@@ -37,6 +102,7 @@
       <a href="#bonds">Bond yields</a>
       <a href="#trade">Trade</a>
     </nav>
+    <div class="share" data-share data-title="Mandala · free macro data stories" style="margin-top:18px"></div>
   </header>
 
   <!-- MARKETS -->
@@ -180,6 +246,7 @@
   </section>
 
   <footer class="site reveal">
+    <div class="stats" data-views style="margin-bottom:16px"></div>
     <p>An open-source project by <strong><a href="https://houtini.com" target="_blank" rel="noopener">houtini</a></strong> · MIT licensed · <a href="https://github.com/richyBaxter/Mandala" target="_blank" rel="noopener">source on GitHub</a> · <a href="docs/how-it-works.md">how it works</a>.</p>
     <p class="src">All data is free and public: FRED (St. Louis Fed), the World Bank, Our World in Data, IMF PortWatch, CoinGecko, Binance and mempool.space. Live series refresh in CI; curated series are dated in each dataset.</p>
     <p class="disc"><strong>Educational only. Not financial advice.</strong> Stories are interpretations of public data, not forecasts.</p>

@@ -1,0 +1,13 @@
+{
+  "_comment": "Per-chart narratives. CI (build_prompt.py -> GitHub Models -> write_narrative.py) overwrites 'text' from live numbers; these are the computed fallbacks so the page always reads well. source = 'fallback' | 'github-models'.",
+  "generated": "2026-06-28T00:00:00Z",
+  "source": "fallback",
+  "notes": {
+    "cape": "At 41.6, the Shiller CAPE is the second-highest in 140 years of records — more than double its 17.3 average and within touching distance of the only reading ever higher: December 1999, right before the dot-com crash. It dwarfs the 1929 and 2008 peaks. Expensive markets don't have to fall, but they have a long way to.",
+    "buffett": "Total US market cap now runs 231% of GDP — the value of stocks against the size of the economy that underpins them. The dot-com mania topped out at 146%; 2007 at 110%. Today's reading is in a different league. The market has detached from the economy beneath it.",
+    "concentration": "Five companies are ~30% of the S&P 500 and tech is pushing 48% of the index. This is the 'Nifty 50' problem in modern dress: when an index is this top-heavy, a stumble in a handful of names forces index funds to sell everything, turning a wobble into a market-wide cascade.",
+    "yieldcurve": "The 3-month/10-year curve has flipped negative again, and the NY Fed's model puts recession odds above 30%. The bond market — the smartest money in the room — has inverted before every recession in modern history. It is pricing in trouble the stock market is ignoring.",
+    "drypowder": "Berkshire is sitting on a record ~$397B in cash, and 79% of institutional investors expect a decline. The biggest, most patient players aren't buying — they're holding fire. They are not waiting to miss the top; they are waiting to pick up the pieces.",
+    "finale": "Valuation alone never causes a crash — a trigger does. Through 2026 the seasonal cycle weakens and the mid-terms add uncertainty. Then, from December 2026 to May 2027, lock-ups expire on SpaceX, OpenAI and Anthropic, releasing trillions in insider shares. Liquidity drains from an overextended market. That is when the music stops."
+  }
+}

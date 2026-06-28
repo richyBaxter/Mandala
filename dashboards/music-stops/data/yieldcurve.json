@@ -1,0 +1,26 @@
+{
+  "_comment": "10-Year minus 3-Month Treasury spread (FRED 'T10Y3M'), percentage points. Negative = inverted = classic recession signal. recession_prob from the NY Fed yield-curve model (newyorkfed.org). Refreshed live by fetch.py in CI.",
+  "_last_updated": "2026-06-28",
+  "unit": "percentage_points",
+  "recession_prob": 0.31,
+  "current": { "value": -0.15, "date": "2026-06", "label": "Jun 2026" },
+  "series": [
+    { "t": "2022-06", "v": 1.45 },
+    { "t": "2022-09", "v": 0.55 },
+    { "t": "2022-11", "v": -0.10 },
+    { "t": "2023-02", "v": -0.95 },
+    { "t": "2023-05", "v": -1.70 },
+    { "t": "2023-08", "v": -1.30 },
+    { "t": "2023-11", "v": -1.05 },
+    { "t": "2024-02", "v": -1.25 },
+    { "t": "2024-05", "v": -0.85 },
+    { "t": "2024-09", "v": -0.10 },
+    { "t": "2024-12", "v": 0.25 },
+    { "t": "2025-03", "v": 0.40 },
+    { "t": "2025-06", "v": 0.38 },
+    { "t": "2025-09", "v": 0.20 },
+    { "t": "2025-12", "v": 0.10 },
+    { "t": "2026-03", "v": -0.05 },
+    { "t": "2026-06", "v": -0.15 }
+  ]
+}

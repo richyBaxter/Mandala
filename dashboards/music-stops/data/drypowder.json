@@ -1,0 +1,19 @@
+{
+  "_comment": "Institutional 'dry powder'. Berkshire Hathaway cash + T-bills by year-end ($B); 2026 = Q1 record $397.4B (surpassing the $381.7B Q3-2025 peak). Survey = share of institutional investors expecting a market decline. Curated from public filings + fund-manager surveys.",
+  "_last_updated": "2026-06-28",
+  "berkshire_unit": "USD_billion",
+  "berkshire_current": { "value": 397.4, "date": "2026-Q1", "label": "Q1 2026 (record)" },
+  "survey_expect_decline": 79,
+  "berkshire_cash": [
+    { "t": "2017", "v": 116 },
+    { "t": "2018", "v": 112 },
+    { "t": "2019", "v": 128 },
+    { "t": "2020", "v": 138 },
+    { "t": "2021", "v": 147 },
+    { "t": "2022", "v": 109 },
+    { "t": "2023", "v": 168 },
+    { "t": "2024", "v": 334 },
+    { "t": "2025", "v": 381.7 },
+    { "t": "2026", "v": 397.4 }
+  ]
+}

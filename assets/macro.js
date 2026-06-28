@@ -13,10 +13,16 @@
   const SERIES = [T.sky, T.btc, T.buy, T.violet, T.fair, T.pink, T.sell];
 
   // --- analytics config ---------------------------------------------------
-  // GoatCounter: free, privacy-friendly, no cookies. Set this to your endpoint
-  // ("https://YOURCODE.goatcounter.com/count") to enable pageview tracking and
-  // the visible page-stats pills. Leave '' to disable everything gracefully.
+  // Visit counter. Two options, both degrade gracefully (the stats slot hides
+  // itself if nothing is configured or the service is unreachable):
+  //
+  // 1) HIT_BADGE (default): a zero-setup hit-counter badge image, counted by
+  //    page URL. {PATH} is replaced with the encoded page URL. No account.
+  // 2) GOATCOUNTER: set to "https://YOURCODE.goatcounter.com/count" to instead
+  //    show styled per-page / site-wide count pills and load privacy-friendly
+  //    (cookieless) pageview tracking. Takes precedence over HIT_BADGE.
   const GOATCOUNTER = '';
+  const HIT_BADGE = 'https://api.visitorbadge.io/api/visitors?path={PATH}&label=views&labelColor=%230f141d&countColor=%23263247&style=flat-square';
 
   function hexA(hex, a) {
     const h = hex.replace('#', '');
@@ -150,17 +156,31 @@
   async function renderStats() {
     const nodes = document.querySelectorAll('[data-views]');
     if (!nodes.length) return;
-    if (!GOATCOUNTER) { nodes.forEach(n => { n.style.display = 'none'; }); return; }
-    const base = GOATCOUNTER.replace(/\/count$/, '');
-    const get = async path => { try { const r = await fetch(`${base}/counter/${encodeURIComponent(path)}.json`); return (await r.json()).count; } catch (e) { return null; } };
-    const total = await get('TOTAL');
-    const page = await get(location.pathname);
+    // Option 2: GoatCounter styled count pills (takes precedence).
+    if (GOATCOUNTER) {
+      const base = GOATCOUNTER.replace(/\/count$/, '');
+      const get = async path => { try { const r = await fetch(`${base}/counter/${encodeURIComponent(path)}.json`); return (await r.json()).count; } catch (e) { return null; } };
+      const total = await get('TOTAL');
+      const page = await get(location.pathname);
+      nodes.forEach(n => {
+        if (total == null && page == null) { n.style.display = 'none'; return; }
+        n.innerHTML = '';
+        const pill = (label, val) => { const p = document.createElement('span'); p.className = 'pill'; p.innerHTML = `<span class="dot"></span><b>${val}</b> ${label}`; return p; };
+        if (page != null) n.appendChild(pill('views this page', page));
+        if (total != null) n.appendChild(pill('views across the site', total));
+      });
+      return;
+    }
+    // Option 1: zero-setup hit-counter badge image (counts by page URL).
+    if (!HIT_BADGE) { nodes.forEach(n => { n.style.display = 'none'; }); return; }
+    const path = encodeURIComponent(location.origin + location.pathname);
     nodes.forEach(n => {
-      if (total == null && page == null) { n.style.display = 'none'; return; }
       n.innerHTML = '';
-      const pill = (label, val) => { const p = document.createElement('span'); p.className = 'pill'; p.innerHTML = `<span class="dot"></span><b>${val}</b> ${label}`; return p; };
-      if (page != null) n.appendChild(pill('views this page', page));
-      if (total != null) n.appendChild(pill('views across the site', total));
+      const img = document.createElement('img');
+      img.className = 'hitbadge'; img.alt = 'page views'; img.loading = 'lazy';
+      img.src = HIT_BADGE.replace('{PATH}', path);
+      img.onerror = () => { n.style.display = 'none'; };
+      n.appendChild(img);
     });
   }
 

@@ -120,6 +120,7 @@ canvas { width:100% !important; }
   border-radius:999px; padding:5px 12px; }
 .stats .pill b { color:var(--ink); font-weight:800; font-variant-numeric:tabular-nums; font-size:.92rem; }
 .stats .pill .dot { width:7px; height:7px; border-radius:50%; background:var(--buy); display:inline-block; align-self:center; }
+.stats .hitbadge { height:22px; border-radius:5px; display:block; opacity:.92; }
 
 /* ---------- shared footer ---------- */
 footer.site { color:var(--faint); font-size:.84rem; padding:48px 0 80px; border-top:1px solid var(--border); margin-top:40px; }

@@ -1,13 +1,13 @@
 {
   "_comment": "Per-chart narratives. CI (build_prompt.py -> GitHub Models -> write_narrative.py) overwrites 'text' from live numbers; these are the computed fallbacks so the page always reads well. source = 'fallback' | 'github-models'.",
-  "generated": "2026-06-28T00:00:00Z",
-  "source": "fallback",
+  "generated": "2026-06-28T21:10:42.649690Z",
+  "source": "github-models",
   "notes": {
-    "cape": "At 41.6, the Shiller CAPE is the second-highest in 140 years of records — more than double its 17.3 average and within touching distance of the only reading ever higher: December 1999, right before the dot-com crash. It dwarfs the 1929 and 2008 peaks. Expensive markets don't have to fall, but they have a long way to.",
-    "buffett": "Total US market cap now runs 231% of GDP — the value of stocks against the size of the economy that underpins them. The dot-com mania topped out at 146%; 2007 at 110%. Today's reading is in a different league. The market has detached from the economy beneath it.",
-    "concentration": "Five companies are ~30% of the S&P 500 and tech is pushing 48% of the index. This is the 'Nifty 50' problem in modern dress: when an index is this top-heavy, a stumble in a handful of names forces index funds to sell everything, turning a wobble into a market-wide cascade.",
-    "yieldcurve": "The 3-month/10-year curve has flipped negative again, and the NY Fed's model puts recession odds above 30%. The bond market — the smartest money in the room — has inverted before every recession in modern history. It is pricing in trouble the stock market is ignoring.",
-    "drypowder": "Berkshire is sitting on a record ~$397B in cash, and 79% of institutional investors expect a decline. The biggest, most patient players aren't buying — they're holding fire. They are not waiting to miss the top; they are waiting to pick up the pieces.",
-    "finale": "Valuation alone never causes a crash — a trigger does. Through 2026 the seasonal cycle weakens and the mid-terms add uncertainty. Then, from December 2026 to May 2027, lock-ups expire on SpaceX, OpenAI and Anthropic, releasing trillions in insider shares. Liquidity drains from an overextended market. That is when the music stops."
+    "cape": "The Shiller CAPE ratio stands at 40.7, more than double its 140-year average of 17.3, and close to the all-time high of 44.19 seen in December 1999, signaling a market priced for extreme optimism. Such stretched valuations have historically preceded major corrections.",
+    "buffett": "The Buffett Indicator, which compares total market value to GDP, is an unprecedented 231.7%, far exceeding the dot-com bubble peak of 146% and the 2007 peak of 110%, highlighting a market vastly overvalued relative to the economy.",
+    "concentration": "Market concentration is intense, with the top 5 companies making up nearly 30% of the S&P 500 and the tech sector commanding 48% of the index, while the top 10 firms hold 41.0%, up from 17.5% in 2015, increasing systemic risk from a few dominant players.",
+    "yieldcurve": "The yield curve spread between 10-year and 3-month Treasuries is a modest 0.55 points, while the New York Fed assigns a 31% chance of recession, reflecting underlying economic concerns despite still positive long-term rates.",
+    "drypowder": "Record cash reserves of $397.4 billion at Berkshire Hathaway reflect significant 'dry powder' or ready capital, yet 79% of institutions expect asset prices to decline, indicating widespread caution even amid high valuations.",
+    "finale": "Between December 2026 and May 2027, IPO lock-up expirations for giants like SpaceX, OpenAI, and Anthropic could flood the market with shares, draining liquidity and potentially triggering sharp price adjustments in an already stretched market."
   }
 }

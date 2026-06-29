@@ -23,6 +23,32 @@ yc = load("yieldcurve.json")
 dry = load("drypowder.json")
 tl = load("timeline.json")
 
+# Optional: a transcript of the source video, fetched best-effort in CI
+# (fetch_transcript.py). If present, the model grounds the overarching
+# "when does the music stop" narrative in the video's actual argument.
+transcript = ""
+tpath = os.path.join(HERE, "transcript.txt")
+if os.path.exists(tpath):
+    try:
+        with open(tpath, encoding="utf-8") as f:
+            transcript = f.read().strip()[:6000]
+    except Exception:
+        transcript = ""
+
+video_ctx = """
+SOURCE & FRAMING. This page retells the argument of a market-analysis video titled
+"When Does the Music Stop?". Its thesis: US equity valuations are at or near record
+extremes on multiple independent gauges, but valuation sets the *magnitude* of a fall,
+not its *timing* — what ends a bull market is a liquidity shock. The framing metaphor is
+musical chairs: cheap money and momentum keep everyone dancing; the danger is being fully
+invested when the music (liquidity) stops. Useful historical base rate: when the Shiller
+CAPE has been above ~39, forward S&P 500 returns have averaged roughly -4% over the next
+year and -20% over two years. Warren Buffett has called readings of the market-cap-to-GDP
+ratio above 200% "playing with fire."
+"""
+if transcript:
+    video_ctx += "\nVERBATIM TRANSCRIPT EXCERPT (ground your wording and emphasis in this; do not quote it directly):\n" + transcript + "\n"
+
 facts = f"""DATA (use only these numbers; never invent figures):
 - Shiller CAPE: {cape['current']['value']} ({cape['current']['label']}); 140-year average {cape['average']}; only-ever-higher Dec 1999 at {cape['peak_1999']['value']}.
 - Buffett Indicator (market cap / GDP): {buf['current']['value']}% ({buf['current']['label']}); dot-com peak {buf['peak_dotcom']['value']}%; 2007 peak {buf['peak_2007']['value']}%.
@@ -43,11 +69,14 @@ and (4) give one measured caveat (limitations, structural drivers, or timing unc
 "finale" should explain that valuation sets magnitude while a trigger sets timing, and tie the
 window to the liquidity mechanics of IPO lock-up expirations.
 
+Carry the source video's "music stops" framing as connective tissue without being gimmicky, and
+where it fits naturally, lean on the historical base rate and the analogy in the framing notes.
+
 Use only the numbers provided — never invent or predict figures. Define jargon in passing. Stay
 neutral and measured; no price targets and no financial advice.
 """
 
-out = facts + "\n" + instructions
+out = facts + "\n" + video_ctx + "\n" + instructions
 with open(os.path.join(HERE, "prompt.txt"), "w") as f:
     f.write(out)
 print("wrote prompt.txt (%d chars)" % len(out))

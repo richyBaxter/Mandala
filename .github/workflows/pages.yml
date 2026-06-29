@@ -57,6 +57,11 @@ jobs:
       - name: Refresh music-stops live data (FRED + multpl)
         continue-on-error: true
         run: python3 dashboards/music-stops/fetch.py
+      - name: Fetch source-video transcript (best-effort)
+        continue-on-error: true        # YouTube may block CI IPs; prompt has a fallback
+        run: |
+          pip install --quiet youtube-transcript-api || true
+          python3 dashboards/music-stops/fetch_transcript.py
       - name: Build music-stops AI prompt from live data
         run: python3 dashboards/music-stops/build_prompt.py
       - name: Generate music-stops narratives (GitHub Models)

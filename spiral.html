@@ -24,29 +24,38 @@
     color-scheme: dark;
     --bg: #0b0e14; --panel: #0f141d; --border: #1e2733;
     --ink: #e8ecf3; --muted: #8a93a3; --faint: #525b6b; --btc: #f7931a;
+    --glow:#10202e; --code-bg:#070a0f; --code-ink:#cfe3d6; --shadow:rgba(0,0,0,.45);
+  }
+  [data-theme="light"] {
+    color-scheme: light;
+    --bg:#f7f8fa; --panel:#ffffff; --border:#dde2ea;
+    --ink:#10151d; --muted:#566072; --faint:#8b93a1;
+    --glow:#e6eefc; --code-bg:#0d1117; --code-ink:#cfe3d6; --shadow:rgba(30,40,60,.14);
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
     font-family: Inter, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background: var(--bg); color: var(--ink); line-height: 1.6;
-    background-image: radial-gradient(60% 50% at 50% 0%, #10202e 0%, var(--bg) 70%);
+    background-image: radial-gradient(60% 50% at 50% 0%, var(--glow) 0%, var(--bg) 70%);
+    transition: background-color .3s ease, color .3s ease;
   }
   header, main, footer { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
   header { padding-top: 56px; }
   .kicker { color: var(--btc); font-size: .72rem; font-weight: 700; letter-spacing: 3px; margin: 0 0 8px; }
   h1 { font-size: 2.4rem; font-weight: 800; margin: 0 0 6px; letter-spacing: -.5px; }
   .sub { color: var(--muted); margin: 0 0 28px; max-width: 60ch; }
+  /* the spiral SVG is dark-baked, so keep its card dark in both themes */
   .chart {
-    background: var(--panel); border: 1px solid var(--border); border-radius: 16px;
-    padding: 10px; box-shadow: 0 20px 60px rgba(0,0,0,.45);
+    background: #0f141d; border: 1px solid var(--border); border-radius: 16px;
+    padding: 10px; box-shadow: 0 20px 60px var(--shadow);
   }
   .chart img { width: 100%; height: auto; display: block; border-radius: 10px; }
   h2 { font-size: 1.25rem; font-weight: 700; margin-top: 44px; }
   ul { padding-left: 18px; } li { margin: 6px 0; color: var(--muted); }
   li strong { color: var(--ink); font-weight: 600; }
   pre {
-    background: #070a0f; color: #cfe3d6; padding: 16px 18px; border-radius: 12px;
+    background: var(--code-bg); color: var(--code-ink); padding: 16px 18px; border-radius: 12px;
     border: 1px solid var(--border); overflow-x: auto; font-size: .85rem;
   }
   code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
@@ -57,9 +66,17 @@
   footer { color: var(--faint); font-size: .85rem; padding: 44px 24px 72px; border-top: 1px solid var(--border); margin-top: 48px; }
   footer strong { color: var(--btc); }
   a { color: var(--btc); }
+  .theme-toggle { position: fixed; top: 14px; right: 14px; z-index: 70; width: 40px; height: 40px;
+    display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+    background: var(--panel); border: 1px solid var(--border); border-radius: 999px; color: var(--muted);
+    transition: border-color .15s, color .15s, background-color .3s; }
+  .theme-toggle:hover { border-color: var(--btc); color: var(--btc); }
+  .theme-toggle svg { width: 18px; height: 18px; fill: currentColor; }
 </style>
+<script>/* set theme before paint to avoid a flash */(function(){try{var t=localStorage.getItem('mandala-theme')||(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.dataset.theme=t;}catch(e){}})();</script>
 </head>
 <body>
+<button class="theme-toggle" id="theme-toggle" aria-label="Toggle light or dark mode"></button>
 <header>
   <p class="kicker"><a href="https://houtini.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">HOUTINI</a></p>
   <p style="margin:0 0 14px"><a href="index.html" style="color:#f7931a;text-decoration:none;font-size:.9rem">&larr; All data stories</a></p>
@@ -106,5 +123,16 @@ FLOWS_URL="https://your-source/btc-etf-daily.csv" python3 fetch_flows.py</code><
 <footer>
   By <strong><a href="https://houtini.com" target="_blank" rel="noopener">houtini</a></strong> &middot; open source, MIT licensed &middot; Power-Law model after G. Santostasi.
 </footer>
+<script>
+(function(){
+  var SUN='<svg viewBox="0 0 24 24"><path d="M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-13a1 1 0 0 1-1-1V1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1Zm0 19a1 1 0 0 1-1-1v-2a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1ZM4.2 5.6 2.8 4.2a1 1 0 1 1 1.4-1.4l1.4 1.4A1 1 0 0 1 4.2 5.6Zm15.6 15.6-1.4-1.4a1 1 0 0 1 1.4-1.4l1.4 1.4a1 1 0 0 1-1.4 1.4ZM1 13a1 1 0 1 1 0-2h2a1 1 0 1 1 0 2H1Zm20 0a1 1 0 1 1 0-2h2a1 1 0 1 1 0 2h-2ZM4.2 18.4a1 1 0 0 1 1.4 1.4l-1.4 1.4a1 1 0 1 1-1.4-1.4l1.4-1.4ZM18.4 19.8a1 1 0 0 1 1.4-1.4l1.4 1.4a1 1 0 0 1-1.4 1.4l-1.4-1.4Z"/></svg>';
+  var MOON='<svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>';
+  var btn=document.getElementById('theme-toggle');
+  function cur(){ return document.documentElement.dataset.theme==='light'?'light':'dark'; }
+  function set(t){ document.documentElement.dataset.theme=t; try{localStorage.setItem('mandala-theme',t);}catch(e){} btn.innerHTML=t==='light'?MOON:SUN; }
+  set(cur());
+  btn.addEventListener('click', function(){ set(cur()==='light'?'dark':'light'); });
+})();
+</script>
 </body>
 </html>

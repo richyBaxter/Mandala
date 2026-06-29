@@ -5,7 +5,7 @@
   "average": 17.3,
   "danger_threshold": 30,
   "current": {
-    "value": 40.7,
+    "value": 41.39,
     "date": "2026-06",
     "label": "Jun 2026"
   },
@@ -117,7 +117,7 @@
     },
     {
       "t": "2026",
-      "v": 40.7
+      "v": 41.39
     }
   ]
 }

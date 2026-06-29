@@ -4,7 +4,7 @@
   "unit": "percentage_points",
   "recession_prob": 0.31,
   "current": {
-    "value": 0.55,
+    "value": 0.51,
     "date": "2026-06",
     "label": "Jun 2026"
   },
@@ -103,7 +103,7 @@
     },
     {
       "t": "2026-06",
-      "v": 0.55
+      "v": 0.51
     }
   ]
 }

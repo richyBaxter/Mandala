@@ -4,7 +4,7 @@
   "current_label": "Jun 2026",
   "recession_prob": 0.31,
   "ten_year": 4.38,
-  "spread_2s10s_current": 0.31,
+  "spread_2s10s_current": 0.28,
   "term_structure": {
     "labels": [
       "1M",
@@ -142,7 +142,7 @@
       },
       {
         "t": "2026-06",
-        "v": 0.31
+        "v": 0.28
       }
     ]
   }

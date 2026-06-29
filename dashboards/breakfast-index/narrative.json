@@ -1,10 +1,10 @@
 {
   "_comment": "Per-chart narratives. CI (build_prompt.py -> GitHub Models -> write_narrative.py) overwrites these from live numbers; this committed copy is the fallback so the page always reads well. source = 'fallback' | 'github-models'.",
-  "generated": "2026-06-29T00:00:00Z",
-  "source": "fallback",
+  "generated": "2026-06-29T20:25:13.648905Z",
+  "source": "github-models",
   "notes": {
-    "basket": "Each line is the global price of one breakfast staple, indexed so that 2015 = 100, which lets you compare a pound of coffee with a tonne of wheat on the same axis. Averaged into a single basket, the cost of the raw materials in your morning is running around 91% above where it sat a decade ago. Two things stand out: the climb is recent and steep (most of it since 2021), and it is wildly uneven — staples have not moved together.",
-    "movers": "The damage is concentrated. Orange juice and coffee have roughly doubled-and-more, while wheat and sugar are up far more modestly. These aren't really inflation stories; they're weather-and-disease stories — citrus greening and hurricanes in Florida and Brazil for orange juice, frost and drought in the big arabica regions for coffee. Soft commodities like these are thin markets where one bad harvest in the wrong place moves the world price.",
-    "why": "So the headline 'your breakfast costs more' hides a more interesting truth: a couple of weather-exposed crops are doing the heavy lifting, not a broad commodity surge. It's a small, tangible reminder that a lot of everyday prices trace back to a handful of fields and the weather over them — and that those inputs can stay elevated for years while a crop recovers."
+    "basket": "The breakfast basket, an average index of coffee, sugar, wheat, and orange juice prices set to 100 in 2015, now stands at 141, reflecting a 41% increase since 2015. This rise indicates that the cost of these staples has climbed sharply over recent years, though the increase has been uneven across the different commodities. The data represent global commodity prices and capture fluctuations in soft commodities, which are agricultural products prone to supply shocks.",
+    "movers": "Coffee has seen the largest increase at 99% since 2015, followed by orange juice up 34%, wheat up 19%, and sugar up 13%. These changes are largely driven by specific weather events and crop diseases\u2014for example, citrus greening and hurricanes have affected orange juice supplies, while frost and drought in arabica coffee regions have contributed to coffee price spikes. Such soft commodity markets tend to be thin, meaning relatively small supply disruptions can cause significant price volatility, rather than reflecting broad-based inflation pressures.",
+    "why": "The headline rise in the breakfast basket is primarily due to weather-exposed crops like coffee and orange juice, which have experienced sharp supply constraints. Given the nature of agricultural production and susceptibility to environmental factors, elevated prices may persist for several years as markets adjust and recover from these shocks."
   }
 }

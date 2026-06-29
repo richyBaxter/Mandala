@@ -29,6 +29,7 @@ dashboards/music-stops/prompt.txt
 dashboards/music-stops/transcript.txt
 dashboards/the-curve/prompt.txt
 dashboards/breakfast-index/prompt.txt
+dashboards/the-price-of-power/prompt.txt
 
 # python / os cruft
 __pycache__/

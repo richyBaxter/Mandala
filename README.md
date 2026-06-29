@@ -1,9 +1,9 @@
 # Mandala — free macro data stories
 
-An open-source hub of **free, no-paywall data stories about the world economy**, by **houtini** —
+An open-source hub of **free, no-paywall data stories about the world economy**, by **houtini**:
 markets, employment, lifestyle, retail, commodities, energy and bond yields. Every page is a
-zero-build static site that hydrates in the browser from public data (FRED, the World Bank, Our
-World in Data, IMF PortWatch), with charts in Chart.js and a shared dark design system
+zero-build static site that builds itself in the browser from public data (FRED, the World Bank, Our
+World in Data, IMF PortWatch), with charts in Chart.js and a shared design system, light and dark
 (`assets/macro.css` + `assets/macro.js`).
 
 **Live hub:** https://richybaxter.github.io/Mandala/
@@ -22,7 +22,7 @@ plain-English verdict.
 
 **Spiral:** https://richybaxter.github.io/Mandala/spiral.html · **Dashboard:** https://richybaxter.github.io/Mandala/dashboard.html
 
-**How it works:** [the story and the stack](docs/how-it-works.md), why I built it and how the pieces fit.
+**How it's built:** [the story and the stack](docs/how-it-works.md), and how the pieces fit together.
 
 Static site, zero backend: the page is plain HTML/SVG/JS and hydrates entirely in the browser
 from free public APIs. Deploys to GitHub Pages with no build step.

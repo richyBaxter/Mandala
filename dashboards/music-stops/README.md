@@ -26,7 +26,7 @@ committed fallback so the page always reads well).
 
 ## Data refresh — free, no keys, ~$0/mo
 
-`fetch.py` (stdlib only) refreshes the two genuinely-live series best-effort:
+`fetch.py` (stdlib only) refreshes the two live series best-effort:
 
 | Series | Source | Cadence |
 |--------|--------|---------|

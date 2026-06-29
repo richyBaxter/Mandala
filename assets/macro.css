@@ -5,23 +5,40 @@
 
 :root {
   color-scheme: dark;
-  /* house tokens */
+  /* house tokens (dark = default) */
   --bg:#0b0e14; --panel:#0f141d; --panel2:#0c111a; --border:#1e2733;
   --ink:#e8ecf3; --muted:#8a93a3; --faint:#525b6b;
   --btc:#f7931a; --buy:#16c784; --fair:#f0a92b; --sell:#ea3943; --sky:#38bdf8;
   /* complementary data-viz extension */
   --violet:#a78bfa; --pink:#ec4899; --crimson:#b11226;
   --danger:#ea3943; --danger-band:rgba(234,57,67,.12);
+  /* theme-dependent surfaces (flip in light mode) */
+  --grid:rgba(255,255,255,.05); --hero-glow:#10202e; --slice-rest:#222b38; --shadow:rgba(0,0,0,.38);
+}
+[data-theme="light"] {
+  color-scheme: light;
+  --bg:#f7f8fa; --panel:#ffffff; --panel2:#eef1f5; --border:#dde2ea;
+  --ink:#10151d; --muted:#566072; --faint:#8b93a1;
+  --grid:rgba(15,20,30,.07); --hero-glow:#e6eefc; --slice-rest:#cfd6e2; --shadow:rgba(30,40,60,.13);
 }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body {
   margin:0; font-family:Inter,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   background:var(--bg); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased;
-  background-image:radial-gradient(70% 45% at 50% -5%, #10202e 0%, var(--bg) 55%);
+  background-image:radial-gradient(70% 45% at 50% -5%, var(--hero-glow) 0%, var(--bg) 55%);
+  transition:background-color .3s ease, color .3s ease;
 }
 .wrap { max-width:1080px; margin:0 auto; padding:0 24px; }
 a { color:var(--btc); }
+
+/* light/dark toggle (auto-injected by macro.js) */
+.theme-toggle { position:fixed; top:14px; right:14px; z-index:70; width:40px; height:40px;
+  display:inline-flex; align-items:center; justify-content:center; cursor:pointer;
+  background:var(--panel); border:1px solid var(--border); border-radius:999px; color:var(--muted);
+  transition:border-color .15s, color .15s, background-color .3s; }
+.theme-toggle:hover { border-color:var(--btc); color:var(--btc); }
+.theme-toggle svg { width:18px; height:18px; fill:currentColor; }
 
 /* ---------- shared header ---------- */
 .kicker { color:var(--btc); font-size:.72rem; font-weight:700; letter-spacing:3px; margin:0 0 14px; }
@@ -44,9 +61,9 @@ a { color:var(--btc); }
 .cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(290px,1fr)); gap:16px; }
 .scard { position:relative; display:flex; flex-direction:column; gap:8px;
   background:var(--panel); border:1px solid var(--border); border-radius:16px; padding:18px 18px 16px;
-  text-decoration:none; color:var(--ink); box-shadow:0 18px 50px rgba(0,0,0,.32);
-  transition:border-color .15s, transform .15s, box-shadow .15s; }
-.scard:hover { border-color:var(--btc); transform:translateY(-3px); box-shadow:0 26px 60px rgba(0,0,0,.45); }
+  text-decoration:none; color:var(--ink); box-shadow:0 18px 50px var(--shadow);
+  transition:border-color .15s, transform .15s, box-shadow .15s, background-color .3s; }
+.scard:hover { border-color:var(--btc); transform:translateY(-3px); box-shadow:0 26px 60px var(--shadow); }
 .scard.soon { opacity:.62; cursor:default; box-shadow:none; }
 .scard.soon:hover { border-color:var(--border); transform:none; }
 .scard .ic { font-size:1.5rem; line-height:1; }
@@ -82,7 +99,7 @@ section.chapter:first-of-type { border-top:0; }
 .stat .lab { color:var(--muted); font-size:.76rem; margin-top:7px; }
 
 .card { background:var(--panel); border:1px solid var(--border); border-radius:18px;
-  padding:18px 20px 14px; box-shadow:0 24px 60px rgba(0,0,0,.4); }
+  padding:18px 20px 14px; box-shadow:0 24px 60px var(--shadow); transition:background-color .3s, border-color .3s; }
 .card h3 { font-size:.98rem; font-weight:700; margin:0 0 2px; }
 .card .hint { color:var(--muted); font-size:.8rem; margin:0 0 14px; }
 .chart-box { position:relative; height:340px; }

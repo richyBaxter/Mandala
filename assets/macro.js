@@ -11,6 +11,10 @@
     .forEach(k => { T[k.slice(2)] = tok(k); });
   // categorical series palette for multi-line / doughnut charts
   const SERIES = [T.sky, T.btc, T.buy, T.violet, T.fair, T.pink, T.sell];
+  // live token read (re-evaluated each draw so charts follow the active theme)
+  const live = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const gridColor = () => live('--grid');
+  const tickColor = () => live('--muted');
 
   // --- analytics config ---------------------------------------------------
   // Visit counter. Two options, both degrade gracefully (the stats slot hides
@@ -42,35 +46,49 @@
     if (!window.Chart || window.__macroChartReady) return;
     window.__macroChartReady = true;
     Chart.defaults.font.family = 'Inter, sans-serif';
-    Chart.defaults.color = T.muted;
+    Chart.defaults.color = tickColor();
     Chart.defaults.plugins.legend.display = false;
-    // horizontal dashed threshold lines via options.plugins.thresholds.lines
+    // horizontal dashed threshold lines; l.tok = live token name, l.color = fixed colour
     Chart.register({
       id: 'thresholds',
       afterDatasetsDraw(chart) {
         const lines = (chart.options.plugins.thresholds || {}).lines || [];
         const { ctx, chartArea, scales } = chart; const y = scales.y; if (!y) return;
         lines.forEach(l => {
+          const col = l.tok ? live(l.tok) : (l.color || live('--faint'));
           const yy = y.getPixelForValue(l.value); if (yy < chartArea.top || yy > chartArea.bottom) return;
           ctx.save(); ctx.beginPath(); ctx.setLineDash([5, 5]); ctx.lineWidth = 1;
-          ctx.strokeStyle = l.color || T.faint; ctx.moveTo(chartArea.left, yy); ctx.lineTo(chartArea.right, yy); ctx.stroke();
-          if (l.label) { ctx.setLineDash([]); ctx.font = '600 11px Inter'; ctx.fillStyle = l.color || T.muted; ctx.textAlign = 'right'; ctx.fillText(l.label, chartArea.right - 6, yy - 5); }
+          ctx.strokeStyle = col; ctx.moveTo(chartArea.left, yy); ctx.lineTo(chartArea.right, yy); ctx.stroke();
+          if (l.label) { ctx.setLineDash([]); ctx.font = '600 11px Inter'; ctx.fillStyle = col; ctx.textAlign = 'right'; ctx.fillText(l.label, chartArea.right - 6, yy - 5); }
           ctx.restore();
         });
       }
     });
   }
 
+  // re-theme every live chart after a theme switch
+  function retheme() {
+    if (!window.Chart) return;
+    Chart.defaults.color = tickColor();
+    Object.values(Chart.instances || {}).forEach(c => { try { c.update('none'); } catch (e) {} });
+  }
+
   function baseLine(extra) {
-    return Object.assign({
+    extra = extra || {};
+    const base = {
       responsive: true, maintainAspectRatio: false,
       interaction: { intersect: false, mode: 'index' },
-      plugins: { tooltip: { backgroundColor: '#0f141d', borderColor: T.border, borderWidth: 1, padding: 10 } },
+      plugins: { tooltip: { backgroundColor: () => live('--panel'), borderColor: () => live('--border'), borderWidth: 1, padding: 10, titleColor: () => live('--ink'), bodyColor: () => live('--ink') } },
       scales: {
-        x: { grid: { color: 'rgba(255,255,255,.04)' }, ticks: { maxRotation: 0, autoSkipPadding: 16 } },
-        y: { grid: { color: 'rgba(255,255,255,.05)' } }
+        x: { grid: { color: gridColor }, ticks: { color: tickColor, maxRotation: 0, autoSkipPadding: 16 } },
+        y: { grid: { color: gridColor }, ticks: { color: tickColor } }
       }
-    }, extra || {});
+    };
+    const out = Object.assign({}, base, extra);
+    out.plugins = Object.assign({}, base.plugins, extra.plugins);
+    out.plugins.tooltip = Object.assign({}, base.plugins.tooltip, extra.plugins && extra.plugins.tooltip);
+    out.scales = Object.assign({}, base.scales, extra.scales);
+    return out;
   }
 
   async function loadJSON(path) { try { return await (await fetch(path)).json(); } catch (e) { return null; } }
@@ -184,10 +202,36 @@
     });
   }
 
-  window.Macro = { T, SERIES, hexA, vGrad, registerChartDefaults, baseLine, loadJSON, setText, fillNarratives, wireProgress, observeReveals, renderShare, renderStats };
+  // ---------- light / dark ----------
+  const SUN = '<svg viewBox="0 0 24 24"><path d="M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-13a1 1 0 0 1-1-1V1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1Zm0 19a1 1 0 0 1-1-1v-2a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1ZM4.2 5.6 2.8 4.2a1 1 0 1 1 1.4-1.4l1.4 1.4A1 1 0 0 1 4.2 5.6Zm15.6 15.6-1.4-1.4a1 1 0 0 1 1.4-1.4l1.4 1.4a1 1 0 0 1-1.4 1.4ZM1 13a1 1 0 1 1 0-2h2a1 1 0 1 1 0 2H1Zm20 0a1 1 0 1 1 0-2h2a1 1 0 1 1 0 2h-2ZM4.2 18.4a1 1 0 0 1 1.4 1.4l-1.4 1.4a1 1 0 1 1-1.4-1.4l1.4-1.4ZM18.4 19.8a1 1 0 0 1 1.4-1.4l1.4 1.4a1 1 0 0 1-1.4 1.4l-1.4-1.4Z"/></svg>';
+  const MOON = '<svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>';
+  const curTheme = () => document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';
+  let themeBtn = null;
+  function setTheme(t) {
+    document.documentElement.dataset.theme = t;
+    try { localStorage.setItem('mandala-theme', t); } catch (e) {}
+    if (themeBtn) themeBtn.innerHTML = t === 'light' ? MOON : SUN;
+    retheme();
+  }
+  function initTheme() {
+    if (!document.documentElement.dataset.theme) {
+      let t = 'dark';
+      try { t = localStorage.getItem('mandala-theme') || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'); } catch (e) {}
+      document.documentElement.dataset.theme = t;
+    }
+    themeBtn = document.createElement('button');
+    themeBtn.className = 'theme-toggle'; themeBtn.id = 'theme-toggle';
+    themeBtn.setAttribute('aria-label', 'Toggle light or dark mode');
+    themeBtn.innerHTML = curTheme() === 'light' ? MOON : SUN;
+    themeBtn.addEventListener('click', () => setTheme(curTheme() === 'light' ? 'dark' : 'light'));
+    document.body.appendChild(themeBtn);
+  }
+
+  window.Macro = { T, SERIES, live, gridColor, tickColor, hexA, vGrad, registerChartDefaults, baseLine, retheme, loadJSON, setText, fillNarratives, wireProgress, observeReveals, renderShare, renderStats, setTheme, curTheme };
 
   // auto-init the cheap scaffolding for any page that includes this file
   document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
     wireProgress();
     observeReveals(null);
     document.querySelectorAll('.share[data-share]').forEach(renderShare);

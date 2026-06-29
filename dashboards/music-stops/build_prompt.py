@@ -34,9 +34,17 @@ facts = f"""DATA (use only these numbers; never invent figures):
 instructions = """
 TASK: Return a SINGLE JSON object and nothing else (no markdown, no prose around it),
 with exactly these keys: "cape", "buffett", "concentration", "yieldcurve", "drypowder", "finale".
-Each value is 1-2 punchy sentences for a smart non-expert, framing the number in the context of a
-possible market bubble. Use only the numbers above. Explain jargon in passing. No price targets,
-no financial advice, no invented figures. "finale" ties the trigger window to draining liquidity.
+
+Each value is 4-5 substantive, technical sentences for a financially-literate reader. For each
+indicator: (1) define the metric and how it is constructed; (2) state the current reading with
+historical context (where it sits versus its mean, percentile, or prior cycle peaks using only the
+numbers above); (3) explain the economic mechanism — why it matters for forward returns or risk;
+and (4) give one measured caveat (limitations, structural drivers, or timing uncertainty).
+"finale" should explain that valuation sets magnitude while a trigger sets timing, and tie the
+window to the liquidity mechanics of IPO lock-up expirations.
+
+Use only the numbers provided — never invent or predict figures. Define jargon in passing. Stay
+neutral and measured; no price targets and no financial advice.
 """
 
 out = facts + "\n" + instructions

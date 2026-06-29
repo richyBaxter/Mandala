@@ -65,9 +65,9 @@ jobs:
         uses: actions/ai-inference@v1
         with:
           model: openai/gpt-4.1-mini
-          system-prompt: "You are a calm, plain-spoken market analyst writing for a smart but non-expert reader. Use only the numbers you are given; never invent or predict figures. Return only the requested JSON object, no markdown."
+          system-prompt: "You are a precise, measured market analyst writing for a financially-literate reader. Be substantive and technical: define each metric, give historical context, and explain the economic mechanism. Use only the numbers you are given; never invent or predict figures. Return only the requested JSON object, no markdown."
           prompt-file: dashboards/music-stops/prompt.txt
-          max-tokens: 600
+          max-tokens: 1100
       - name: Write music-stops narrative.json (AI or fallback)
         env:
           RESPONSE: ${{ steps.ai_music.outputs.response }}

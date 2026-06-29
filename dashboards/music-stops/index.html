@@ -43,24 +43,45 @@
 <style>
   :root {
     color-scheme: dark;
-    /* houtini / Mandala house tokens */
+    /* houtini / Mandala house tokens (dark = default) */
     --bg:#0b0e14; --panel:#0f141d; --panel2:#0c111a; --border:#1e2733;
     --ink:#e8ecf3; --muted:#8a93a3; --faint:#525b6b;
     --btc:#f7931a; --buy:#16c784; --fair:#f0a92b; --sell:#ea3943; --sky:#38bdf8;
     /* complementary data-viz extension */
     --violet:#a78bfa; --pink:#ec4899; --crimson:#b11226;
     --danger:#ea3943; --danger-band:rgba(234,57,67,.12);
+    /* theme-dependent surfaces (flip in light mode) */
+    --grid:rgba(255,255,255,.05); --hero-glow:#1a0f14; --slice-rest:#222b38; --shadow:rgba(0,0,0,.4);
+  }
+  [data-theme="light"] {
+    color-scheme: light;
+    --bg:#f7f8fa; --panel:#ffffff; --panel2:#eef1f5; --border:#dde2ea;
+    --ink:#10151d; --muted:#566072; --faint:#8b93a1;
+    --grid:rgba(15,20,30,.07); --hero-glow:#fdecd9; --slice-rest:#cfd6e2; --shadow:rgba(30,40,60,.13);
   }
   * { box-sizing:border-box; }
   html { scroll-behavior:smooth; }
   body {
     margin:0; font-family:Inter,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     background:var(--bg); color:var(--ink); line-height:1.6;
-    background-image:radial-gradient(70% 45% at 50% -5%, #1a0f14 0%, var(--bg) 55%);
-    -webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(70% 45% at 50% -5%, var(--hero-glow) 0%, var(--bg) 55%);
+    -webkit-font-smoothing:antialiased; transition:background-color .3s ease, color .3s ease;
   }
   .wrap { max-width:1040px; margin:0 auto; padding:0 24px; }
   a { color:var(--btc); }
+
+  /* light/dark toggle */
+  .theme-toggle { position:fixed; top:14px; right:14px; z-index:70; width:40px; height:40px;
+    display:inline-flex; align-items:center; justify-content:center; cursor:pointer;
+    background:var(--panel); border:1px solid var(--border); border-radius:999px; color:var(--muted);
+    transition:border-color .15s, color .15s, background-color .3s; }
+  .theme-toggle:hover { border-color:var(--btc); color:var(--btc); }
+  .theme-toggle svg { width:18px; height:18px; fill:currentColor; }
+
+  /* authority source link under each chart */
+  .srclink { margin:12px 0 0; font-size:.78rem; color:var(--faint); }
+  .srclink a { color:var(--muted); text-decoration:none; border-bottom:1px dotted var(--border); }
+  .srclink a:hover { color:var(--btc); border-color:var(--btc); }
 
   /* progress bar */
   .progress { position:fixed; top:0; left:0; height:3px; width:0%; z-index:60;
@@ -94,7 +115,7 @@
   .stat .lab { color:var(--muted); font-size:.76rem; margin-top:7px; }
 
   .card { background:var(--panel); border:1px solid var(--border); border-radius:18px;
-    padding:18px 20px 14px; box-shadow:0 24px 60px rgba(0,0,0,.4); }
+    padding:18px 20px 14px; box-shadow:0 24px 60px var(--shadow); transition:background-color .3s, border-color .3s; }
   .card h3 { font-size:.98rem; font-weight:700; margin:0 0 2px; }
   .card .hint { color:var(--muted); font-size:.8rem; margin:0 0 14px; }
   .chart-box { position:relative; height:340px; }
@@ -140,9 +161,11 @@
   .disc { background:rgba(247,147,26,.07); border:1px solid rgba(247,147,26,.3);
     padding:12px 16px; border-radius:12px; font-size:.84rem; color:var(--muted); margin-top:18px; }
 </style>
+<script>/* set theme before paint to avoid a flash */(function(){try{var t=localStorage.getItem('mandala-theme')||(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.dataset.theme=t;}catch(e){}})();</script>
 </head>
 <body>
 <div class="progress" id="progress"></div>
+<button class="theme-toggle" id="theme-toggle" aria-label="Toggle light or dark mode"></button>
 <div class="wrap">
 
   <header>
@@ -167,6 +190,7 @@
       <h3>Shiller CAPE, 1901 – 2026</h3>
       <p class="hint">Cyclically-adjusted P/E. Dashed lines: the historical average and the "danger" zone.</p>
       <div class="chart-box"><canvas id="chart-cape"></canvas></div>
+      <p class="srclink">Learn more: <a href="https://shillerdata.com/" target="_blank" rel="noopener">Robert Shiller's official CAPE data (Yale)</a> · <a href="https://www.multpl.com/shiller-pe" target="_blank" rel="noopener">live value at multpl</a></p>
     </div>
     <div class="ai" data-note="cape"><span class="badge">AI ANALYSIS</span><span class="src"></span><p></p></div>
   </section>
@@ -185,6 +209,7 @@
       <h3>Buffett Indicator, 1971 – 2026</h3>
       <p class="hint">Percent of GDP. Dashed lines: "fair value" (100%) and "overvalued" (120%).</p>
       <div class="chart-box"><canvas id="chart-buffett"></canvas></div>
+      <p class="srclink">Learn more: <a href="https://fred.stlouisfed.org/series/WILL5000PR" target="_blank" rel="noopener">Wilshire 5000 (FRED)</a> ÷ <a href="https://fred.stlouisfed.org/series/GDP" target="_blank" rel="noopener">GDP (FRED)</a> · <a href="https://www.longtermtrends.net/market-cap-to-gdp-the-buffett-indicator/" target="_blank" rel="noopener">background</a></p>
     </div>
     <div class="ai" data-note="buffett"><span class="badge">AI ANALYSIS</span><span class="src"></span><p></p></div>
   </section>
@@ -211,6 +236,7 @@
           <div class="chart-box short"><canvas id="chart-conc-hist"></canvas></div>
         </div>
       </div>
+      <p class="srclink">Learn more: <a href="https://www.slickcharts.com/sp500" target="_blank" rel="noopener">live S&amp;P 500 weights (slickcharts)</a> · <a href="https://www.spglobal.com/spdji/en/indices/equity/sp-500/" target="_blank" rel="noopener">S&amp;P Dow Jones Indices</a></p>
     </div>
     <div class="ai" data-note="concentration"><span class="badge">AI ANALYSIS</span><span class="src"></span><p></p></div>
   </section>
@@ -228,6 +254,7 @@
       <h3>10-Year minus 3-Month Treasury spread</h3>
       <p class="hint">Below the zero line = inverted = the classic recession signal.</p>
       <div class="chart-box"><canvas id="chart-yield"></canvas></div>
+      <p class="srclink">Learn more: <a href="https://fred.stlouisfed.org/series/T10Y3M" target="_blank" rel="noopener">10Y−3M spread (FRED)</a> · <a href="https://www.newyorkfed.org/research/capital_markets/ycfaq" target="_blank" rel="noopener">NY Fed recession-probability model</a></p>
     </div>
     <div class="ai" data-note="yieldcurve"><span class="badge">AI ANALYSIS</span><span class="src"></span><p></p></div>
   </section>
@@ -245,6 +272,7 @@
       <h3>Berkshire Hathaway cash pile, 2017 – 2026</h3>
       <p class="hint">Cash &amp; T-bills, $bn. The 2026 bar is an all-time record.</p>
       <div class="chart-box"><canvas id="chart-dry"></canvas></div>
+      <p class="srclink">Learn more: <a href="https://www.berkshirehathaway.com/" target="_blank" rel="noopener">Berkshire Hathaway filings &amp; letters</a> · <a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001067983&type=10-Q" target="_blank" rel="noopener">SEC 10-Q (cash &amp; T-bills)</a></p>
     </div>
     <div class="ai" data-note="drypowder"><span class="badge">AI ANALYSIS</span><span class="src"></span><p></p></div>
   </section>
@@ -275,12 +303,13 @@
 (function(){
   "use strict";
   const $ = s => document.querySelector(s);
-  const C = getComputedStyle(document.documentElement);
-  const tok = n => C.getPropertyValue(n).trim();
-  const INK=tok('--ink'), MUTED=tok('--muted'), FAINT=tok('--faint'), BORDER=tok('--border'),
-        BTC=tok('--btc'), BUY=tok('--buy'), FAIR=tok('--fair'), SELL=tok('--sell'), SKY=tok('--sky'),
-        VIOLET=tok('--violet'), PINK=tok('--pink');
+  const tokv = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  // brand / semantic colours — identical in light & dark
+  const BTC='#f7931a', BUY='#16c784', FAIR='#f0a92b', SELL='#ea3943', SKY='#38bdf8', VIOLET='#a78bfa', PINK='#ec4899';
   const SERIES = [SKY, BTC, BUY, VIOLET, FAIR, PINK];
+  // live theme-dependent colours (read fresh every draw so charts re-theme)
+  const gridColor = () => tokv('--grid');
+  const tickColor = () => tokv('--muted');
 
   function hexA(hex, a){
     const h = hex.replace('#',''); const n = parseInt(h.length===3 ? h.split('').map(c=>c+c).join('') : h, 16);
@@ -294,19 +323,20 @@
 
   if (window.Chart){
     Chart.defaults.font.family = 'Inter, sans-serif';
-    Chart.defaults.color = MUTED;
+    Chart.defaults.color = tickColor();
     Chart.defaults.plugins.legend.display = false;
-    // horizontal dashed threshold lines
+    // horizontal dashed threshold lines; l.tok = live token name, l.color = fixed colour
     Chart.register({
       id:'thresholds',
       afterDatasetsDraw(chart){
         const lines = (chart.options.plugins.thresholds||{}).lines || [];
         const {ctx, chartArea, scales} = chart; const y = scales.y; if(!y) return;
         lines.forEach(l=>{
+          const col = l.tok ? tokv(l.tok) : (l.color || tokv('--faint'));
           const yy = y.getPixelForValue(l.value); if(yy<chartArea.top||yy>chartArea.bottom) return;
           ctx.save(); ctx.beginPath(); ctx.setLineDash([5,5]); ctx.lineWidth=1;
-          ctx.strokeStyle = l.color || FAINT; ctx.moveTo(chartArea.left, yy); ctx.lineTo(chartArea.right, yy); ctx.stroke();
-          if(l.label){ ctx.setLineDash([]); ctx.font='600 11px Inter'; ctx.fillStyle = l.color || MUTED;
+          ctx.strokeStyle = col; ctx.moveTo(chartArea.left, yy); ctx.lineTo(chartArea.right, yy); ctx.stroke();
+          if(l.label){ ctx.setLineDash([]); ctx.font='600 11px Inter'; ctx.fillStyle = col;
             ctx.textAlign='right'; ctx.fillText(l.label, chartArea.right-6, yy-5); }
           ctx.restore();
         });
@@ -333,15 +363,24 @@
     });
   }
 
-  const baseLine = (extra) => Object.assign({
-    responsive:true, maintainAspectRatio:false,
-    interaction:{ intersect:false, mode:'index' },
-    plugins:{ tooltip:{ backgroundColor:'#0f141d', borderColor:BORDER, borderWidth:1, padding:10 } },
-    scales:{
-      x:{ grid:{ color:'rgba(255,255,255,.04)' }, ticks:{ maxRotation:0, autoSkipPadding:16 } },
-      y:{ grid:{ color:'rgba(255,255,255,.05)' } }
-    }
-  }, extra||{});
+  const baseLine = (extra) => {
+    extra = extra || {};
+    const base = {
+      responsive:true, maintainAspectRatio:false,
+      interaction:{ intersect:false, mode:'index' },
+      plugins:{ tooltip:{ backgroundColor:()=>tokv('--panel'), borderColor:()=>tokv('--border'), borderWidth:1, padding:10, titleColor:()=>tokv('--ink'), bodyColor:()=>tokv('--ink') } },
+      scales:{
+        x:{ grid:{ color:gridColor }, ticks:{ color:tickColor, maxRotation:0, autoSkipPadding:16 } },
+        y:{ grid:{ color:gridColor }, ticks:{ color:tickColor } }
+      }
+    };
+    const out = Object.assign({}, base, extra);
+    out.plugins = Object.assign({}, base.plugins, extra.plugins);
+    // keep the themed tooltip even when a chart adds its own tooltip callbacks
+    out.plugins.tooltip = Object.assign({}, base.plugins.tooltip, extra.plugins && extra.plugins.tooltip);
+    out.scales = Object.assign({}, base.scales, extra.scales);
+    return out;
+  };
 
   // ---- renderers ----
   const drawn = {};
@@ -354,7 +393,7 @@
         pointRadius:d.series.map(p=>p.v>=40?4:0), pointBackgroundColor:BTC, pointBorderColor:BTC,
         tension:.3, fill:true, backgroundColor:c=>vGrad(c.chart, SELL, .26) }] },
       options:baseLine({ plugins:{ thresholds:{ lines:[
-        { value:d.average, color:MUTED, label:'140-yr avg '+d.average },
+        { value:d.average, tok:'--muted', label:'140-yr avg '+d.average },
         { value:d.danger_threshold, color:FAIR, label:'danger '+d.danger_threshold } ] } } })
     });
   }
@@ -366,8 +405,8 @@
         data:d.series.map(p=>p.v), borderColor:SELL, borderWidth:2,
         pointRadius:d.series.map(p=>p.v>=200?4:0), pointBackgroundColor:BTC, pointBorderColor:BTC,
         tension:.3, fill:true, backgroundColor:c=>vGrad(c.chart, SELL, .24) }] },
-      options:baseLine({ scales:{ y:{ ticks:{ callback:v=>v+'%' }, grid:{ color:'rgba(255,255,255,.05)' } },
-        x:{ grid:{ color:'rgba(255,255,255,.04)' } } },
+      options:baseLine({ scales:{ y:{ ticks:{ color:tickColor, callback:v=>v+'%' }, grid:{ color:gridColor } },
+        x:{ grid:{ color:gridColor }, ticks:{ color:tickColor } } },
         plugins:{ thresholds:{ lines:[
           { value:d.fair_value, color:BUY, label:'fair '+d.fair_value+'%' },
           { value:d.overvalued_threshold, color:FAIR, label:'overvalued '+d.overvalued_threshold+'%' } ] } } })
@@ -379,17 +418,18 @@
     new Chart($('#chart-conc-doughnut'), { type:'doughnut',
       data:{ labels:[...d.top5.map(c=>c.name),'Other 495'],
         datasets:[{ data:[...d.top5.map(c=>c.weight), d.rest_total],
-          backgroundColor:[...SERIES.slice(0,5), '#222b38'], borderColor:'#0b0e14', borderWidth:2 }] },
+          backgroundColor:(c)=> c.dataIndex<5 ? SERIES[c.dataIndex] : tokv('--slice-rest'),
+          borderColor:()=>tokv('--bg'), borderWidth:2 }] },
       options:{ responsive:true, maintainAspectRatio:false, cutout:'58%',
         plugins:{ legend:{ display:true, position:'right', labels:{ boxWidth:10, padding:8, font:{size:11} } },
-          tooltip:{ callbacks:{ label:c=>` ${c.label}: ${c.parsed}%` } } } }
+          tooltip:{ backgroundColor:()=>tokv('--panel'), borderColor:()=>tokv('--border'), borderWidth:1, titleColor:()=>tokv('--ink'), bodyColor:()=>tokv('--ink'), callbacks:{ label:c=>` ${c.label}: ${c.parsed}%` } } } }
     });
     new Chart($('#chart-conc-hist'), { type:'line',
       data:{ labels:d.top10_history.map(p=>p.t), datasets:[{
         data:d.top10_history.map(p=>p.v), borderColor:BTC, borderWidth:2, tension:.3,
         pointRadius:0, fill:true, backgroundColor:c=>vGrad(c.chart, BTC, .24) }] },
-      options:baseLine({ scales:{ y:{ ticks:{ callback:v=>v+'%' }, grid:{ color:'rgba(255,255,255,.05)' } },
-        x:{ grid:{ color:'rgba(255,255,255,.04)' } } } })
+      options:baseLine({ scales:{ y:{ ticks:{ color:tickColor, callback:v=>v+'%' }, grid:{ color:gridColor } },
+        x:{ grid:{ color:gridColor }, ticks:{ color:tickColor } } } })
     });
   }
   function renderYield(){
@@ -401,7 +441,7 @@
         segment:{ borderColor:ctx=> ctx.p1.parsed.y<0 ? SELL : BUY },
         borderColor:SELL,
         fill:{ target:{ value:0 }, above:hexA(BUY,.14), below:hexA(SELL,.18) } }] },
-      options:baseLine({ plugins:{ thresholds:{ lines:[ { value:0, color:MUTED, label:'inversion line' } ] } } })
+      options:baseLine({ plugins:{ thresholds:{ lines:[ { value:0, tok:'--muted', label:'inversion line' } ] } } })
     });
   }
   function renderDry(){
@@ -413,8 +453,8 @@
         data:d.berkshire_cash.map(p=>p.v),
         backgroundColor:d.berkshire_cash.map((p,i)=> i===last ? SELL : hexA(BTC,.7)),
         borderRadius:5 }] },
-      options:baseLine({ scales:{ y:{ ticks:{ callback:v=>'$'+v+'B' }, grid:{ color:'rgba(255,255,255,.05)' } },
-        x:{ grid:{ display:false } } },
+      options:baseLine({ scales:{ y:{ ticks:{ color:tickColor, callback:v=>'$'+v+'B' }, grid:{ color:gridColor } },
+        x:{ grid:{ display:false }, ticks:{ color:tickColor } } },
         plugins:{ tooltip:{ callbacks:{ label:c=>` $${c.parsed.y}B` } } } })
     });
   }
@@ -451,6 +491,27 @@
     }, { threshold:.12 });
     document.querySelectorAll('.chapter').forEach(s=>io.observe(s));
     onScroll();
+  }
+
+  // ---- light / dark ----
+  const SUN='<svg viewBox="0 0 24 24"><path d="M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-13a1 1 0 0 1-1-1V1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1Zm0 19a1 1 0 0 1-1-1v-2a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1ZM4.2 5.6 2.8 4.2a1 1 0 1 1 1.4-1.4l1.4 1.4A1 1 0 0 1 4.2 5.6Zm15.6 15.6-1.4-1.4a1 1 0 0 1 1.4-1.4l1.4 1.4a1 1 0 0 1-1.4 1.4ZM1 13a1 1 0 1 1 0-2h2a1 1 0 1 1 0 2H1Zm20 0a1 1 0 1 1 0-2h2a1 1 0 1 1 0 2h-2ZM4.2 18.4a1 1 0 0 1 1.4 1.4l-1.4 1.4a1 1 0 1 1-1.4-1.4l1.4-1.4ZM18.4 19.8a1 1 0 0 1 1.4-1.4l1.4 1.4a1 1 0 0 1-1.4 1.4l-1.4-1.4Z"/></svg>';
+  const MOON='<svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>';
+  const themeBtn = $('#theme-toggle');
+  const curTheme = () => document.documentElement.dataset.theme==='light' ? 'light' : 'dark';
+  function retheme(){
+    if(!window.Chart) return;
+    Chart.defaults.color = tokv('--muted');
+    Object.values(Chart.instances||{}).forEach(c=>{ try{ c.update('none'); }catch(e){} });
+  }
+  function setTheme(t){
+    document.documentElement.dataset.theme = t;
+    try{ localStorage.setItem('mandala-theme', t); }catch(e){}
+    if(themeBtn) themeBtn.innerHTML = t==='light' ? MOON : SUN;
+    retheme();
+  }
+  if(themeBtn){
+    themeBtn.innerHTML = curTheme()==='light' ? MOON : SUN;
+    themeBtn.addEventListener('click', ()=> setTheme(curTheme()==='light' ? 'dark' : 'light'));
   }
 
   loadAll().then(()=>{

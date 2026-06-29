@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<title>The Breakfast Index: coffee, OJ &amp; food prices · houtini</title>
+<meta name="description" content="What your morning costs: coffee, sugar, wheat and orange juice prices since 2015, and the weather-hit crops doing the work. Free data from FRED.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://richybaxter.github.io/Mandala/dashboards/breakfast-index/">
+<meta property="og:title" content="The Breakfast Index">
+<meta property="og:description" content="Coffee, sugar, wheat and orange juice since 2015 — what your morning costs. A data story by houtini.">
+<meta property="og:image" content="https://richybaxter.github.io/Mandala/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Breakfast Index">
+<meta name="twitter:description" content="What your morning costs, and why it keeps creeping up.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="../../assets/macro.css">
+<script>/* set theme before paint to avoid a flash */(function(){try{var t=localStorage.getItem('mandala-theme')||(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "The Breakfast Index — coffee, sugar, wheat & orange juice prices",
+  "description": "Global commodity prices for breakfast staples (coffee, sugar, wheat, orange juice), indexed to 2015 = 100, with the change since 2015 by item.",
+  "url": "https://richybaxter.github.io/Mandala/dashboards/breakfast-index/",
+  "keywords": ["commodity prices", "coffee price", "orange juice price", "wheat price", "sugar price", "food inflation"],
+  "creator": { "@type": "Organization", "name": "houtini", "url": "https://houtini.com" },
+  "license": "https://opensource.org/licenses/MIT",
+  "isAccessibleForFree": true,
+  "temporalCoverage": "2015/2026",
+  "variableMeasured": ["Global price of coffee", "Global price of sugar", "Global price of wheat", "Global price of orange juice"],
+  "isBasedOn": ["https://fred.stlouisfed.org/"],
+  "includedInDataCatalog": { "@type": "DataCatalog", "@id": "https://richybaxter.github.io/Mandala/#catalog" }
+}
+</script>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="wrap">
+
+  <header class="story-header reveal">
+    <nav class="crumbs"><a href="../../index.html">Mandala</a> <span class="sep">/</span> Commodities <span class="sep">/</span> The Breakfast Index</nav>
+    <h1>The Breakfast Index</h1>
+    <p class="lede">Coffee, a glass of orange juice, toast with a spoonful of sugar. Four of the most ordinary things you'll buy this week are also globally-traded commodities, and their prices have done something strange over the last decade. My take: the tidy phrase "food inflation" is doing a lot of hiding here. Most of the rise is one or two weather-hit crops, not your weekly shop as a whole.</p>
+    <div class="share" data-share data-title="The Breakfast Index · houtini" style="justify-content:center;margin-top:18px"></div>
+    <div class="scrollcue">SCROLL ↓</div>
+  </header>
+
+  <section class="chapter reveal" id="ch-basket">
+    <p class="chnum">01 · THE BASKET</p>
+    <h2 class="chtitle">What your morning costs</h2>
+    <p class="chsub" data-fill="basket-sub"></p>
+    <div class="stat-row">
+      <div class="stat"><div class="big alarm" id="s-index">+91%</div><div class="lab">Breakfast basket vs 2015</div></div>
+      <div class="stat"><div class="big" id="s-top1">+170%</div><div class="lab" id="s-top1-lab">Orange juice</div></div>
+      <div class="stat"><div class="big" id="s-top2">+140%</div><div class="lab" id="s-top2-lab">Coffee</div></div>
+    </div>
+    <div class="card">
+      <h3>Breakfast staples, indexed to 2015 = 100</h3>
+      <p class="hint">Each line is one commodity's global price; the thick line is the basket average.</p>
+      <div class="chart-box"><canvas id="chart-basket"></canvas></div>
+      <p class="srclink">Learn more: <a href="https://fred.stlouisfed.org/release?rid=359" target="_blank" rel="noopener">global commodity prices (FRED / IMF)</a></p>
+    </div>
+    <div class="ai" data-note="basket"><span class="badge2">AI ANALYSIS</span><span class="src"></span><p></p></div>
+  </section>
+
+  <section class="chapter reveal" id="ch-movers">
+    <p class="chnum">02 · WHO'S TO BLAME</p>
+    <h2 class="chtitle">It isn't spread evenly</h2>
+    <p class="chsub">A rising "basket" hides who's actually moving. Split it by item and the climb turns out to be the work of a couple of weather-exposed crops, not a broad surge.</p>
+    <div class="card">
+      <h3>Price change since 2015, by item</h3>
+      <p class="hint">Soft commodities are thin markets: one bad harvest in the wrong place moves the world price.</p>
+      <div class="chart-box short"><canvas id="chart-movers"></canvas></div>
+      <p class="srclink">Learn more: <a href="https://fred.stlouisfed.org/series/PORANGUSDM" target="_blank" rel="noopener">orange juice</a> · <a href="https://fred.stlouisfed.org/series/PCOFFOTMUSDM" target="_blank" rel="noopener">coffee</a> (FRED)</p>
+    </div>
+    <div class="ai" data-note="movers"><span class="badge2">AI ANALYSIS</span><span class="src"></span><p></p></div>
+  </section>
+
+  <section class="chapter reveal" id="ch-why">
+    <p class="chnum">03 · THE VERDICT</p>
+    <h2 class="chtitle">A handful of fields</h2>
+    <p class="chsub">What the breakfast basket is really telling you.</p>
+    <div class="ai" data-note="why"><span class="badge2">AI ANALYSIS</span><span class="src"></span><p></p></div>
+  </section>
+
+  <footer class="site reveal">
+    <div class="stats" data-views style="margin-bottom:16px"></div>
+    <a class="back" href="../../index.html">← all data stories</a>
+    <p>A data story by <strong><a href="https://houtini.com" target="_blank" rel="noopener">houtini</a></strong> · open source, MIT licensed · part of the <a href="../../index.html">Mandala</a> project.</p>
+    <p class="src">Source: FRED global price series (IMF) for coffee, sugar, wheat and orange juice, indexed to 2015. The per-chart analysis is written by an LLM (GitHub Models) from the live numbers. Latest readings refresh daily in CI.</p>
+    <p class="disc"><strong>Educational only. Not financial advice.</strong></p>
+  </footer>
+
+</div>
+<script src="../../assets/macro.js"></script>
+<script>
+(async function(){
+  const M = window.Macro; const T = M.T;
+  M.registerChartDefaults();
+  const d = await M.loadJSON('data/breakfast.json');
+  const narr = await M.loadJSON('narrative.json');
+  if (narr) M.fillNarratives(narr);
+  if (!d) return;
+
+  const it = d.items, names = ['Coffee', 'Sugar', 'Wheat', 'Orange juice'];
+  // basket = average of the four items per year
+  const basket = it.labels.map((_, i) => Math.round(names.reduce((a, n) => a + it[n][i], 0) / names.length));
+  const idxNow = basket[basket.length - 1];
+  M.setText('s-index', '+' + (idxNow - 100) + '%');
+  const movers = d.change_since_base;
+  if (movers[0]) { M.setText('s-top1', '+' + movers[0].pct + '%'); M.setText('s-top1-lab', movers[0].name); }
+  if (movers[1]) { M.setText('s-top2', '+' + movers[1].pct + '%'); M.setText('s-top2-lab', movers[1].name); }
+  const sub = document.querySelector('[data-fill="basket-sub"]');
+  if (sub) sub.textContent = "Plot the four together (indexed so 2015 = 100), average them into one 'breakfast basket', and the raw materials in your morning now run about " + (idxNow - 100) + "% above a decade ago. The striking part isn't the level. It's how lopsided the climb is.";
+
+  const palette = [T.btc, T.fair, T.buy, T.sky];
+  new Chart(document.getElementById('chart-basket'), {
+    type: 'line',
+    data: { labels: it.labels, datasets: [
+      ...names.map((n, i) => ({ label: n, data: it[n], borderColor: palette[i], backgroundColor: 'transparent', borderWidth: 1.6, tension: .3, pointRadius: 0 })),
+      { label: 'Breakfast basket', data: basket, borderColor: T.sell, borderWidth: 3, tension: .3, pointRadius: 0, fill: true, backgroundColor: c => M.vGrad(c.chart, T.sell, .15) }
+    ] },
+    options: M.baseLine({
+      plugins: { legend: { display: true, labels: { boxWidth: 12, usePointStyle: true, padding: 12 } } },
+      scales: {
+        y: { ticks: { color: M.tickColor }, grid: { color: M.gridColor } },
+        x: { grid: { color: M.gridColor }, ticks: { color: M.tickColor } }
+      }
+    })
+  });
+
+  new Chart(document.getElementById('chart-movers'), {
+    type: 'bar',
+    data: { labels: movers.map(m => m.name), datasets: [{
+      data: movers.map(m => m.pct),
+      backgroundColor: movers.map(m => m.pct >= 100 ? T.sell : M.hexA(T.btc, .75)),
+      borderRadius: 5
+    }] },
+    options: M.baseLine({
+      indexAxis: 'y',
+      plugins: { tooltip: { callbacks: { label: c => ' +' + c.parsed.x + '% since 2015' } } },
+      scales: {
+        x: { ticks: { color: M.tickColor, callback: v => '+' + v + '%' }, grid: { color: M.gridColor } },
+        y: { grid: { display: false }, ticks: { color: M.tickColor } }
+      }
+    })
+  });
+})();
+</script>
+</body>
+</html>

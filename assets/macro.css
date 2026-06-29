@@ -32,6 +32,12 @@ body {
 .wrap { max-width:1080px; margin:0 auto; padding:0 24px; }
 a { color:var(--btc); }
 
+/* breadcrumb */
+.crumbs { font-size:.78rem; font-weight:600; color:var(--faint); letter-spacing:.3px; margin:0 0 14px; }
+.crumbs a { color:var(--btc); text-decoration:none; }
+.crumbs a:hover { text-decoration:underline; }
+.crumbs .sep { color:var(--faint); margin:0 7px; }
+
 /* light/dark toggle (auto-injected by macro.js) */
 .theme-toggle { position:fixed; top:14px; right:14px; z-index:70; width:40px; height:40px;
   display:inline-flex; align-items:center; justify-content:center; cursor:pointer;
@@ -119,6 +125,11 @@ canvas { width:100% !important; }
 .reveal { opacity:0; transform:translateY(26px); transition:opacity .7s ease, transform .7s ease; }
 .reveal.in { opacity:1; transform:none; }
 @media (prefers-reduced-motion: reduce){ .reveal { opacity:1; transform:none; transition:none; } .scrollcue{ animation:none; } }
+
+/* ---------- authority source link under a chart ---------- */
+.srclink { margin:12px 0 0; font-size:.78rem; color:var(--faint); }
+.srclink a { color:var(--muted); text-decoration:none; border-bottom:1px dotted var(--border); }
+.srclink a:hover { color:var(--btc); border-color:var(--btc); }
 
 /* ---------- share bar ---------- */
 .share { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }

@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <title>How this is built · houtini</title>
-<meta name="description" content="An honest bill of materials for the Mandala data dashboards: pulled together by directing Claude Code, hosted free on GitHub, fed by free public data, with a light touch of LLM analysis. What's now within reach for people who don't write code.">
+<meta name="description" content="How the Mandala dashboards are built: directed with Claude Code, hosted free on GitHub, fed by free public data, with a light touch of LLM analysis.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://richybaxter.github.io/Mandala/how-it-works.html">
 <meta property="og:title" content="How this is built — directed AI, free infrastructure, honest numbers">
@@ -85,6 +86,28 @@
   @media (max-width: 560px){ h1 { font-size: 2rem; } }
 </style>
 <script>/* set theme before paint to avoid a flash */(function(){try{var t=localStorage.getItem('mandala-theme')||(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "How this is built",
+  "description": "An honest bill of materials for the Mandala data dashboards: Claude Code, GitHub Pages/Actions/Models and free public data.",
+  "url": "https://richybaxter.github.io/Mandala/how-it-works.html",
+  "author": {
+    "@type": "Organization",
+    "name": "houtini",
+    "url": "https://houtini.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "houtini",
+    "url": "https://houtini.com"
+  },
+  "image": "https://richybaxter.github.io/Mandala/og.png",
+  "license": "https://opensource.org/licenses/MIT",
+  "isAccessibleForFree": true
+}
+</script>
 </head>
 <body>
 <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light or dark mode"></button>
@@ -184,5 +207,6 @@
   btn.addEventListener('click', function(){ set(cur()==='light'?'dark':'light'); });
 })();
 </script>
+<script src="assets/viewcount.js" defer></script>
 </body>
 </html>

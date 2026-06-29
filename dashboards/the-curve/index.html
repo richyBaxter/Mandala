@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<title>The Curve: the US yield curve, read live · houtini</title>
+<meta name="description" content="The US Treasury yield curve read off its shape: the term structure, the 2s10s spread through its inversion, and what the bond market is signalling now.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://richybaxter.github.io/Mandala/dashboards/the-curve/">
+<meta property="og:title" content="The Curve">
+<meta property="og:description" content="The Treasury yield curve and what its shape has predicted for 60 years. A data story by houtini.">
+<meta property="og:image" content="https://richybaxter.github.io/Mandala/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Curve">
+<meta name="twitter:description" content="The Treasury yield curve and what its shape is signalling now.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="../../assets/macro.css">
+<script>/* set theme before paint to avoid a flash */(function(){try{var t=localStorage.getItem('mandala-theme')||(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "The Curve — US Treasury yield curve & spreads",
+  "description": "The US Treasury term structure (1-month to 30-year), the 10-year minus 2-year spread through its 2022–24 inversion and re-steepening, and the NY Fed recession probability.",
+  "url": "https://richybaxter.github.io/Mandala/dashboards/the-curve/",
+  "keywords": ["Treasury yield curve", "yield curve inversion", "2s10s spread", "recession probability", "term structure"],
+  "creator": { "@type": "Organization", "name": "houtini", "url": "https://houtini.com" },
+  "license": "https://opensource.org/licenses/MIT",
+  "isAccessibleForFree": true,
+  "spatialCoverage": "United States",
+  "temporalCoverage": "2022/2026",
+  "variableMeasured": ["Treasury par yields by maturity", "10Y-2Y spread", "NY Fed recession probability"],
+  "isBasedOn": ["https://fred.stlouisfed.org/", "https://www.newyorkfed.org/"],
+  "includedInDataCatalog": { "@type": "DataCatalog", "@id": "https://richybaxter.github.io/Mandala/#catalog" }
+}
+</script>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="wrap">
+
+  <header class="story-header reveal">
+    <nav class="crumbs"><a href="../../index.html">Mandala</a> <span class="sep">/</span> Bond yields <span class="sep">/</span> The Curve</nav>
+    <h1>The Curve</h1>
+    <p class="lede">The most important chart in finance isn't a stock index. It's the shape of what the government pays to borrow money, from a month out to thirty years. When that shape turns upside down, the bond market (historically the level-headed one) is quietly betting on trouble. My read: it's stopped shouting recession, but it hasn't given the all-clear either, which is a more uncomfortable place to sit than either extreme.</p>
+    <div class="share" data-share data-title="The Curve · houtini" style="justify-content:center;margin-top:18px"></div>
+    <div class="scrollcue">SCROLL ↓</div>
+  </header>
+
+  <section class="chapter reveal" id="ch-shape">
+    <p class="chnum">01 · THE SHAPE OF MONEY</p>
+    <h2 class="chtitle">The term structure</h2>
+    <p class="chsub" data-fill="shape-sub"></p>
+    <div class="stat-row">
+      <div class="stat"><div class="big accent" id="s-ty">4.35%</div><div class="lab">10-year yield (Jun 2026)</div></div>
+      <div class="stat"><div class="big" id="s-spread">+0.55</div><div class="lab">10Y − 2Y spread</div></div>
+    </div>
+    <div class="card">
+      <h3>Treasury yields by maturity</h3>
+      <p class="hint">Today's curve against the deeply inverted shape of mid-2023.</p>
+      <div class="chart-box"><canvas id="chart-term"></canvas></div>
+      <p class="srclink">Learn more: <a href="https://fred.stlouisfed.org/categories/115" target="_blank" rel="noopener">Treasury constant-maturity yields (FRED)</a></p>
+    </div>
+    <div class="ai" data-note="shape"><span class="badge2">AI ANALYSIS</span><span class="src"></span><p></p></div>
+  </section>
+
+  <section class="chapter reveal" id="ch-signal">
+    <p class="chnum">02 · THE SIGNAL</p>
+    <h2 class="chtitle">10-year minus 2-year</h2>
+    <p class="chsub">Boil the whole curve down to one number and you get the spread between the 10-year and the 2-year. Below the line is inverted — the recession tell that has fired before every modern US downturn.</p>
+    <div class="stat-row">
+      <div class="stat"><div class="big alarm" id="s-prob">31%</div><div class="lab">NY Fed recession probability</div></div>
+    </div>
+    <div class="card">
+      <h3>10Y − 2Y spread, 2022 – 2026</h3>
+      <p class="hint">Below zero = inverted. One of the longest inversions on record, now re-steepened.</p>
+      <div class="chart-box"><canvas id="chart-spread"></canvas></div>
+      <p class="srclink">Learn more: <a href="https://fred.stlouisfed.org/series/T10Y2Y" target="_blank" rel="noopener">10Y−2Y spread (FRED)</a> · <a href="https://www.newyorkfed.org/research/capital_markets/ycfaq" target="_blank" rel="noopener">NY Fed recession model</a></p>
+    </div>
+    <div class="ai" data-note="signal"><span class="badge2">AI ANALYSIS</span><span class="src"></span><p></p></div>
+  </section>
+
+  <section class="chapter reveal" id="ch-now">
+    <p class="chnum">03 · THE VERDICT</p>
+    <h2 class="chtitle">What the curve is saying now</h2>
+    <p class="chsub">Put the shape and the signal together and you get the bond market's current read.</p>
+    <div class="ai" data-note="now"><span class="badge2">AI ANALYSIS</span><span class="src"></span><p></p></div>
+  </section>
+
+  <footer class="site reveal">
+    <div class="stats" data-views style="margin-bottom:16px"></div>
+    <a class="back" href="../../index.html">← all data stories</a>
+    <p>A data story by <strong><a href="https://houtini.com" target="_blank" rel="noopener">houtini</a></strong> · open source, MIT licensed · part of the <a href="../../index.html">Mandala</a> project.</p>
+    <p class="src">Source: FRED (Treasury constant-maturity yields, the 10Y−2Y spread) and the NY Fed yield-curve model. The per-chart analysis is written by an LLM (GitHub Models) from the live numbers. Live series refresh daily in CI.</p>
+    <p class="disc"><strong>Educational only. Not financial advice.</strong></p>
+  </footer>
+
+</div>
+<script src="../../assets/macro.js"></script>
+<script>
+(async function(){
+  const M = window.Macro; const T = M.T;
+  M.registerChartDefaults();
+  const d = await M.loadJSON('data/curve.json');
+  const narr = await M.loadJSON('narrative.json');
+  if (narr) M.fillNarratives(narr);
+  if (!d) return;
+
+  M.setText('s-ty', d.ten_year + '%');
+  M.setText('s-spread', (d.spread_2s10s_current >= 0 ? '+' : '') + d.spread_2s10s_current);
+  M.setText('s-prob', Math.round(d.recession_prob * 100) + '%');
+  const sub = document.querySelector('[data-fill="shape-sub"]');
+  if (sub) sub.textContent = "Lend the government money and it pays you interest; the longer you lend, the more you'd normally expect. Plot that rate across maturities and you've got the yield curve. Today it slopes gently up again, with a 10-year near " + d.ten_year + "%, but only after spending two years upside down.";
+
+  // term structure
+  const ts = d.term_structure;
+  new Chart(document.getElementById('chart-term'), {
+    type: 'line',
+    data: { labels: ts.labels, datasets: [
+      { label: 'Today', data: ts.now, borderColor: T.btc, backgroundColor: 'transparent', borderWidth: 2.4, tension: .25, pointRadius: 3, pointBackgroundColor: T.btc, pointBorderColor: T.btc },
+      { label: '2023 (inverted)', data: ts.inverted_2023, borderColor: T.sell, borderDash: [6,4], borderWidth: 1.8, tension: .25, pointRadius: 0 }
+    ] },
+    options: M.baseLine({
+      plugins: { legend: { display: true, labels: { boxWidth: 12, usePointStyle: true, padding: 14 } } },
+      scales: {
+        y: { ticks: { color: M.tickColor, callback: v => v + '%' }, grid: { color: M.gridColor } },
+        x: { grid: { color: M.gridColor }, ticks: { color: M.tickColor } }
+      }
+    })
+  });
+
+  // 2s10s spread
+  const s = d.spread_2s10s.series;
+  new Chart(document.getElementById('chart-spread'), {
+    type: 'line',
+    data: { labels: s.map(p => p.t), datasets: [{
+      data: s.map(p => p.v), borderWidth: 2, tension: .25, pointRadius: 0,
+      segment: { borderColor: ctx => ctx.p1.parsed.y < 0 ? T.sell : T.buy },
+      borderColor: T.buy,
+      fill: { target: { value: 0 }, above: M.hexA(T.buy, .14), below: M.hexA(T.sell, .18) }
+    }] },
+    options: M.baseLine({ plugins: { thresholds: { lines: [ { value: 0, tok: '--muted', label: 'inversion line' } ] } } })
+  });
+})();
+</script>
+</body>
+</html>

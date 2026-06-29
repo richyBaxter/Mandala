@@ -1,0 +1,21 @@
+{
+  "_comment": "Global commodity prices for breakfast staples, indexed to 2015 = 100 so different units are comparable. Source: FRED global price series (IMF) — coffee PCOFFOTMUSDM, sugar PSUGAISAUSDM, wheat PWHEAMTUSDM, orange juice PORANGUSDM. Historical points curated; the latest reading refreshes best-effort daily via fetch.py.",
+  "_last_updated": "2026-06-29",
+  "base_year": "2015",
+  "current_label": "2026",
+  "index_now": 191,
+  "items": {
+    "labels": ["2015", "2018", "2020", "2021", "2022", "2023", "2024", "2025", "2026"],
+    "Coffee":       [100, 95,  90,  130, 150, 140, 200, 260, 240],
+    "Sugar":        [100, 85,  90,  120, 130, 160, 150, 140, 135],
+    "Wheat":        [100, 110, 110, 135, 190, 150, 130, 125, 120],
+    "Orange juice": [100, 95,  100, 110, 130, 180, 260, 300, 270]
+  },
+  "change_since_base": [
+    { "name": "Orange juice", "pct": 170 },
+    { "name": "Coffee", "pct": 140 },
+    { "name": "Sugar", "pct": 35 },
+    { "name": "Wheat", "pct": 20 }
+  ],
+  "fred": { "Coffee": "PCOFFOTMUSDM", "Sugar": "PSUGAISAUSDM", "Wheat": "PWHEAMTUSDM", "Orange juice": "PORANGUSDM" }
+}

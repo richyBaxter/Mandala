@@ -77,6 +77,42 @@ jobs:
         env:
           RESPONSE: ${{ steps.ai_music.outputs.response }}
         run: python3 dashboards/music-stops/write_narrative.py
+      - name: Refresh The Curve live data (FRED)
+        continue-on-error: true
+        run: python3 dashboards/the-curve/fetch.py
+      - name: Build The Curve AI prompt
+        run: python3 dashboards/the-curve/build_prompt.py
+      - name: Generate The Curve narrative (GitHub Models)
+        id: ai_curve
+        continue-on-error: true
+        uses: actions/ai-inference@v1
+        with:
+          model: openai/gpt-4.1-mini
+          system-prompt: "You are a precise, measured market analyst writing for a financially-literate reader. Be substantive and technical; use only the numbers you are given; never invent or predict figures. Return only the requested JSON object, no markdown."
+          prompt-file: dashboards/the-curve/prompt.txt
+          max-tokens: 900
+      - name: Write The Curve narrative.json (AI or fallback)
+        env:
+          RESPONSE: ${{ steps.ai_curve.outputs.response }}
+        run: python3 dashboards/the-curve/write_narrative.py
+      - name: Refresh Breakfast Index live data (FRED)
+        continue-on-error: true
+        run: python3 dashboards/breakfast-index/fetch.py
+      - name: Build Breakfast Index AI prompt
+        run: python3 dashboards/breakfast-index/build_prompt.py
+      - name: Generate Breakfast Index narrative (GitHub Models)
+        id: ai_breakfast
+        continue-on-error: true
+        uses: actions/ai-inference@v1
+        with:
+          model: openai/gpt-4.1-mini
+          system-prompt: "You are a precise, measured commodities analyst writing for a financially-literate reader. Be substantive; use only the numbers you are given; never invent or predict figures. Return only the requested JSON object, no markdown."
+          prompt-file: dashboards/breakfast-index/prompt.txt
+          max-tokens: 900
+      - name: Write Breakfast Index narrative.json (AI or fallback)
+        env:
+          RESPONSE: ${{ steps.ai_breakfast.outputs.response }}
+        run: python3 dashboards/breakfast-index/write_narrative.py
       - name: Commit refreshed data + SVG back to repo
         continue-on-error: true
         env:
@@ -86,7 +122,9 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add data/btc-monthly.json btc-mandala.svg dashboards/maritime/chokepoint_deviations.json \
                   dashboards/music-stops/data/yieldcurve.json dashboards/music-stops/data/cape.json \
-                  dashboards/music-stops/narrative.json
+                  dashboards/music-stops/narrative.json \
+                  dashboards/the-curve/data/curve.json dashboards/the-curve/narrative.json \
+                  dashboards/breakfast-index/data/breakfast.json dashboards/breakfast-index/narrative.json
           if git diff --staged --quiet; then
             echo "no changes to commit"; exit 0
           fi

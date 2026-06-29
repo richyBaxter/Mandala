@@ -17,6 +17,29 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "When Does the Music Stop? — US market-bubble indicators",
+  "description": "Five valuation and risk indicators for the US stock market — the Shiller CAPE ratio, the Buffett Indicator (total market cap to GDP), S&P 500 concentration, the 10-year minus 3-month Treasury yield spread, and institutional cash reserves — with a trigger-window timeline for 2026/27.",
+  "url": "https://richybaxter.github.io/Mandala/dashboards/music-stops/",
+  "keywords": ["Shiller CAPE", "Buffett Indicator", "yield curve", "market concentration", "stock market valuation", "recession probability"],
+  "creator": { "@type": "Organization", "name": "houtini", "url": "https://houtini.com" },
+  "publisher": { "@type": "Organization", "name": "houtini", "url": "https://houtini.com" },
+  "license": "https://opensource.org/licenses/MIT",
+  "isAccessibleForFree": true,
+  "spatialCoverage": "United States",
+  "temporalCoverage": "1901/2026",
+  "variableMeasured": ["Shiller CAPE ratio", "Buffett Indicator (market cap to GDP)", "S&P 500 top-5 and top-10 concentration", "10Y-3M Treasury yield spread", "NY Fed recession probability", "Berkshire Hathaway cash reserves"],
+  "includedInDataCatalog": { "@type": "DataCatalog", "@id": "https://richybaxter.github.io/Mandala/#catalog" },
+  "isBasedOn": ["https://fred.stlouisfed.org/", "https://www.multpl.com/shiller-pe", "https://www.newyorkfed.org/"],
+  "distribution": [
+    { "@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://richybaxter.github.io/Mandala/dashboards/music-stops/data/cape.json" },
+    { "@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://richybaxter.github.io/Mandala/dashboards/music-stops/data/yieldcurve.json" }
+  ]
+}
+</script>
 <style>
   :root {
     color-scheme: dark;

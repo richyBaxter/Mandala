@@ -26,13 +26,32 @@
     --bg:#0b0e14; --panel:#0f141d; --panel2:#0c111a; --border:#1e2733;
     --ink:#e8ecf3; --muted:#8a93a3; --faint:#525b6b;
     --btc:#f7931a; --buy:#16c784; --fair:#f0a92b; --sell:#ea3943; --sky:#38bdf8;
+    --glow:#10202e; --grid:#1c2330; --shadow:rgba(0,0,0,.35);
+  }
+  [data-theme="light"] {
+    color-scheme: light;
+    --bg:#f7f8fa; --panel:#ffffff; --panel2:#eef1f5; --border:#dde2ea;
+    --ink:#10151d; --muted:#566072; --faint:#8b93a1;
+    --glow:#e6eefc; --grid:#dde3ec; --shadow:rgba(30,40,60,.13);
   }
   * { box-sizing:border-box; }
   body {
     margin:0; font-family:Inter,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     background:var(--bg); color:var(--ink); line-height:1.5;
-    background-image:radial-gradient(70% 50% at 50% -5%, #10202e 0%, var(--bg) 60%);
+    background-image:radial-gradient(70% 50% at 50% -5%, var(--glow) 0%, var(--bg) 60%);
+    transition:background-color .3s ease, color .3s ease;
   }
+  /* the spiral is a dark-baked SVG — frame it on dark in both themes */
+  #spiral-host { background:#0b0e14; border-radius:10px; padding:6px; }
+  .theme-toggle { position:fixed; top:14px; right:14px; z-index:80; width:40px; height:40px;
+    display:inline-flex; align-items:center; justify-content:center; cursor:pointer;
+    background:var(--panel); border:1px solid var(--border); border-radius:999px; color:var(--muted);
+    transition:border-color .15s, color .15s, background-color .3s; }
+  .theme-toggle:hover { border-color:var(--btc); color:var(--btc); }
+  .theme-toggle svg { width:18px; height:18px; fill:currentColor; }
+</style>
+<script>/* set theme before paint to avoid a flash */(function(){try{var t=localStorage.getItem('mandala-theme')||(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+<style>
   .wrap { max-width:1240px; margin:0 auto; padding:0 22px; }
   header { padding:48px 0 8px; position:relative; }
   .kicker { color:var(--btc); font-size:.72rem; font-weight:700; letter-spacing:3px; margin:0 0 8px; }
@@ -54,7 +73,7 @@
 
   .verdict { display:flex; align-items:center; gap:22px; flex-wrap:wrap;
     background:var(--panel); border:1px solid var(--border); border-left:5px solid var(--faint);
-    border-radius:16px; padding:18px 22px; margin:26px 0 6px; box-shadow:0 14px 40px rgba(0,0,0,.3); }
+    border-radius:16px; padding:18px 22px; margin:26px 0 6px; box-shadow:0 14px 40px var(--shadow); }
   .verdict .word { font-size:1.85rem; font-weight:800; letter-spacing:-.5px; line-height:1.1; }
   .verdict .sub { color:var(--muted); font-size:.88rem; flex:1; min-width:220px; }
   .verdict .factors { display:flex; gap:7px; flex-wrap:wrap; }
@@ -81,7 +100,7 @@
   @media (max-width:980px){ .grid{ grid-template-columns:1fr;} }
   .card {
     background:var(--panel); border:1px solid var(--border); border-radius:16px;
-    padding:16px 18px; box-shadow:0 18px 50px rgba(0,0,0,.35);
+    padding:16px 18px; box-shadow:0 18px 50px var(--shadow);
   }
   .card h2 { font-size:1rem; font-weight:700; margin:0 0 2px; }
   .card .hint { color:var(--muted); font-size:.8rem; margin:0 0 12px; }
@@ -164,6 +183,7 @@
 </style>
 </head>
 <body>
+<button class="theme-toggle" id="theme-toggle" aria-label="Toggle light or dark mode"></button>
 <div class="wrap">
   <header>
     <div class="gh-corner">
@@ -343,6 +363,13 @@
 <script>
 const C = { bg:"#0b0e14", ink:"#e8ecf3", muted:"#8a93a3", faint:"#525b6b", grid:"#1c2330",
             btc:"#f7931a", buy:"#16c784", fair:"#f0a92b", sell:"#ea3943", sky:"#38bdf8" };
+// theme-dependent greys are read live from CSS tokens so charts follow light/dark
+const tok = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function syncC(){
+  C.bg=tok('--bg'); C.ink=tok('--ink'); C.muted=tok('--muted'); C.faint=tok('--faint'); C.grid=tok('--grid');
+  if(window.Chart){ Chart.defaults.color=C.muted; Chart.defaults.borderColor=C.grid; }
+}
+syncC();
 // ---- Power Law (Santostasi) ----
 const GENESIS = Date.UTC(2009,0,3);
 const N = 5.8, A_SUP = -17.32, A_FAIR = -17.01, A_RES = -16.5;
@@ -918,6 +945,27 @@ fetch("https://api.github.com/repos/richyBaxter/Mandala")
     }
   })
   .catch(() => {});
+
+// ---------- light / dark ----------
+(function(){
+  const SUN='<svg viewBox="0 0 24 24"><path d="M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-13a1 1 0 0 1-1-1V1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1Zm0 19a1 1 0 0 1-1-1v-2a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1ZM4.2 5.6 2.8 4.2a1 1 0 1 1 1.4-1.4l1.4 1.4A1 1 0 0 1 4.2 5.6Zm15.6 15.6-1.4-1.4a1 1 0 0 1 1.4-1.4l1.4 1.4a1 1 0 0 1-1.4 1.4ZM1 13a1 1 0 1 1 0-2h2a1 1 0 1 1 0 2H1Zm20 0a1 1 0 1 1 0-2h2a1 1 0 1 1 0 2h-2ZM4.2 18.4a1 1 0 0 1 1.4 1.4l-1.4 1.4a1 1 0 1 1-1.4-1.4l1.4-1.4ZM18.4 19.8a1 1 0 0 1 1.4-1.4l1.4 1.4a1 1 0 0 1-1.4 1.4l-1.4-1.4Z"/></svg>';
+  const MOON='<svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>';
+  const btn=document.getElementById("theme-toggle");
+  if(!btn) return;
+  const cur=()=>document.documentElement.dataset.theme==="light"?"light":"dark";
+  let t0=0;
+  function setTheme(t){
+    document.documentElement.dataset.theme=t;
+    try{ localStorage.setItem("mandala-theme", t); }catch(e){}
+    btn.innerHTML = t==="light" ? MOON : SUN;
+    syncC();
+    // rebuild charts with the new palette (same path the refresh timers use; debounced)
+    const now=Date.now(); t0=now;
+    setTimeout(()=>{ if(t0===now){ try{ refreshMarket(); refreshSlow(); }catch(e){ console.warn(e); } } }, 120);
+  }
+  btn.innerHTML = cur()==="light" ? MOON : SUN;
+  btn.addEventListener("click", ()=> setTheme(cur()==="light"?"dark":"light"));
+})();
 </script>
 </body>
 </html>

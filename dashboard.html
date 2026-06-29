@@ -182,6 +182,41 @@
   .toc a:hover { color:var(--btc); border-color:var(--btc); }
   [id]{ scroll-margin-top:18px; }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "Bitcoin Monitor \u2014 Power-Law valuation & signals",
+  "description": "Live Bitcoin price against the Power-Law model (fair value, floor, cycle-top), plus Mayer Multiple, Pi Cycle, MVRV, Fear & Greed, taker-flow and ETF flows, blended into a single verdict.",
+  "url": "https://richybaxter.github.io/Mandala/dashboard.html",
+  "keywords": [
+    "Bitcoin",
+    "Power Law",
+    "Mayer Multiple",
+    "Pi Cycle",
+    "MVRV",
+    "Fear and Greed",
+    "ETF flows",
+    "cryptocurrency valuation"
+  ],
+  "creator": {
+    "@type": "Organization",
+    "name": "houtini",
+    "url": "https://houtini.com"
+  },
+  "license": "https://opensource.org/licenses/MIT",
+  "isAccessibleForFree": true,
+  "isBasedOn": [
+    "https://www.coingecko.com/",
+    "https://www.binance.com/",
+    "https://mempool.space/"
+  ],
+  "includedInDataCatalog": {
+    "@type": "DataCatalog",
+    "@id": "https://richybaxter.github.io/Mandala/#catalog"
+  }
+}
+</script>
 </head>
 <body>
 <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light or dark mode"></button>
@@ -968,5 +1003,6 @@ fetch("https://api.github.com/repos/richyBaxter/Mandala")
   btn.addEventListener("click", ()=> setTheme(cur()==="light"?"dark":"light"));
 })();
 </script>
+<script src="assets/viewcount.js" defer></script>
 </body>
 </html>

@@ -75,6 +75,33 @@
   .theme-toggle svg { width: 18px; height: 18px; fill: currentColor; }
 </style>
 <script>/* set theme before paint to avoid a flash */(function(){try{var t=localStorage.getItem('mandala-theme')||(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "The Bitcoin Spiral \u2014 price on a 4-year-cycle Power-Law map",
+  "description": "Bitcoin's monthly price on a polar 4-year-cycle map against the Power-Law channel (floor, fair value, cycle-top), 2011 to date.",
+  "url": "https://richybaxter.github.io/Mandala/spiral.html",
+  "keywords": [
+    "Bitcoin",
+    "Power Law",
+    "market cycle",
+    "spiral chart",
+    "Santostasi"
+  ],
+  "creator": {
+    "@type": "Organization",
+    "name": "houtini",
+    "url": "https://houtini.com"
+  },
+  "license": "https://opensource.org/licenses/MIT",
+  "isAccessibleForFree": true,
+  "includedInDataCatalog": {
+    "@type": "DataCatalog",
+    "@id": "https://richybaxter.github.io/Mandala/#catalog"
+  }
+}
+</script>
 </head>
 <body>
 <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light or dark mode"></button>
@@ -135,5 +162,6 @@ FLOWS_URL="https://your-source/btc-etf-daily.csv" python3 fetch_flows.py</code><
   btn.addEventListener('click', function(){ set(cur()==='light'?'dark':'light'); });
 })();
 </script>
+<script src="assets/viewcount.js" defer></script>
 </body>
 </html>

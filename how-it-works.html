@@ -86,6 +86,28 @@
   @media (max-width: 560px){ h1 { font-size: 2rem; } }
 </style>
 <script>/* set theme before paint to avoid a flash */(function(){try{var t=localStorage.getItem('mandala-theme')||(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "How this is built",
+  "description": "An honest bill of materials for the Mandala data dashboards: Claude Code, GitHub Pages/Actions/Models and free public data.",
+  "url": "https://richybaxter.github.io/Mandala/how-it-works.html",
+  "author": {
+    "@type": "Organization",
+    "name": "houtini",
+    "url": "https://houtini.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "houtini",
+    "url": "https://houtini.com"
+  },
+  "image": "https://richybaxter.github.io/Mandala/og.png",
+  "license": "https://opensource.org/licenses/MIT",
+  "isAccessibleForFree": true
+}
+</script>
 </head>
 <body>
 <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light or dark mode"></button>
@@ -185,5 +207,6 @@
   btn.addEventListener('click', function(){ set(cur()==='light'?'dark':'light'); });
 })();
 </script>
+<script src="assets/viewcount.js" defer></script>
 </body>
 </html>

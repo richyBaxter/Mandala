@@ -1,0 +1,10 @@
+{
+  "_comment": "Per-chart narratives. CI (build_prompt.py -> GitHub Models -> write_narrative.py) overwrites these from live numbers; this committed copy is the fallback so the page always reads well. source = 'fallback' | 'github-models'.",
+  "generated": "2026-06-29T00:00:00Z",
+  "source": "fallback",
+  "notes": {
+    "shape": "A yield curve is just the interest rate the government pays to borrow for different lengths of time, plotted from a month out to thirty years. Normally it slopes up: lend for longer, earn more. When it slopes down (\"inverted\"), short-term money pays more than long-term money, which is the bond market's way of saying it expects rates, and the economy, to be lower in future than they are now. The line on the left shows where the curve sits today against the deeply inverted shape of 2023.",
+    "signal": "The cleanest read on all this is a single spread: the 10-year yield minus the 2-year. Below zero is inverted, and an inversion has come before every US recession in the modern era, usually by six to eighteen months. After one of the longest inversions on record it has climbed back above zero, to about +0.55. That sounds like the all-clear, but it isn't quite: the curve has a habit of flipping back up just before the downturn actually shows up, and the NY Fed's model still puts recession odds near a third.",
+    "now": "So the bond market's verdict, read off its own shape, is cautious rather than calm. The curve has normalised, which is healthy, but it normalised the way it usually does on the way into trouble rather than out of it, and a ~31% recession probability is not nothing. None of this is a timer. It's the most sober voice in the market telling you it still isn't comfortable."
+  }
+}

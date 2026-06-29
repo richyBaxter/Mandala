@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <title>Mandala · free macro data stories by houtini</title>
 <meta name="description" content="Free, no-paywall data stories about the world economy — markets, work, prices, retail, commodities, energy and bond yields. Every chart hydrates from public data; every source is free.">
 <meta property="og:type" content="website">
@@ -77,6 +78,26 @@
           "description": "Daily ship-transit deviation from baseline at the world's maritime chokepoints, and how much traffic is diverting onto longer routes.",
           "url": "https://richybaxter.github.io/Mandala/dashboards/maritime/",
           "keywords": ["maritime trade", "chokepoints", "shipping", "trade diversion", "logistics"],
+          "creator": { "@id": "https://houtini.com/#org" },
+          "isAccessibleForFree": true,
+          "license": "https://opensource.org/licenses/MIT"
+        },
+        {
+          "@type": "Dataset",
+          "name": "The Curve — US Treasury yield curve & spreads",
+          "description": "The US Treasury term structure (1-month to 30-year), the 10Y-2Y spread through its inversion and re-steepening, and the NY Fed recession probability.",
+          "url": "https://richybaxter.github.io/Mandala/dashboards/the-curve/",
+          "keywords": ["Treasury yield curve", "yield curve inversion", "2s10s spread", "recession probability"],
+          "creator": { "@id": "https://houtini.com/#org" },
+          "isAccessibleForFree": true,
+          "license": "https://opensource.org/licenses/MIT"
+        },
+        {
+          "@type": "Dataset",
+          "name": "The Breakfast Index — coffee, sugar, wheat & orange juice prices",
+          "description": "Global commodity prices for breakfast staples, indexed to 2015, with the change since 2015 by item.",
+          "url": "https://richybaxter.github.io/Mandala/dashboards/breakfast-index/",
+          "keywords": ["commodity prices", "coffee price", "orange juice price", "food inflation"],
           "creator": { "@id": "https://houtini.com/#org" },
           "isAccessibleForFree": true,
           "license": "https://opensource.org/licenses/MIT"
@@ -191,12 +212,12 @@
     <h2>Commodities &amp; energy</h2>
     <p class="th-sub">The raw price of running the world.</p>
     <div class="cards">
-      <div class="scard soon">
+      <a class="scard" href="dashboards/breakfast-index/index.html">
         <div class="ic">☕</div>
         <div class="t">The Breakfast Index</div>
         <div class="hook">Coffee, sugar, wheat and orange juice: what your morning costs, and why it keeps creeping up.</div>
-        <div class="meta"><span class="badge soon">Coming soon</span><span class="srcline">FRED · IMF commodity prices</span></div>
-      </div>
+        <div class="meta"><span class="badge live">Live</span><span class="srcline">FRED · IMF commodity prices</span></div>
+      </a>
       <div class="scard soon">
         <div class="ic">⚡</div>
         <div class="t">The Price of Power</div>
@@ -217,12 +238,12 @@
     <h2>Bond yields</h2>
     <p class="th-sub">The plumbing the whole economy is priced off.</p>
     <div class="cards">
-      <div class="scard soon">
+      <a class="scard" href="dashboards/the-curve/index.html">
         <div class="ic">📉</div>
         <div class="t">The Curve</div>
         <div class="hook">The whole Treasury term structure, 1-month to 30-year, and what its shape has called for 60 years.</div>
-        <div class="meta"><span class="badge soon">Coming soon</span><span class="srcline">FRED · DGS1MO–DGS30</span></div>
-      </div>
+        <div class="meta"><span class="badge live">Live</span><span class="srcline">FRED · DGS1MO–DGS30</span></div>
+      </a>
       <div class="scard soon">
         <div class="ic">💳</div>
         <div class="t">The Fear Gauge</div>

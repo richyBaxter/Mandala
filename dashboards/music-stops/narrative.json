@@ -1,13 +1,13 @@
 {
   "_comment": "Per-chart narratives. CI (build_prompt.py -> GitHub Models -> write_narrative.py) overwrites 'text' from live numbers; these are the computed fallbacks so the page always reads well. source = 'fallback' | 'github-models'.",
-  "generated": "2026-06-29T10:43:13.684662Z",
+  "generated": "2026-06-29T13:36:34.324091Z",
   "source": "github-models",
   "notes": {
-    "cape": "The Shiller CAPE ratio stands at 40.7 in June 2026, more than double its 140-year average of 17.3 and close to the all-time high of 44.19 from December 1999. Such elevated valuation measures have historically signaled market bubbles.",
-    "buffett": "The Buffett Indicator shows the total market capitalization at 231.7% of GDP, far exceeding the dot-com peak of 146% and the 2007 peak of 110%. This suggests stocks may be significantly overvalued relative to the economy.",
-    "concentration": "Market concentration is intense, with the top 5 stocks making up nearly 30% of the S&P 500, and the tech sector accounting for 48%. The top 10 holdings now represent 41% of the index, up from 17.5% in 2015, heightening systemic risk.",
-    "yieldcurve": "The yield curve spread between 10-year and 3-month Treasuries is just 0.55 points, while the NY Fed estimates a 31% chance of recession. This flat curve combined with recession risks often precedes market downturns.",
-    "drypowder": "Berkshire Hathaway holds a record $397.4 billion in cash, but 79% of institutions expect liquidity to tighten, meaning the abundant dry powder could soon dry up and limit buying support.",
-    "finale": "The trigger window from December 2026 to May 2027 features IPO lock-up expirations for giants like SpaceX, OpenAI, and Anthropic, likely releasing shares into the market and draining liquidity just as investor cash reserves are expected to decline."
+    "cape": "The Shiller CAPE ratio stands at 40.7 in June 2026, more than double its 140-year average of 17.3 and only slightly below the record high of 44.19 set in December 1999, signaling extreme market overvaluation by historical standards.",
+    "buffett": "The Buffett Indicator, which compares total market capitalization to GDP, has surged to 231.7% in June 2026\u2014far exceeding the dot-com peak of 146% and 2007's peak of 110%\u2014highlighting an unprecedented disconnect between stock prices and economic output.",
+    "concentration": "Market concentration is unusually high, with the top 5 companies comprising nearly 30% of the S&P 500, the tech sector making up 48% of the index, and the top 10 stocks accounting for 41% in 2026 compared to just 17.5% in 2015, increasing systemic risk tied to a few dominant players.",
+    "yieldcurve": "The yield curve spread between 10-year and 3-month Treasuries is a modest 0.55 points, while the New York Fed assigns a 31% chance of recession, reflecting market concerns about future economic downturn despite a currently positive slope.",
+    "drypowder": "Berkshire Hathaway holds a record $397.4 billion in cash as of Q1 2026, indicating significant dry powder, yet 79% of institutions expect a decline in liquid assets, suggesting reduced buying power amid potential market stress.",
+    "finale": "Between December 2026 and May 2027, IPO lock-up expirations for major companies like SpaceX, OpenAI, and Anthropic will release large shares into the market, potentially draining liquidity when combined with shrinking institutional cash reserves and heightening market volatility."
   }
 }

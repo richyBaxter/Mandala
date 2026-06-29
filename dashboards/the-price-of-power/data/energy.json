@@ -1,0 +1,115 @@
+{
+  "_comment": "The Price of Power. Fossil block (WTI/Brent/Henry Hub/US regular gasoline) is live FRED, indexed to the first month = 100, refreshed best-effort daily by fetch.py. The lcoe (levelised cost of electricity, $/MWh) and non_usd (estimated share of oil trade settled outside the US dollar) blocks are CURATED from IRENA / Lazard and from published BIS / JPMorgan / Reuters estimates respectively; fetch.py never touches them.",
+  "_last_updated": "2026-06-29",
+  "current_label": "Jun 2026",
+  "fossil": {
+    "wti": 71.0,
+    "brent": 75.0,
+    "henry_hub": 3.3,
+    "gasoline": 3.1,
+    "labels": [
+      "2019",
+      "2020",
+      "2021",
+      "2022",
+      "2023",
+      "2024",
+      "2025",
+      "2026"
+    ],
+    "wti_idx": [
+      100,
+      65,
+      115,
+      160,
+      130,
+      130,
+      122,
+      118
+    ],
+    "gas_idx": [
+      100,
+      70,
+      140,
+      270,
+      110,
+      95,
+      130,
+      110
+    ],
+    "pump_idx": [
+      100,
+      80,
+      130,
+      165,
+      130,
+      125,
+      120,
+      116
+    ]
+  },
+  "lcoe": {
+    "_note": "Global benchmark levelised cost of electricity for new build, $/MWh. Renewables from IRENA Renewable Power Generation Costs (global weighted average); fossil bands from Lazard LCOE+. Indicative, not a market price.",
+    "labels": [
+      "Solar PV",
+      "Onshore wind",
+      "Offshore wind",
+      "Gas (CCGT)",
+      "Coal"
+    ],
+    "now": [
+      44,
+      33,
+      75,
+      76,
+      110
+    ],
+    "renewable": [
+      true,
+      true,
+      true,
+      false,
+      false
+    ],
+    "solar_2010": 460,
+    "solar_now": 44,
+    "history": {
+      "labels": [
+        "2010",
+        "2015",
+        "2020",
+        "2024"
+      ],
+      "Solar PV": [
+        460,
+        130,
+        60,
+        44
+      ],
+      "Coal": [
+        110,
+        105,
+        100,
+        110
+      ]
+    }
+  },
+  "non_usd": {
+    "_note": "Estimated share of global crude oil trade INVOICED or SETTLED outside the US dollar. There is no official series; this is a curated reading of published estimates (BIS, JPMorgan, Reuters reporting on yuan- and rupee-settled cargoes). Treat as a trend, not a precise figure.",
+    "labels": [
+      "2018",
+      "2020",
+      "2022",
+      "2024",
+      "2026e"
+    ],
+    "share": [
+      4,
+      6,
+      10,
+      17,
+      20
+    ],
+    "current_pct": 20
+  }
+}

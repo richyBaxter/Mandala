@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<title>The Price of Power: oil, gas & the cost of energy · houtini</title>
+<meta name="description" content="Crude, natural gas and the price at the pump, the falling cost of solar and wind, and how much oil now trades outside the US dollar. Free energy data.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://richybaxter.github.io/Mandala/dashboards/the-price-of-power/">
+<meta property="og:title" content="The Price of Power">
+<meta property="og:description" content="Oil and gas, the falling cost of renewables, and the slow drift of oil trade out of the dollar. A data story by houtini.">
+<meta property="og:image" content="https://richybaxter.github.io/Mandala/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Price of Power">
+<meta name="twitter:description" content="What energy costs, why renewables undercut fossil fuels, and how oil is drifting out of the dollar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="../../assets/macro.css">
+<script>/* set theme before paint to avoid a flash */(function(){try{var t=localStorage.getItem('mandala-theme')||(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "The Price of Power — energy prices, renewable costs & oil's currency",
+  "description": "Crude oil (WTI, Brent), natural gas (Henry Hub) and US gasoline prices indexed over time; the levelised cost of solar, wind, gas and coal; and an estimate of how much oil trade now settles outside the US dollar.",
+  "url": "https://richybaxter.github.io/Mandala/dashboards/the-price-of-power/",
+  "keywords": ["oil price", "natural gas price", "gasoline price", "levelised cost of electricity", "renewable energy cost", "de-dollarisation", "energy prices"],
+  "creator": { "@type": "Organization", "name": "houtini", "url": "https://houtini.com" },
+  "license": "https://opensource.org/licenses/MIT",
+  "isAccessibleForFree": true,
+  "temporalCoverage": "2019/2026",
+  "variableMeasured": ["WTI crude price", "Henry Hub natural gas price", "US regular gasoline price", "Levelised cost of electricity by source", "Share of oil trade settled outside USD"],
+  "isBasedOn": ["https://fred.stlouisfed.org/", "https://www.irena.org/", "https://www.lazard.com/"],
+  "includedInDataCatalog": { "@type": "DataCatalog", "@id": "https://richybaxter.github.io/Mandala/#catalog" }
+}
+</script>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="wrap">
+
+  <header class="story-header reveal">
+    <nav class="crumbs"><a href="../../index.html">Mandala</a> <span class="sep">/</span> Energy <span class="sep">/</span> The Price of Power</nav>
+    <h1>The Price of Power</h1>
+    <p class="lede">Energy is the one price that hides inside every other price. A barrel of crude, a therm of gas, the figure on the forecourt: they quietly set the cost of the food you buy, the parcel that arrives, the heating you'd rather not think about in January. My take: the interesting story in energy right now isn't the day's oil price at all. It's two slower things happening underneath it. Renewables have quietly become the cheapest electricity most of the world has ever built, and a growing slice of the oil trade has started settling in currencies that aren't the dollar.</p>
+    <div class="share" data-share data-title="The Price of Power · houtini" style="justify-content:center;margin-top:18px"></div>
+    <div class="scrollcue">SCROLL ↓</div>
+  </header>
+
+  <section class="chapter reveal" id="ch-fossil">
+    <p class="chnum">01 · THE FOSSIL BASELINE</p>
+    <h2 class="chtitle">Oil, gas and the pump</h2>
+    <p class="chsub" data-fill="fossil-sub"></p>
+    <div class="stat-row">
+      <div class="stat"><div class="big accent" id="s-wti">$71</div><div class="lab">WTI crude / barrel</div></div>
+      <div class="stat"><div class="big" id="s-gas">$3.30</div><div class="lab">Henry Hub gas / MMBtu</div></div>
+      <div class="stat"><div class="big" id="s-pump">$3.10</div><div class="lab">US regular / gallon</div></div>
+    </div>
+    <div class="card">
+      <h3>Energy prices, indexed to 2019 = 100</h3>
+      <p class="hint">Three fuels on one scale. Note how gas (the spikiest line) ran away from the rest in 2022, then fell back.</p>
+      <div class="chart-box"><canvas id="chart-fossil"></canvas></div>
+      <p class="srclink">Learn more: <a href="https://fred.stlouisfed.org/series/DCOILWTICO" target="_blank" rel="noopener">WTI crude</a> · <a href="https://fred.stlouisfed.org/series/DHHNGSP" target="_blank" rel="noopener">Henry Hub gas</a> · <a href="https://fred.stlouisfed.org/series/GASREGW" target="_blank" rel="noopener">US gasoline</a> (FRED)</p>
+    </div>
+    <div class="ai" data-note="fossil"><span class="badge2">AI ANALYSIS</span><span class="src"></span><p></p></div>
+  </section>
+
+  <section class="chapter reveal" id="ch-transition">
+    <p class="chnum">02 · THE CROSSOVER</p>
+    <h2 class="chtitle">Renewables, in price terms</h2>
+    <p class="chsub">Strip out the politics and put every way of generating a megawatt-hour on the same axis: its levelised cost, the all-in price over a plant's life. A decade ago that comparison was a rout in favour of fossil fuels. It isn't any more.</p>
+    <div class="stat-row">
+      <div class="stat"><div class="big buy" id="s-solar">$44</div><div class="lab">Solar PV, cost / MWh</div></div>
+      <div class="stat"><div class="big" id="s-solar-fall">−90%</div><div class="lab">Solar cost since 2010</div></div>
+    </div>
+    <div class="card">
+      <h3>Levelised cost of new electricity, $ / MWh</h3>
+      <p class="hint">Green = renewable, red = fossil. Lower is cheaper. Solar and onshore wind now sit below new coal and gas.</p>
+      <div class="chart-box short"><canvas id="chart-lcoe"></canvas></div>
+      <p class="srclink">Learn more: <a href="https://www.irena.org/Publications/2024/Sep/Renewable-Power-Generation-Costs-in-2023" target="_blank" rel="noopener">IRENA renewable cost report</a> · <a href="https://www.lazard.com/research-insights/levelized-cost-of-energyplus/" target="_blank" rel="noopener">Lazard LCOE+</a></p>
+    </div>
+    <div class="ai" data-note="transition"><span class="badge2">AI ANALYSIS</span><span class="src"></span><p></p></div>
+  </section>
+
+  <section class="chapter reveal" id="ch-currency">
+    <p class="chnum">03 · THE CURRENCY OF OIL</p>
+    <h2 class="chtitle">Oil, slowly leaving the dollar</h2>
+    <p class="chsub">For fifty years almost every barrel was priced and paid for in dollars; that "petrodollar" plumbing is a big part of why the dollar runs the world. It's still overwhelmingly true. But since 2022 a measurable slice of the oil trade has started settling in yuan, rupees and dirhams instead, and the line only points one way.</p>
+    <div class="stat-row">
+      <div class="stat"><div class="big alarm" id="s-nonusd">~20%</div><div class="lab">Oil trade settled outside USD (est.)</div></div>
+    </div>
+    <div class="card">
+      <h3>Estimated share of oil trade settled outside the dollar</h3>
+      <p class="hint">There is no official figure for this, so read it as a trend rather than a precise number. The drivers are Russia's pivot to Asian buyers and growing yuan-settled cargoes.</p>
+      <div class="chart-box short"><canvas id="chart-nonusd"></canvas></div>
+      <p class="srclink">Learn more: <a href="https://www.bis.org/publ/qtrpdf/r_qt2312.htm" target="_blank" rel="noopener">BIS on currency invoicing</a> · estimates compiled from JPMorgan and Reuters reporting</p>
+    </div>
+    <div class="ai" data-note="currency"><span class="badge2">AI ANALYSIS</span><span class="src"></span><p></p></div>
+  </section>
+
+  <section class="chapter reveal" id="ch-now">
+    <p class="chnum">04 · THE VERDICT</p>
+    <h2 class="chtitle">What energy is really telling you</h2>
+    <p class="chsub">Put the day's barrel, the falling cost curve and the currency drift together, and a longer story comes into focus.</p>
+    <div class="ai" data-note="now"><span class="badge2">AI ANALYSIS</span><span class="src"></span><p></p></div>
+  </section>
+
+  <footer class="site reveal">
+    <div class="stats" data-views style="margin-bottom:16px"></div>
+    <a class="back" href="../../index.html">← all data stories</a>
+    <p>A data story by <strong><a href="https://houtini.com" target="_blank" rel="noopener">houtini</a></strong> · open source, MIT licensed · part of the <a href="../../index.html">Mandala</a> project.</p>
+    <p class="src">Sources: FRED (WTI, Brent, Henry Hub gas and US gasoline, refreshed daily in CI); IRENA and Lazard for the levelised cost of electricity; and a curated reading of BIS, JPMorgan and Reuters estimates for oil's currency mix. The cost and currency figures are curated, not live. The per-chart analysis is written by an LLM (GitHub Models) from these numbers.</p>
+    <p class="disc"><strong>Educational only. Not financial advice.</strong></p>
+  </footer>
+
+</div>
+<script src="../../assets/macro.js"></script>
+<script>
+(async function(){
+  const M = window.Macro; const T = M.T;
+  M.registerChartDefaults();
+  const d = await M.loadJSON('data/energy.json');
+  const narr = await M.loadJSON('narrative.json');
+  if (narr) M.fillNarratives(narr);
+  if (!d) return;
+
+  const f = d.fossil, l = d.lcoe, n = d.non_usd;
+  M.setText('s-wti', '$' + Math.round(f.wti));
+  M.setText('s-gas', '$' + f.henry_hub.toFixed(2));
+  M.setText('s-pump', '$' + f.gasoline.toFixed(2));
+  M.setText('s-solar', '$' + l.solar_now);
+  M.setText('s-solar-fall', '−' + Math.round((1 - l.solar_now / l.solar_2010) * 100) + '%');
+  M.setText('s-nonusd', '~' + n.current_pct + '%');
+
+  const sub = document.querySelector('[data-fill="fossil-sub"]');
+  if (sub) sub.textContent = "WTI crude sits near $" + Math.round(f.wti) + " a barrel, Henry Hub gas around $" + f.henry_hub.toFixed(2) + " per MMBtu, and US regular about $" + f.gasoline.toFixed(2) + " a gallon. Indexed to 2019 so they share one scale, the three move together most of the time, then come apart hard in a crisis. Gas is the one that bites.";
+
+  // 01 · indexed fossil prices
+  new Chart(document.getElementById('chart-fossil'), {
+    type: 'line',
+    data: { labels: f.labels, datasets: [
+      { label: 'WTI crude', data: f.wti_idx, borderColor: T.btc, backgroundColor: 'transparent', borderWidth: 2.4, tension: .3, pointRadius: 0 },
+      { label: 'Natural gas', data: f.gas_idx, borderColor: T.sky, backgroundColor: 'transparent', borderWidth: 2.4, tension: .3, pointRadius: 0 },
+      { label: 'Pump (gasoline)', data: f.pump_idx, borderColor: T.fair, backgroundColor: 'transparent', borderWidth: 1.8, tension: .3, pointRadius: 0 }
+    ] },
+    options: M.baseLine({
+      plugins: {
+        legend: { display: true, labels: { boxWidth: 12, usePointStyle: true, padding: 14 } },
+        thresholds: { lines: [ { value: 100, tok: '--muted', label: '2019 level' } ] }
+      },
+      scales: {
+        y: { ticks: { color: M.tickColor }, grid: { color: M.gridColor } },
+        x: { grid: { color: M.gridColor }, ticks: { color: M.tickColor } }
+      }
+    })
+  });
+
+  // 02 · levelised cost by source (renewable vs fossil)
+  new Chart(document.getElementById('chart-lcoe'), {
+    type: 'bar',
+    data: { labels: l.labels, datasets: [{
+      data: l.now,
+      backgroundColor: l.renewable.map(r => r ? M.hexA(T.buy, .8) : M.hexA(T.sell, .8)),
+      borderColor: l.renewable.map(r => r ? T.buy : T.sell),
+      borderWidth: 1.5,
+      borderRadius: 5
+    }] },
+    options: M.baseLine({
+      indexAxis: 'y',
+      plugins: { tooltip: { callbacks: { label: c => ' $' + c.parsed.x + ' / MWh' } } },
+      scales: {
+        x: { ticks: { color: M.tickColor, callback: v => '$' + v }, grid: { color: M.gridColor } },
+        y: { grid: { display: false }, ticks: { color: M.tickColor } }
+      }
+    })
+  });
+
+  // 03 · oil trade settled outside the dollar (estimate)
+  new Chart(document.getElementById('chart-nonusd'), {
+    type: 'line',
+    data: { labels: n.labels, datasets: [{
+      label: 'Outside USD (est.)',
+      data: n.share,
+      borderColor: T.violet, borderWidth: 2.6, tension: .3, pointRadius: 3,
+      pointBackgroundColor: T.violet, pointBorderColor: T.violet,
+      fill: true, backgroundColor: c => M.vGrad(c.chart, T.violet, .2)
+    }] },
+    options: M.baseLine({
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ' ~' + c.parsed.y + '% (estimate)' } } },
+      scales: {
+        y: { ticks: { color: M.tickColor, callback: v => v + '%' }, grid: { color: M.gridColor }, suggestedMin: 0 },
+        x: { grid: { color: M.gridColor }, ticks: { color: M.tickColor } }
+      }
+    })
+  });
+})();
+</script>
+</body>
+</html>

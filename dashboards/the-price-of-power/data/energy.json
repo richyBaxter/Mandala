@@ -1,6 +1,6 @@
 {
   "_comment": "The Price of Power. Fossil block (WTI/Brent/Henry Hub/US regular gasoline) is live FRED, indexed to the first month = 100, refreshed best-effort daily by fetch.py. The lcoe (levelised cost of electricity, $/MWh) and non_usd (estimated share of oil trade settled outside the US dollar) blocks are CURATED from IRENA / Lazard and from published BIS / JPMorgan / Reuters estimates respectively; fetch.py never touches them.",
-  "_last_updated": "2026-07-03",
+  "_last_updated": "2026-07-04",
   "current_label": "Jun 2026",
   "fossil": {
     "wti": 71.87,

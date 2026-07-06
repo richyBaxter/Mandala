@@ -1,7 +1,7 @@
 {
   "_comment": "Per-chart narratives. CI (build_prompt.py -> GitHub Models -> write_narrative.py) overwrites these from live numbers; this committed copy is the fallback so the page always reads well. source = 'fallback' | 'github-models'.",
-  "generated": "2026-07-06T10:18:26.513657Z",
-  "source": "github-models",
+  "generated": "2026-07-06T15:30:34.278224Z",
+  "source": "fallback",
   "notes": {
     "fossil": "As of June 2026, WTI crude oil is priced at approximately $71.87 per barrel, Brent at $71.59 per barrel, and US regular gasoline at $3.83 per gallon. Henry Hub natural gas stands at $3.33 per MMBtu and has exhibited the highest volatility among these fuels, with its price index spiking sharply in 2022 before declining, while crude oil and gasoline prices moved more in tandem, indexed to 2019 equals 100. This volatility in natural gas can be attributed to factors such as supply disruptions and varying demand dynamics. The relative stability of crude and gasoline prices contrasts with the sharper swings seen in natural gas markets.",
     "transition": "The levelised cost of electricity (LCOE), which measures the average total cost to build and operate a power-generating asset over its lifetime divided by the total energy output, shows solar photovoltaic (PV) and onshore wind as the most competitive new electricity sources globally, costing $44/MWh and $33/MWh respectively. These costs now undercut new coal at $110/MWh and gas combined cycle gas turbine (CCGT) at $76/MWh, reflecting a significant shift in generation economics. Solar PV's LCOE has fallen about 90% since 2010, decreasing from roughly $460/MWh to $44/MWh, underscoring rapid technological progress and cost reductions that enhance its role in the energy transition.",

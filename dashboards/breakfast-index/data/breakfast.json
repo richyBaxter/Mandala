@@ -3,7 +3,7 @@
   "_last_updated": "2026-07-13",
   "base_year": "2015",
   "current_label": "2026",
-  "index_now": 141,
+  "index_now": 132,
   "items": {
     "labels": [
       "2015",
@@ -25,7 +25,7 @@
       140,
       200,
       260,
-      199
+      193
     ],
     "Sugar": [
       100,
@@ -36,7 +36,7 @@
       160,
       150,
       140,
-      113
+      105
     ],
     "Wheat": [
       100,
@@ -47,7 +47,7 @@
       150,
       130,
       125,
-      119
+      107
     ],
     "Orange juice": [
       100,
@@ -58,25 +58,25 @@
       180,
       260,
       300,
-      134
+      122
     ]
   },
   "change_since_base": [
     {
       "name": "Coffee",
-      "pct": 99
+      "pct": 93
     },
     {
       "name": "Orange juice",
-      "pct": 34
+      "pct": 22
     },
     {
       "name": "Wheat",
-      "pct": 19
+      "pct": 7
     },
     {
       "name": "Sugar",
-      "pct": 13
+      "pct": 5
     }
   ],
   "fred": {

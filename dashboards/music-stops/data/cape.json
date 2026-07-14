@@ -1,11 +1,11 @@
 {
   "_comment": "Shiller CAPE (cyclically-adjusted P/E) for the S&P 500. Representative annual series capturing the historical shape and the famous peaks/troughs. Sources: Robert Shiller's public dataset (econ.yale.edu/~shiller/data.htm) and multpl.com/shiller-pe. Refreshed best-effort by fetch.py; current point verified Jun 2026.",
-  "_last_updated": "2026-07-13",
+  "_last_updated": "2026-07-14",
   "unit": "ratio",
   "average": 17.3,
   "danger_threshold": 30,
   "current": {
-    "value": 42.18,
+    "value": 41.85,
     "date": "2026-07",
     "label": "Jul 2026"
   },
@@ -117,7 +117,7 @@
     },
     {
       "t": "2026",
-      "v": 42.18
+      "v": 41.85
     }
   ]
 }

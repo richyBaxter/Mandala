@@ -1,10 +1,10 @@
 {
   "_comment": "US Treasury yield curve. Term structure from FRED (DGS1MO..DGS30); the 2s10s spread from T10Y2Y; recession_prob from the NY Fed yield-curve model. Curated baseline (Jun 2026), refreshed best-effort daily by fetch.py.",
-  "_last_updated": "2026-07-17",
+  "_last_updated": "2026-07-18",
   "current_label": "Jun 2026",
   "recession_prob": 0.31,
-  "ten_year": 4.55,
-  "spread_2s10s_current": 0.41,
+  "ten_year": 4.57,
+  "spread_2s10s_current": 0.37,
   "term_structure": {
     "labels": [
       "1M",
@@ -20,17 +20,17 @@
       "30Y"
     ],
     "now": [
-      3.73,
-      3.83,
-      3.93,
-      3.97,
-      4.13,
-      4.18,
-      4.26,
-      4.39,
-      4.55,
-      5.07,
-      5.08
+      3.76,
+      3.84,
+      3.94,
+      3.99,
+      4.16,
+      4.2,
+      4.28,
+      4.41,
+      4.57,
+      5.09,
+      5.09
     ],
     "inverted_2023": [
       5.3,
@@ -142,7 +142,7 @@
       },
       {
         "t": "2026-07",
-        "v": 0.41
+        "v": 0.37
       }
     ]
   }

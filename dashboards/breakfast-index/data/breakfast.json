@@ -1,6 +1,6 @@
 {
   "_comment": "Global commodity prices for breakfast staples, indexed to 2015 = 100 so different units are comparable. Source: FRED global price series (IMF) \u2014 coffee PCOFFOTMUSDM, sugar PSUGAISAUSDM, wheat PWHEAMTUSDM, orange juice PORANGUSDM. Historical points curated; the latest reading refreshes best-effort daily via fetch.py.",
-  "_last_updated": "2026-07-20",
+  "_last_updated": "2026-07-21",
   "base_year": "2015",
   "current_label": "2026",
   "index_now": 132,

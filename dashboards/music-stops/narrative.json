@@ -1,7 +1,7 @@
 {
   "_comment": "Per-chart narratives. CI (build_prompt.py -> GitHub Models -> write_narrative.py) overwrites these from live numbers; this committed copy is the technical fallback so the page always reads well. source = 'fallback' | 'github-models'.",
-  "generated": "2026-07-23T13:52:44.575549Z",
-  "source": "github-models",
+  "generated": "2026-07-23T19:13:15.342653Z",
+  "source": "fallback",
   "notes": {
     "cape": "The Shiller CAPE (Cyclically Adjusted Price-to-Earnings) ratio is constructed by dividing current price levels by the average of inflation-adjusted earnings over the past 10 years, smoothing earnings cyclicality. As of July 2026, the CAPE stands at 40.94, far above its 140-year historical average of 17.3 and second only to the December 1999 peak of 44.19. Elevated CAPE readings generally presage lower forward equity returns; historically, when CAPE exceeds approx. 39, subsequent one-year returns average around -4%, and two-year returns about -20%. However, CAPE captures valuation extremes but offers limited precision on timing, as rich valuations can persist for extended periods under accommodative liquidity and market momentum conditions.",
     "buffett": "The Buffett Indicator is the ratio of total US market capitalization to GDP, providing a macro-level gauge of equity market valuation relative to economic output. In June 2026, this ratio reached 231.7%, substantially above prior peaks of 146% during the dot-com bubble and 110% before the 2007 financial crisis. Such elevated ratios reflect stretched valuations, with Warren Buffett cautioning that readings above 200% represent 'playing with fire,' indicative of heightened systemic risk and vulnerability to corrections. Despite its conceptual clarity, this indicator can be influenced by distortions in GDP measurement or equity buybacks, and thus should be considered alongside other measures rather than as a standalone timing tool.",

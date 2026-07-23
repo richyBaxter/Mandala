@@ -1,7 +1,7 @@
 {
   "_comment": "Per-chart narratives. CI (build_prompt.py -> GitHub Models -> write_narrative.py) overwrites these from live numbers; this committed copy is the fallback so the page always reads well. source = 'fallback' | 'github-models'.",
-  "generated": "2026-07-23T13:52:56.933178Z",
-  "source": "github-models",
+  "generated": "2026-07-23T19:13:23.337878Z",
+  "source": "fallback",
   "notes": {
     "shape": "The yield curve plots US Treasury yields across different maturities, typically from 1 month to 30 years, with an upward slope indicating normal economic conditions where longer-term yields exceed shorter-term ones. A downward slope, or inversion, has historically preceded US recessions by 6 to 18 months. Presently, the 10-year Treasury yield is 4.63% with a 10-year minus 2-year spread (2s10s) of 0.36 percentage points, indicating a positively sloped curve. This contrasts with the 2022-2024 period when the curve was inverted, with 2s10s spending time at 0.0 points or below, marking the deepest inversion in the available series.",
     "signal": "The 2s10s spread is a widely used recession indicator; inversion (spread below zero) has historically signaled upcoming recessions, though the curve often un-inverts before the recession onset. The current positive 2s10s spread of 0.36 points follows a prolonged inversion, indicating a re-steepening of the curve. Despite the un-inversion, the NY Fed's recession probability remains elevated at 31%, reflecting ongoing market caution. This suggests that while the yield curve signal has shifted, monetary conditions and economic uncertainties keep recession risk material.",

@@ -1,10 +1,10 @@
 {
   "_comment": "Per-chart narratives. CI (build_prompt.py -> GitHub Models -> write_narrative.py) overwrites these from live numbers; this committed copy is the fallback so the page always reads well. source = 'fallback' | 'github-models'.",
-  "generated": "2026-07-23T19:13:25.462761Z",
-  "source": "fallback",
+  "generated": "2026-07-24T02:31:32.311654Z",
+  "source": "github-models",
   "notes": {
-    "basket": "The breakfast basket, an average of coffee, sugar, wheat, and orange juice prices indexed to 2015 = 100, currently stands at 132, indicating an approximate 32% increase since 2015. This rise reflects uneven price movements among components, with the overall climb occurring over several years rather than steadily. The index highlights varying trends in commodities commonly consumed at breakfast, serving as a broad measure of related soft commodity costs.",
-    "movers": "Coffee and orange juice are the primary contributors to this increase, with price changes since 2015 of +93% and +22%, respectively. Wheat and sugar have seen more modest rises of +7% and +5%. These shifts are driven largely by specific weather events and crop diseases \u2014 such as frost and drought for arabica coffee and citrus greening and hurricanes for orange juice \u2014 rather than general inflationary pressures. The soft commodity markets are relatively thin, meaning that such supply shocks can cause significant price swings.",
-    "why": "The headline rise in the breakfast basket is largely due to a few weather-affected crops experiencing supply disruptions. Given the nature of these agricultural commodities, prices may remain elevated for extended periods as growers and markets adapt. Understanding these dynamics underscores the sensitivity of soft commodity prices to environmental factors."
+    "basket": "The breakfast basket, an average index of coffee, sugar, wheat, and orange juice prices benchmarked to 2015 = 100, currently stands at 132, indicating a roughly 32% increase since 2015. This rise is not uniform across all commodities and has been driven particularly by recent price changes rather than steady growth. The increases reflect substantial volatility rather than a consistent trend across the entire basket.",
+    "movers": "Coffee is the primary driver, having risen by 93% since 2015, followed by orange juice which is up 22%. Wheat and sugar have risen more modestly, at 7% and 5% respectively. These prices are influenced heavily by localized weather events and crop diseases such as citrus greening and hurricanes affecting orange juice, and frost or drought conditions impacting coffee regions. Market thinness in these soft commodities amplifies price swings, reflecting supply rather than broad inflationary pressures.",
+    "why": "The headline price increases are largely due to a small number of weather-sensitive crops, not general inflation trends. Due to the nature of agricultural inputs and the vulnerability of these commodities to environmental factors, elevated prices may persist in the medium term as crop conditions and outbreaks evolve."
   }
 }

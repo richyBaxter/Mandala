@@ -1,10 +1,10 @@
 {
   "_comment": "Per-chart narratives. CI (build_prompt.py -> GitHub Models -> write_narrative.py) overwrites these from live numbers; this committed copy is the fallback so the page always reads well. source = 'fallback' | 'github-models'.",
-  "generated": "2026-07-25T08:04:00.582714Z",
+  "generated": "2026-07-25T13:21:46.565183Z",
   "source": "github-models",
   "notes": {
-    "basket": "The breakfast basket, an index averaging coffee, sugar, wheat, and orange juice prices with 2015 as the base year (100), stands at 132, reflecting a 32% rise since 2015. This increase has been uneven across commodities and is largely driven by recent price moves rather than steady growth. The index captures general breakfast-related commodity costs on a global scale.",
-    "movers": "Coffee prices surged 93% since 2015, the largest individual increase, followed by orange juice at 22%, wheat at 7%, and sugar at 5%. These movements are primarily due to weather events and diseases affecting crops, such as frost and drought in coffee-growing areas and citrus greening plus hurricanes impacting orange juice. These soft commodities trade in thin markets, meaning smaller supply disruptions can sharply impact prices, rather than reflecting broad inflationary trends.",
-    "why": "The headline rise in the breakfast basket is driven by a few weather-sensitive crops that face ongoing production risks. Given the nature of these markets, elevated price levels can persist for several years if adverse conditions continue."
+    "basket": "The breakfast basket index, reflecting an average of coffee, sugar, wheat, and orange juice prices relative to 2015 (set at 100), currently stands at 132, indicating a 32% increase since 2015. This headline rise is not uniform across all components and has occurred unevenly over the period. The basket highlights how these essential commodities, consumed regularly, have collectively become more expensive. Recent price movements further emphasize variability within these markets.",
+    "movers": "Coffee prices have surged by 93% since 2015, the largest increase among the basket's components, followed by orange juice at 22%. Wheat and sugar have shown more modest gains of 7% and 5% respectively. These price changes are driven primarily by weather events and crop diseases, such as frost, drought in arabica coffee regions, and citrus greening along with hurricanes affecting orange juice production. These are thin markets, meaning global supplies are sensitive to supply shocks rather than broad inflationary trends.",
+    "why": "The headline increase in the breakfast basket is largely a story of a few crops exposed to adverse weather and disease conditions, which sharply affect global supply and thus prices. Due to their thin market characteristics, such impacts can sustain elevated input costs over extended periods. This suggests that these price pressures may persist well beyond short-term disruptions."
   }
 }

@@ -1,7 +1,7 @@
 {
   "_comment": "Per-chart narratives. CI (build_prompt.py -> GitHub Models -> write_narrative.py) overwrites these from live numbers; this committed copy is the fallback so the page always reads well. source = 'fallback' | 'github-models'.",
-  "generated": "2026-07-30T19:23:20.332949Z",
-  "source": "github-models",
+  "generated": "2026-07-31T02:38:04.414566Z",
+  "source": "fallback",
   "notes": {
     "basket": "The breakfast basket, an average of coffee, sugar, wheat, and orange juice prices indexed to 2015=100, currently stands at 132, indicating a 32% increase since 2015. This index reflects commodity price changes over nearly a decade with recent price gains driving the rise. However, increases are uneven across the basket components, highlighting variability in individual commodity markets. The index captures global soft commodity prices as tracked by sources like FRED and the IMF.",
     "movers": "The primary contributors to the basket\u2019s increase are coffee, up 93%, and orange juice, up 22% since 2015, while wheat and sugar rose modestly by 7% and 5%, respectively. These price shifts largely stem from weather-related events and crop diseases rather than broad inflationary trends. For example, coffee prices have been influenced by frost and drought in arabica growing regions, while orange juice prices reacted to citrus greening and hurricanes. These soft commodity markets tend to be thin, meaning global supply is sensitive to such disruptions.",

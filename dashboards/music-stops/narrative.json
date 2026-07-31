@@ -1,7 +1,7 @@
 {
   "_comment": "Per-chart narratives. CI (build_prompt.py -> GitHub Models -> write_narrative.py) overwrites these from live numbers; this committed copy is the technical fallback so the page always reads well. source = 'fallback' | 'github-models'.",
-  "generated": "2026-07-30T19:22:50.603222Z",
-  "source": "github-models",
+  "generated": "2026-07-31T02:37:55.017772Z",
+  "source": "fallback",
   "notes": {
     "cape": "The Shiller CAPE ratio measures the cyclically adjusted price-to-earnings ratio, averaging inflation-adjusted earnings over 10 years to smooth earnings volatility. As of July 2026, it stands at 39.93, more than double its 140-year average of 17.3 and second only to the 44.19 peak at the 1999 dot-com bubble top. Elevated CAPE readings historically signal stretched valuations, with data indicating average forward S&P 500 returns of approximately -4% over one year and -20% over two years when above 39. This measure is valuable for long-term valuation insight but limited in precise timing, as high CAPEs can persist without immediate market declines due to changing earnings quality or market structure.",
     "buffett": "The Buffett Indicator calculates total stock market capitalization as a percentage of GDP, providing a macro-level valuation benchmark that compares equity prices to the size of the economy. At 231.7% in June 2026, the ratio far exceeds its 2007 peak of 110% and the dot-com peak of 146%, levels Warren Buffett famously described as 'playing with fire.' This elevated ratio suggests an overvalued market relative to economic output, implying risk of valuation correction when earnings growth or liquidity falters. One caveat is that structural changes like increased corporate earnings abroad or expanded tech sector capitalizations can distort this ratio\u2019s interpretation over time.",

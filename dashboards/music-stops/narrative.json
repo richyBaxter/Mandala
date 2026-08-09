@@ -1,6 +1,6 @@
 {
   "_comment": "Per-chart narratives. CI (build_prompt.py -> GitHub Models -> write_narrative.py) overwrites these from live numbers; this committed copy is the technical fallback so the page always reads well. source = 'fallback' | 'github-models'.",
-  "generated": "2026-08-08T18:33:42.784926Z",
+  "generated": "2026-08-09T01:28:36.922630Z",
   "source": "fallback",
   "notes": {
     "cape": "The Shiller CAPE ratio measures the cyclically adjusted price-to-earnings ratio, averaging inflation-adjusted earnings over 10 years to smooth earnings volatility. As of July 2026, it stands at 39.93, more than double its 140-year average of 17.3 and second only to the 44.19 peak at the 1999 dot-com bubble top. Elevated CAPE readings historically signal stretched valuations, with data indicating average forward S&P 500 returns of approximately -4% over one year and -20% over two years when above 39. This measure is valuable for long-term valuation insight but limited in precise timing, as high CAPEs can persist without immediate market declines due to changing earnings quality or market structure.",

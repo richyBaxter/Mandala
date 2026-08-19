@@ -1,6 +1,6 @@
 {
   "_comment": "Per-chart narratives. CI (build_prompt.py -> GitHub Models -> write_narrative.py) overwrites these from live numbers; this committed copy is the fallback so the page always reads well. source = 'fallback' | 'github-models'.",
-  "generated": "2026-08-18T18:34:57.962185Z",
+  "generated": "2026-08-19T01:06:25.156803Z",
   "source": "fallback",
   "notes": {
     "fossil": "As of June 2026, WTI crude oil is priced at approximately $84.25 per barrel, Brent crude at $91.82 per barrel, and US regular gasoline at $4.1 per gallon. Henry Hub natural gas stands at $2.63 per MMBtu, showing it is the most volatile fuel among the three, as indicated by an indexed comparison to 2019 (indexed at 100). Natural gas experienced the sharpest price spike in 2022 before retreating, while crude oil and gasoline prices have tended to move more in step. This volatility reflects natural gas's sensitivity to supply-demand dynamics and regional market fluctuations compared to the relatively steadier crude and gasoline markets.",

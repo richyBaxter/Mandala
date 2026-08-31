@@ -1,6 +1,6 @@
 {
   "_comment": "Per-chart narratives. CI (build_prompt.py -> GitHub Models -> write_narrative.py) overwrites these from live numbers; this committed copy is the fallback so the page always reads well. source = 'fallback' | 'github-models'.",
-  "generated": "2026-08-31T12:42:51.509132Z",
+  "generated": "2026-08-31T22:27:46.452045Z",
   "source": "fallback",
   "notes": {
     "shape": "The yield curve graphs Treasury yields across maturities from 1 month to 30 years, with a normal upward slope indicating higher yields for longer maturities due to risk and time factors. An inverted curve, where short-term yields exceed long-term yields, has historically preceded every modern US recession with a lead time of 6 to 18 months. Currently, the 10-year Treasury yield stands at 4.61% for June 2026, and the 10-year minus 2-year (2s10s) spread is positive at 0.45 percentage points, indicating a normal upward slope. This contrasts with the period from 2022 to 2024 when the curve was inverted (spread below zero), making today's curve a re-steepened, non-inverted shape after the inversion phase.",
